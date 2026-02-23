@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - Spectrum</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Unit Converter</h1>
+        <nav>
+            <a href="../../index.html">Back to Spectrum Home</a>
+        </nav>
+    </header>
+    <main>
+        <section class="converter-card">
+            <h2>Length Converter</h2>
+            <div class="input-group">
+                <input type="number" id="inputValue" value="1" min="0">
+                <select id="inputUnit">
+                    <option value="meters">Meters</option>
+                    <option value="feet">Feet</option>
+                    <option value="inches">Inches</option>
+                </select>
+            </div>
+            <div class="output-group">
+                <p>Result:</p>
+                <span id="outputValue"></span>
+                <select id="outputUnit">
+                    <option value="feet">Feet</option>
+                    <option value="meters">Meters</option>
+                    <option value="inches">Inches</option>
+                </select>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Spectrum Project</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>

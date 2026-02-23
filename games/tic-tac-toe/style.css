@@ -1,0 +1,129 @@
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #e8f5e9; /* Light green background */
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50; /* Green header */
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+header nav a {
+    color: white;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+}
+
+header nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.game-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.status {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #388e3c; /* Darker green for status */
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 5px;
+    margin: 0 auto 20px auto;
+    width: 315px; /* 3*100px + 2*5px */
+    height: 315px; /* 3*100px + 2*5px */
+    background-color: #bbdefb; /* Light blue board background */
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.2);
+}
+
+.cell {
+    width: 100px;
+    height: 100px;
+    background-color: #e3f2fd; /* Lighter blue for cells */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3em;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.cell:hover {
+    background-color: #c5e1fd; /* Even lighter blue on hover */
+}
+
+.cell.x {
+    color: #d32f2f; /* Red for X */
+}
+
+.cell.o {
+    color: #1976d2; /* Blue for O */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background-color: #2196F3; /* Blue button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #1976D2; /* Darker blue on hover */
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 1em 0;
+    background-color: #333;
+    color: white;
+    margin-top: 20px;
+}
