@@ -129,7 +129,7 @@ body {
 }
 
 h1 {
-    font-size: 4rem;
+    font-size: min(4rem, 12vw);
     font-weight: 800;
     margin: 0;
     color: transparent;
@@ -214,8 +214,8 @@ h1 {
 
 .item-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: 20px;
 }
 
 .item-card {
@@ -386,11 +386,28 @@ h1 {
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    .app-container {
+        padding: 40px 15px 30px;
+    }
+    
     h1 {
         font-size: 2.8rem;
     }
 
     .item-grid {
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+    
+    .logo-icon {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    
+    .search-container {
+        padding: 10px 15px;
     }
 }

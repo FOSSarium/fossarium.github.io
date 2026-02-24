@@ -20,6 +20,12 @@ let nextDy = 0;
 let gameLoop = null;
 let isRunning = false;
 
+// Touch control variables
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
+
 function initGame() {
     snake = [{ x: 10, y: 10 }];
     generateFood();
@@ -144,6 +150,46 @@ window.addEventListener('keydown', e => {
             break;
     }
 });
+
+// Touch / Swipe controls
+canvas.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+canvas.addEventListener('touchmove', e => {
+    e.preventDefault(); // Prevent scrolling while playing
+}, { passive: false });
+
+canvas.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+}, { passive: true });
+
+function handleSwipe() {
+    const diffX = touchEndX - touchStartX;
+    const diffY = touchEndY - touchStartY;
+
+    // Require a minimum swipe distance
+    if (Math.abs(diffX) < 30 && Math.abs(diffY) < 30) return;
+
+    if (Math.abs(diffX) > Math.abs(diffY)) {
+        // Horizontal swipe
+        if (diffX > 0 && dx !== -1) {
+            nextDx = 1; nextDy = 0; // Right
+        } else if (diffX < 0 && dx !== 1) {
+            nextDx = -1; nextDy = 0; // Left
+        }
+    } else {
+        // Vertical swipe
+        if (diffY > 0 && dy !== -1) {
+            nextDx = 0; nextDy = 1; // Down
+        } else if (diffY < 0 && dy !== 1) {
+            nextDx = 0; nextDy = -1; // Up
+        }
+    }
+}
 
 startBtn.addEventListener('click', () => {
     initGame();
