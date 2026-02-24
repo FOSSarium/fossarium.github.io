@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper - Spectrum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="game-body">
+    <script>
+        const savedTheme = localStorage.getItem('spectrum-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+    <div class="app-container game-container-wrapper">
+        <div class="header-nav">
+            <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+        </div>
+
+        <div class="game-header">
+            <div class="game-title">
+                <h1>Minesweeper</h1>
+            </div>
+            <div class="score-container">
+                <div class="score-box">
+                    <span class="score-label">MINES</span>
+                    <span id="mines-count">10</span>
+                </div>
+                <div class="score-box">
+                    <span class="score-label">TIME</span>
+                    <span id="timer">000</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-controls">
+            <button id="level-btn" class="secondary-btn">Medium (16x16)</button>
+            <button id="restart-btn" class="primary-btn">
+                <ion-icon name="refresh-outline"></ion-icon> Restart
+            </button>
+        </div>
+
+        <div class="game-board-container">
+            <div id="minesweeper-board" class="minesweeper-board">
+                <!-- Cells generated here -->
+            </div>
+
+            <div id="game-message" class="game-message hidden">
+                <h2 id="end-title">Game Over!</h2>
+                <button id="play-again-btn" class="primary-btn">Play Again</button>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p>Left Click: Reveal | Right Click: Flag</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

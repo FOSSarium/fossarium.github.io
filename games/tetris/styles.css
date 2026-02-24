@@ -1,0 +1,304 @@
+.game-body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.game-container-wrapper {
+    max-width: 900px;
+    width: 100%;
+    padding: 20px;
+}
+
+.header-nav {
+    margin-bottom: 10px;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+:root.light-theme .back-button:hover {
+    color: #000;
+}
+
+.tetris-layout {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: stretch;
+}
+
+.side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 140px;
+}
+
+.left-panel {
+    align-items: flex-end;
+}
+
+.right-panel {
+    align-items: flex-start;
+}
+
+.panel-box {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.panel-box h3 {
+    margin: 0 0 10px 0;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-family: 'Press Start 2P', cursive;
+    letter-spacing: -1px;
+}
+
+.score-box p {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    word-break: break-all;
+}
+
+.mini-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+canvas#hold-board,
+canvas#next-board {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+}
+
+:root.light-theme canvas#hold-board,
+:root.light-theme canvas#next-board {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.controls-info {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.controls-info p {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+kbd {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-color);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom-width: 2px;
+}
+
+:root.light-theme kbd {
+    background: rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.2);
+}
+
+.game-board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-header {
+    margin-bottom: 15px;
+}
+
+.game-header h1 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 2.2rem;
+    margin: 0;
+    color: transparent;
+    background: linear-gradient(to right, #FF416C, #FF4B2B, #f7b733);
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: none;
+    letter-spacing: -2px;
+}
+
+.canvas-wrapper {
+    position: relative;
+    background: #000;
+    border: 4px solid var(--card-border);
+    border-radius: 8px;
+    padding: 2px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    height: 70vh;
+    max-height: 800px;
+    min-height: 450px;
+}
+
+:root.light-theme .canvas-wrapper {
+    background: #e9ecef;
+}
+
+canvas#tetris-board {
+    display: block;
+    background: #111;
+    height: 100%;
+    width: auto;
+    aspect-ratio: 1 / 2;
+}
+
+:root.light-theme canvas#tetris-board {
+    background: #fff;
+}
+
+.game-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.game-message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-message h2 {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.8rem;
+    color: #fff;
+    margin: 0 0 30px 0;
+    text-align: center;
+    line-height: 1.3;
+}
+
+.primary-btn {
+    background: var(--gradient-8);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 65, 108, 0.4);
+}
+
+.mobile-controls {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.mobile-controls button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
+    padding: 15px 0;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+:root.light-theme .mobile-controls button {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.mobile-controls button:active {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+:root.light-theme .mobile-controls button:active {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.mobile-controls .span-2 {
+    grid-column: span 3;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 12px 0;
+}
+
+@media (max-width: 800px) {
+    .tetris-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .side-panel {
+        width: 100%;
+        max-width: 320px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .controls-info {
+        display: none;
+    }
+
+    .mobile-controls {
+        display: grid;
+    }
+
+    .side-panel.left-panel,
+    .side-panel.right-panel {
+        flex-wrap: wrap;
+    }
+
+    .panel-box {
+        width: auto;
+        min-width: 80px;
+        padding: 10px;
+    }
+}

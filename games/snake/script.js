@@ -140,10 +140,15 @@ startBtn.addEventListener('click', () => {
     initGame();
 });
 
-// Initial draw
 ctx.fillStyle = '#222';
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = 'white';
 ctx.font = '20px Arial';
 ctx.textAlign = 'center';
 ctx.fillText('Click Start to Play', canvas.width / 2, canvas.height / 2);
+
+window.addEventListener("keydown", function (e) {
+    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, { passive: false });

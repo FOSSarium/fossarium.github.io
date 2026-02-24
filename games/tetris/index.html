@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris - Spectrum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="game-body">
+    <script>
+        const savedTheme = localStorage.getItem('spectrum-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+    <div class="app-container game-container-wrapper">
+        <div class="header-nav">
+            <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+        </div>
+
+        <div class="tetris-layout">
+            <div class="side-panel left-panel">
+                <div class="panel-box mini-box">
+                    <h3>HOLD</h3>
+                    <canvas id="hold-board" width="80" height="80"></canvas>
+                </div>
+
+                <div class="controls-info">
+                    <p><kbd>↑</kbd> Rotate</p>
+                    <p><kbd>←</kbd> Left</p>
+                    <p><kbd>→</kbd> Right</p>
+                    <p><kbd>↓</kbd> Soft Drop</p>
+                    <p><kbd>Space</kbd> Hard Drop</p>
+                    <p><kbd>C</kbd> Hold</p>
+                    <p><kbd>P</kbd> Pause</p>
+                </div>
+            </div>
+
+            <div class="game-board-container">
+                <div class="game-header">
+                    <h1>TETRIS</h1>
+                </div>
+                <div class="canvas-wrapper">
+                    <canvas id="tetris-board" width="300" height="600"></canvas>
+                    <div id="game-message" class="game-message">
+                        <h2 id="msg-title">TETRIS</h2>
+                        <button id="start-btn" class="primary-btn">Play Game</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="side-panel right-panel">
+                <div class="panel-box score-box">
+                    <h3>SCORE</h3>
+                    <p id="score">0</p>
+                </div>
+                <div class="panel-box score-box">
+                    <h3>LEVEL</h3>
+                    <p id="level">1</p>
+                </div>
+                <div class="panel-box score-box">
+                    <h3>LINES</h3>
+                    <p id="lines">0</p>
+                </div>
+
+                <div class="panel-box mini-box">
+                    <h3>NEXT</h3>
+                    <canvas id="next-board" width="80" height="80"></canvas>
+                </div>
+
+                <div class="mobile-controls">
+                    <button id="btn-left"><ion-icon name="arrow-back"></ion-icon></button>
+                    <button id="btn-rotate"><ion-icon name="refresh"></ion-icon></button>
+                    <button id="btn-right"><ion-icon name="arrow-forward"></ion-icon></button>
+                    <button id="btn-down"><ion-icon name="arrow-down"></ion-icon></button>
+                    <button id="btn-drop" class="span-2">HARD DROP</button>
+                    <button id="btn-hold" class="span-2">HOLD (C)</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

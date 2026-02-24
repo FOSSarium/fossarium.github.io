@@ -1,0 +1,257 @@
+.tool-body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.tool-container-wrapper {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+:root.light-theme .back-button:hover {
+    color: #000;
+}
+
+.tool-header {
+    margin-bottom: 30px;
+}
+
+.tool-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.tool-title h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+}
+
+.stopwatch-container {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.time-display {
+    font-family: 'Space Mono', monospace;
+    font-size: 4rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.digits {
+    display: inline-block;
+    width: 2.5ch;
+    text-align: center;
+}
+
+.milliseconds {
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 5px;
+    width: 3.5ch;
+    text-align: left;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    width: 100%;
+    justify-content: center;
+}
+
+.btn {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.primary-btn {
+    background: var(--gradient-6);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
+}
+
+.primary-btn:hover {
+    box-shadow: 0 6px 20px rgba(56, 239, 125, 0.6);
+}
+
+.secondary-btn {
+    background: var(--gradient-2);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(245, 175, 25, 0.4);
+}
+
+.utility-btn {
+    background: rgba(139, 148, 158, 0.2);
+    color: var(--text-color);
+}
+
+.utility-btn:hover:not(:disabled) {
+    background: rgba(139, 148, 158, 0.3);
+}
+
+.danger-btn {
+    background: rgba(248, 81, 73, 0.1);
+    color: #ff5858;
+}
+
+.danger-btn:hover {
+    background: rgba(248, 81, 73, 0.2);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.laps-container {
+    width: 100%;
+    border-top: 1px solid var(--card-border);
+    padding-top: 20px;
+}
+
+.laps-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px 10px 15px;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.laps-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* Custom Scrollbar for laps */
+.laps-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.laps-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.laps-list::-webkit-scrollbar-thumb {
+    background: rgba(139, 148, 158, 0.3);
+    border-radius: 3px;
+}
+
+.lap-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    color: var(--text-color);
+    animation: fadeIn 0.3s ease;
+}
+
+.lap-item:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+:root.light-theme .lap-item:nth-child(even) {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.lap-number {
+    color: var(--text-muted);
+}
+
+.lap-time {
+    color: var(--accent-color);
+    font-weight: 700;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 500px) {
+    .time-display {
+        font-size: 3rem;
+    }
+
+    .milliseconds {
+        font-size: 1.4rem;
+    }
+
+    .controls {
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        flex: 1;
+        min-width: 45%;
+    }
+}

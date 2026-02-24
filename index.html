@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +12,25 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
+    <script>
+        // Prevent FOUC (Flash of Unstyled Content) by setting theme immediately
+        const savedTheme = localStorage.getItem('spectrum-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
     <div class="background-blobs">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
     </div>
 
     <div class="app-container">
@@ -25,7 +40,7 @@
                 <h1>Spectrum</h1>
             </div>
             <p class="subtitle">The ultimate, ever-growing FOSS library.</p>
-            
+
             <div class="search-container">
                 <ion-icon name="search-outline"></ion-icon>
                 <input type="text" id="searchInput" placeholder="Search games and tools...">
@@ -67,6 +82,28 @@
                         <div class="card-content">
                             <h3>Markdown Editor</h3>
                             <p>Real-time markdown previewer.</p>
+                        </div>
+                    </a>
+                    <a href="tools/stopwatch/index.html" class="item-card" data-title="Stopwatch">
+                        <div class="card-icon gradient-6"><ion-icon name="stopwatch-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Stopwatch / Timer</h3>
+                            <p>A beautiful digital stopwatch with lap tracking.</p>
+                        </div>
+                    </a>
+                    <a href="tools/color-picker/index.html" class="item-card"
+                        data-title="Color Picker Palette Generator">
+                        <div class="card-icon gradient-9"><ion-icon name="color-palette-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Color Picker</h3>
+                            <p>Generate color palettes and pick HEX / RGB values.</p>
+                        </div>
+                    </a>
+                    <a href="tools/base64/index.html" class="item-card" data-title="Base64 Encoder Decoder">
+                        <div class="card-icon gradient-8"><ion-icon name="code-working-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Base64 Tool</h3>
+                            <p>Instantly encode plain text or decode Base64.</p>
                         </div>
                     </a>
                 </div>
@@ -114,14 +151,36 @@
                             <p>Find matching pairs of cards.</p>
                         </div>
                     </a>
+                    <a href="games/minesweeper/index.html" class="item-card" data-title="Minesweeper">
+                        <div class="card-icon gradient-8"><ion-icon name="grid-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Minesweeper</h3>
+                            <p>The classic puzzle game. Avoid the mines.</p>
+                        </div>
+                    </a>
+                    <a href="games/tetris/index.html" class="item-card" data-title="Tetris">
+                        <div class="card-icon gradient-2"><ion-icon name="albums-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Tetris</h3>
+                            <p>Match falling tetrominoes in this fast-paced classic.</p>
+                        </div>
+                    </a>
+                    <a href="games/wordle/index.html" class="item-card" data-title="Word Guess Wordle Clone">
+                        <div class="card-icon gradient-5"><ion-icon name="text-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Word Guess</h3>
+                            <p>A clone of the popular puzzle game. Guess the 5-letter word.</p>
+                        </div>
+                    </a>
                 </div>
             </section>
         </main>
-        
+
         <footer class="app-footer">
             <p>&copy; 2024 Spectrum Project. Open Source & Forever Free.</p>
         </footer>
     </div>
     <script src="scripts/main.js"></script>
 </body>
+
 </html>

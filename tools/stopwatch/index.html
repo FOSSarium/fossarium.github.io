@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch - Spectrum</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="tool-body">
+    <script>
+        const savedTheme = localStorage.getItem('spectrum-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+
+    <div class="app-container tool-container-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+
+        <div class="tool-header">
+            <div class="tool-title">
+                <div class="card-icon gradient-5"><ion-icon name="stopwatch-outline"></ion-icon></div>
+                <h1>Stopwatch</h1>
+            </div>
+        </div>
+
+        <div class="stopwatch-container">
+            <div class="time-display" id="display">
+                <span class="digits" id="hours">00</span>:<span class="digits" id="minutes">00</span>:<span
+                    class="digits" id="seconds">00</span><span class="milliseconds" id="milliseconds">.00</span>
+            </div>
+
+            <div class="controls">
+                <button id="btn-start" class="btn primary-btn"><ion-icon name="play-outline"></ion-icon> Start</button>
+                <button id="btn-pause" class="btn secondary-btn hidden"><ion-icon name="pause-outline"></ion-icon>
+                    Pause</button>
+                <button id="btn-lap" class="btn utility-btn" disabled><ion-icon name="flag-outline"></ion-icon>
+                    Lap</button>
+                <button id="btn-reset" class="btn danger-btn"><ion-icon name="refresh-outline"></ion-icon>
+                    Reset</button>
+            </div>
+
+            <div class="laps-container">
+                <div class="laps-header">
+                    <span>Lap</span>
+                    <span>Lap Time</span>
+                    <span>Total Time</span>
+                </div>
+                <ul id="laps-list" class="laps-list">
+                    <!-- Laps inserted here via JS -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

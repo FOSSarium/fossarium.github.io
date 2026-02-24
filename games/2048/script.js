@@ -159,3 +159,9 @@ restartBtn.addEventListener('click', initGame);
 retryBtn.addEventListener('click', initGame);
 
 initGame();
+
+window.addEventListener("keydown", function (e) {
+    if (["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, { passive: false });

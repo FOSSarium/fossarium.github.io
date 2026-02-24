@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Encoder/Decoder - Spectrum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="tool-body">
+    <script>
+        const savedTheme = localStorage.getItem('spectrum-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+
+    <div class="app-container tool-container-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+
+        <div class="tool-header">
+            <div class="tool-title">
+                <div class="card-icon gradient-8"><ion-icon name="code-working-outline"></ion-icon></div>
+                <h1>Base64 Tool</h1>
+            </div>
+            <p>Encode or Decode text data instantly.</p>
+        </div>
+
+        <div class="base64-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="encode">Encode</button>
+                <button class="tab-btn" data-tab="decode">Decode</button>
+            </div>
+
+            <div class="input-section">
+                <label for="input-text" id="input-label">Plain Text Input</label>
+                <textarea id="input-text" placeholder="Type or paste your text here..."></textarea>
+                <div class="action-row">
+                    <button class="btn secondary-btn" id="btn-clear"><ion-icon name="trash"></ion-icon> Clear</button>
+                    <button class="btn primary-btn" id="btn-process">Encode to Base64 <ion-icon
+                            name="arrow-down"></ion-icon></button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <label for="output-text" id="output-label">Base64 Output</label>
+                <div class="output-wrapper">
+                    <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
+                    <button class="copy-btn" id="btn-copy" title="Copy to clipboard"><ion-icon
+                            name="copy-outline"></ion-icon></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="toast" class="toast">Copied to clipboard!</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

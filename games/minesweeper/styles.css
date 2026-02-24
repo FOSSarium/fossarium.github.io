@@ -1,0 +1,277 @@
+.game-body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.game-container-wrapper {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+}
+
+.header-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+:root.light-theme .back-button:hover {
+    color: #000;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.game-title h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.score-container {
+    display: flex;
+    gap: 10px;
+}
+
+.score-box {
+    background: var(--card-bg);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+}
+
+.score-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+#timer,
+#mines-count {
+    font-size: 1.5rem;
+    font-family: monospace;
+    font-weight: 700;
+    color: #ff3333;
+    /* Classic red LCD color */
+    text-shadow: 0 0 5px rgba(255, 51, 51, 0.4);
+}
+
+.game-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.primary-btn {
+    background: var(--gradient-1);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(31, 162, 255, 0.4);
+}
+
+.secondary-btn {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.secondary-btn:hover {
+    background: var(--hover-bg);
+}
+
+.game-board-container {
+    position: relative;
+    background: var(--card-bg);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: auto;
+    /* handle large boards */
+}
+
+/* Base grid setup - will be overwritten dynamically by JS based on level */
+.minesweeper-board {
+    display: grid;
+    gap: 2px;
+    background: var(--card-border);
+    border: 2px solid var(--card-border);
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.ms-cell {
+    width: 25px;
+    height: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: inset 2px 2px 0 rgba(255, 255, 255, 0.2), inset -2px -2px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.1s;
+}
+
+:root.light-theme .ms-cell {
+    background: #e0e0e0;
+    box-shadow: inset 2px 2px 0 #fff, inset -2px -2px 0 #999;
+}
+
+.ms-cell:hover:not(.revealed) {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+:root.light-theme .ms-cell:hover:not(.revealed) {
+    background: #d0d0d0;
+}
+
+.ms-cell:active:not(.revealed):not(.flagged) {
+    box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.ms-cell.revealed {
+    background: var(--bg-color);
+    box-shadow: none;
+    border: 1px solid rgba(120, 120, 120, 0.2);
+    cursor: default;
+}
+
+.ms-cell.mine {
+    background: #ff5858;
+    box-shadow: none;
+}
+
+/* Number colors */
+.val-1 {
+    color: #58a6ff;
+}
+
+.val-2 {
+    color: #3fb950;
+}
+
+.val-3 {
+    color: #f85149;
+}
+
+.val-4 {
+    color: #a371f7;
+}
+
+.val-5 {
+    color: #e34c26;
+}
+
+.val-6 {
+    color: #00b09b;
+}
+
+.val-7 {
+    color: #d2a8ff;
+}
+
+.val-8 {
+    color: #8b949e;
+}
+
+/* Flag style */
+.ms-cell.flagged::after {
+    content: "🚩";
+    font-size: 14px;
+}
+
+/* Mine style */
+.ms-cell.mine::after {
+    content: "💣";
+    font-size: 14px;
+}
+
+.game-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 17, 23, 0.85);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 12px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+:root.light-theme .game-message {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.game-message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-message h2 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 0 0 20px 0;
+    color: var(--text-color);
+}
+
+.game-message.win h2 {
+    color: #3fb950;
+}
+
+.game-message.lose h2 {
+    color: #f85149;
+}
+
+.instructions {
+    text-align: center;
+    margin-top: 15px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}

@@ -5,7 +5,8 @@
 }
 
 .game-container-wrapper {
-    max-width: 840px;
+    max-width: min(1400px, 140vh);
+    /* Max height approx 70vh since ratio is 2:1 */
     width: 100%;
     padding: 20px;
 }

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker - Spectrum</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="tool-body">
+    <script>
+        const savedTheme = localStorage.getItem('spectrum-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+
+    <div class="app-container tool-container-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+
+        <div class="tool-header">
+            <div class="tool-title">
+                <div class="card-icon gradient-9"><ion-icon name="color-palette-outline"></ion-icon></div>
+                <h1>Color Picker</h1>
+            </div>
+            <p>Select colors and generate beautiful palettes.</p>
+        </div>
+
+        <div class="picker-container">
+            <div class="primary-color-section" id="preview-box">
+                <input type="color" id="native-color-picker" value="#58a6ff" class="native-picker">
+                <div class="color-info">
+                    <div class="color-value" id="hex-val">#58a6ff</div>
+                    <div class="color-value rgb" id="rgb-val">rgb(88, 166, 255)</div>
+                    <div class="color-value hsl" id="hsl-val">hsl(212, 100%, 67%)</div>
+                </div>
+                <button class="copy-btn" id="copy-primary" title="Copy HEX">
+                    <ion-icon name="copy-outline"></ion-icon>
+                </button>
+            </div>
+
+            <div class="controls-section">
+                <button id="generate-random" class="btn mix-btn"><ion-icon name="shuffle"></ion-icon> Random
+                    Color</button>
+                <div class="harmony-select">
+                    <label>Generate Palette:</label>
+                    <select id="harmony-type">
+                        <option value="analogous">Analogous</option>
+                        <option value="monochromatic">Monochromatic</option>
+                        <option value="triadic">Triadic</option>
+                        <option value="complementary">Complementary</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="palette-display" id="palette-display">
+                <!-- Palette swatches generated here -->
+            </div>
+        </div>
+
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">Copied to clipboard!</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

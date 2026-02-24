@@ -1,0 +1,274 @@
+.tool-body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.tool-container-wrapper {
+    max-width: 600px;
+    width: 100%;
+    padding: 20px;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+:root.light-theme .back-button:hover {
+    color: #000;
+}
+
+.tool-header {
+    margin-bottom: 30px;
+}
+
+.tool-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.tool-title h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.tool-header p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+}
+
+.picker-container {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.primary-color-section {
+    width: 100%;
+    height: 150px;
+    border-radius: 12px;
+    background-color: #58a6ff;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    transition: background-color 0.2s ease;
+    overflow: hidden;
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.native-picker {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.color-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    pointer-events: none;
+}
+
+.color-value {
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.color-value.rgb,
+.color-value.hsl {
+    font-size: 0.8rem;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: none;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: transform 0.2s, background 0.2s;
+    z-index: 2;
+}
+
+.copy-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+    transform: scale(1.1);
+}
+
+.controls-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.mix-btn {
+    background: var(--gradient-9);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 176, 155, 0.4);
+}
+
+.harmony-select {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+select {
+    background: rgba(13, 17, 23, 0.8);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+}
+
+:root.light-theme select {
+    background: #fff;
+}
+
+.palette-display {
+    display: flex;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    gap: 2px;
+}
+
+.swatch {
+    flex: 1;
+    position: relative;
+    cursor: pointer;
+    transition: flex 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.swatch:hover {
+    flex: 1.5;
+}
+
+.swatch-hex {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    text-align: center;
+    padding: 8px 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.swatch:hover .swatch-hex {
+    opacity: 1;
+}
+
+/* Toast */
+.toast {
+    position: fixed;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2ea043;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+}
+
+.toast.show {
+    bottom: 30px;
+    opacity: 1;
+}
+
+@media (max-width: 500px) {
+    .color-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .color-value.rgb,
+    .color-value.hsl {
+        display: none;
+    }
+
+    .controls-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
