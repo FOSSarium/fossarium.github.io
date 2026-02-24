@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Editor - Spectrum</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Marked.js for parsing markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="tool-body">
+    <div class="app-container tool-container-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+
+        <div class="tool-header">
+            <div class="tool-title">
+                <div class="card-icon gradient-4"><ion-icon name="document-text-outline"></ion-icon></div>
+                <h1>Markdown Editor</h1>
+            </div>
+            <p>Real-time markdown previewer.</p>
+        </div>
+
+        <div class="editor-layout">
+            <div class="editor-pane">
+                <div class="pane-header">
+                    <ion-icon name="code-working-outline"></ion-icon> Markdown Editor
+                </div>
+                <textarea id="editor" placeholder="Type your markdown here..."># Welcome to Markdown
+This is a real-time markdown editor!
+
+## Features
+- **Bold text** and *italic text*
+- [Links!](https://github.com)
+- Inline `code` and code blocks:
+
+```javascript
+function hello() {
+    console.log("Hello World!");
+}
+```
+
+> "Markdown is awesome!"
+
+### Lists
+1. First item
+2. Second item
+   - Sub item
+
+![Placeholder](https://via.placeholder.com/150 "Placeholder Image")
+</textarea>
+            </div>
+            <div class="preview-pane">
+                <div class="pane-header">
+                    <ion-icon name="eye-outline"></ion-icon> Live Preview
+                </div>
+                <div id="preview" class="markdown-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

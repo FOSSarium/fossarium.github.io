@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Generator - Spectrum</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="tool-body">
+    <div class="app-container tool-container-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+
+        <div class="tool-header">
+            <div class="tool-title">
+                <div class="card-icon gradient-3"><ion-icon name="key-outline"></ion-icon></div>
+                <h1>Password Generator</h1>
+            </div>
+            <p>Generate secure, random passwords instantly.</p>
+        </div>
+
+        <div class="generator-container">
+            <div class="password-display">
+                <span id="password">P4$5W0rD!</span>
+                <button id="copy-btn" class="icon-btn" title="Copy to clipboard">
+                    <ion-icon name="copy-outline"></ion-icon>
+                </button>
+            </div>
+
+            <div class="strength-meter">
+                <div class="strength-bar" id="strength-bar"></div>
+            </div>
+            <p class="strength-text" id="strength-text">Medium</p>
+
+            <div class="settings">
+                <div class="setting-group">
+                    <label for="length">Password Length</label>
+                    <span id="length-val">16</span>
+                </div>
+                <input type="range" id="length" min="8" max="64" value="16" class="slider">
+
+                <div class="checkbox-group">
+                    <label class="container">Uppercase Letters (A-Z)
+                        <input type="checkbox" id="uppercase" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Lowercase Letters (a-z)
+                        <input type="checkbox" id="lowercase" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Numbers (0-9)
+                        <input type="checkbox" id="numbers" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Symbols (!@#$%^&*)
+                        <input type="checkbox" id="symbols" checked>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+
+                <button id="generate-btn" class="primary-btn generate-btn">
+                    <ion-icon name="flash-outline"></ion-icon> Generate Password
+                </button>
+            </div>
+        </div>
+        <!-- Toast Notification -->
+        <div id="toast" class="toast">Copied to clipboard!</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

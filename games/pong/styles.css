@@ -1,0 +1,133 @@
+.game-body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.game-container-wrapper {
+    max-width: 840px;
+    width: 100%;
+    padding: 20px;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.game-title h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #fff;
+    text-shadow: 2px 2px 0 var(--accent-color);
+    background: none;
+    -webkit-background-clip: unset;
+}
+
+.score-container {
+    display: flex;
+    gap: 20px;
+}
+
+.score-box {
+    background: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 80px;
+}
+
+.score-label {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    margin-bottom: 5px;
+}
+
+#player-score,
+#ai-score {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.game-board-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border: 4px solid #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 2 / 1;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: none;
+}
+
+.game-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.game-message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-message p {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2rem;
+    color: white;
+    text-align: center;
+    line-height: 1.5;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.instructions {
+    text-align: center;
+    margin-top: 15px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 600px) {
+    .game-title h1 {
+        font-size: 1.8rem;
+    }
+}

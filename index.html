@@ -3,34 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectrum - FOSS Collection</title>
+    <title>Spectrum - Premium FOSS Collection</title>
+    <!-- Modern Font: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/main.css">
+    <!-- Ionicons for beautiful icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Welcome to Spectrum</h1>
-        <p>Your biggest FOSS collection of miscellaneous tools and games.</p>
-    </header>
-    <main>
-        <section id="tools">
-            <h2>Tools</h2>
-            <ul>
-                <li><a href="tools/unit-converter/index.html">Unit Converter</a></li>
-                <!-- More tools will be added here -->
-            </ul>
-        </section>
-        <section id="games">
-            <h2>Games</h2>
-            <ul>
-                <li><a href="games/tic-tac-toe/index.html">Tic-Tac-Toe</a></li>
-                <li><a href="games/snake/index.html">Snake</a></li>
-                <!-- More games will be added here -->
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 Spectrum Project</p>
-    </footer>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-container">
+                <ion-icon name="infinite-outline" class="logo-icon"></ion-icon>
+                <h1>Spectrum</h1>
+            </div>
+            <p class="subtitle">The ultimate, ever-growing FOSS library.</p>
+            
+            <div class="search-container">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="searchInput" placeholder="Search games and tools...">
+            </div>
+        </header>
+
+        <main class="app-main">
+            <!-- Tools Section -->
+            <section class="category-section" id="tools-section">
+                <div class="section-header">
+                    <h2><ion-icon name="hammer-outline"></ion-icon> Tools</h2>
+                </div>
+                <div class="item-grid" id="tools-grid">
+                    <!-- Cards will be populated here -->
+                    <a href="tools/unit-converter/index.html" class="item-card" data-title="Unit Converter">
+                        <div class="card-icon gradient-1"><ion-icon name="construct-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Unit Converter</h3>
+                            <p>Convert various units instantly.</p>
+                        </div>
+                    </a>
+                    <!-- New tools placeholders -->
+                    <a href="tools/calculator/index.html" class="item-card" data-title="Calculator">
+                        <div class="card-icon gradient-2"><ion-icon name="calculator-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Calculator</h3>
+                            <p>A sleek, modern standard calculator.</p>
+                        </div>
+                    </a>
+                    <a href="tools/password-generator/index.html" class="item-card" data-title="Password Generator">
+                        <div class="card-icon gradient-3"><ion-icon name="key-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Password Generator</h3>
+                            <p>Create secure, random passwords.</p>
+                        </div>
+                    </a>
+                    <a href="tools/markdown-editor/index.html" class="item-card" data-title="Markdown Editor">
+                        <div class="card-icon gradient-4"><ion-icon name="document-text-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Markdown Editor</h3>
+                            <p>Real-time markdown previewer.</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+
+            <!-- Games Section -->
+            <section class="category-section" id="games-section">
+                <div class="section-header">
+                    <h2><ion-icon name="game-controller-outline"></ion-icon> Games</h2>
+                </div>
+                <div class="item-grid" id="games-grid">
+                    <a href="games/tic-tac-toe/index.html" class="item-card" data-title="Tic-Tac-Toe">
+                        <div class="card-icon gradient-5"><ion-icon name="grid-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Tic-Tac-Toe</h3>
+                            <p>The classic paper-and-pencil game.</p>
+                        </div>
+                    </a>
+                    <a href="games/snake/index.html" class="item-card" data-title="Snake">
+                        <div class="card-icon gradient-6"><ion-icon name="analytics-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Snake</h3>
+                            <p>Eat apples to grow your snake.</p>
+                        </div>
+                    </a>
+                    <!-- New games placeholders -->
+                    <a href="games/2048/index.html" class="item-card" data-title="2048">
+                        <div class="card-icon gradient-7"><ion-icon name="apps-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>2048</h3>
+                            <p>Slide tiles to reach 2048.</p>
+                        </div>
+                    </a>
+                    <a href="games/pong/index.html" class="item-card" data-title="Pong">
+                        <div class="card-icon gradient-8"><ion-icon name="tennisball-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Pong</h3>
+                            <p>Retro table tennis arcade game.</p>
+                        </div>
+                    </a>
+                    <a href="games/memory/index.html" class="item-card" data-title="Memory Game">
+                        <div class="card-icon gradient-9"><ion-icon name="albums-outline"></ion-icon></div>
+                        <div class="card-content">
+                            <h3>Memory Game</h3>
+                            <p>Find matching pairs of cards.</p>
+                        </div>
+                    </a>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <p>&copy; 2024 Spectrum Project. Open Source & Forever Free.</p>
+        </footer>
+    </div>
     <script src="scripts/main.js"></script>
 </body>
 </html>

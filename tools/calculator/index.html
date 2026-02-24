@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator - Spectrum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body class="tool-body">
+    <div class="app-container tool-container-wrapper">
+        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+
+        <div class="tool-header">
+            <div class="tool-title">
+                <div class="card-icon gradient-2"><ion-icon name="calculator-outline"></ion-icon></div>
+                <h1>Calculator</h1>
+            </div>
+        </div>
+
+        <div class="calc-container">
+            <div class="calc-display">
+                <div id="history" class="calc-history"></div>
+                <div id="result" class="calc-result">0</div>
+            </div>
+            <div class="calc-keypad">
+                <button class="calc-btn utility" data-action="clear">AC</button>
+                <button class="calc-btn utility" data-action="delete">DEL</button>
+                <button class="calc-btn utility" data-action="percentage">%</button>
+                <button class="calc-btn operator" data-action="/">÷</button>
+
+                <button class="calc-btn number" data-number="7">7</button>
+                <button class="calc-btn number" data-number="8">8</button>
+                <button class="calc-btn number" data-number="9">9</button>
+                <button class="calc-btn operator" data-action="*">×</button>
+
+                <button class="calc-btn number" data-number="4">4</button>
+                <button class="calc-btn number" data-number="5">5</button>
+                <button class="calc-btn number" data-number="6">6</button>
+                <button class="calc-btn operator" data-action="-">−</button>
+
+                <button class="calc-btn number" data-number="1">1</button>
+                <button class="calc-btn number" data-number="2">2</button>
+                <button class="calc-btn number" data-number="3">3</button>
+                <button class="calc-btn operator" data-action="+">+</button>
+
+                <button class="calc-btn number zero" data-number="0">0</button>
+                <button class="calc-btn number" data-number=".">.</button>
+                <button class="calc-btn equals" data-action="=">=</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

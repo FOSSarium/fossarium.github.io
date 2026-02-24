@@ -1,0 +1,251 @@
+.game-body {
+    display: flex;
+    justify-content: center;
+    background-color: var(--bg-color);
+}
+
+.game-container-wrapper {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+}
+
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    margin-bottom: 20px;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.back-button:hover {
+    color: #fff;
+    text-decoration: none;
+}
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.game-title h1 {
+    font-size: 3rem;
+    margin: 0;
+    line-height: 1;
+}
+
+.game-title p {
+    color: var(--text-muted);
+    margin: 5px 0 0 0;
+}
+
+.score-container {
+    display: flex;
+    gap: 10px;
+}
+
+.score-box {
+    background: var(--card-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+}
+
+.score-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 700;
+}
+
+#score,
+#best-score {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.game-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.primary-btn {
+    background: var(--gradient-1);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(31, 162, 255, 0.4);
+}
+
+.game-board-container {
+    position: relative;
+    background: rgba(43, 48, 56, 0.8);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    touch-action: none;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+}
+
+.grid-cell {
+    background: rgba(22, 27, 34, 0.6);
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    transition: all 0.1s ease-in-out;
+}
+
+/* Tile Colors */
+.tile-2 {
+    background: #3c424b;
+    color: #fff;
+}
+
+.tile-4 {
+    background: #4a535e;
+    color: #fff;
+}
+
+.tile-8 {
+    background: #f2b179;
+    color: #fff;
+}
+
+.tile-16 {
+    background: #f59563;
+    color: #fff;
+}
+
+.tile-32 {
+    background: #f67c5f;
+    color: #fff;
+}
+
+.tile-64 {
+    background: #f65e3b;
+    color: #fff;
+}
+
+.tile-128 {
+    background: rgba(237, 207, 114, 0.8);
+    color: #fff;
+    font-size: 1.8rem;
+    box-shadow: 0 0 10px rgba(237, 207, 114, 0.4);
+}
+
+.tile-256 {
+    background: rgba(237, 204, 97, 0.9);
+    color: #fff;
+    font-size: 1.8rem;
+    box-shadow: 0 0 15px rgba(237, 204, 97, 0.5);
+}
+
+.tile-512 {
+    background: rgba(237, 200, 80, 0.9);
+    color: #fff;
+    font-size: 1.8rem;
+    box-shadow: 0 0 20px rgba(237, 200, 80, 0.6);
+}
+
+.tile-1024 {
+    background: rgba(237, 197, 63, 1);
+    color: #fff;
+    font-size: 1.5rem;
+    box-shadow: 0 0 25px rgba(237, 197, 63, 0.7);
+}
+
+.tile-2048 {
+    background: rgba(237, 194, 46, 1);
+    color: #fff;
+    font-size: 1.5rem;
+    box-shadow: 0 0 30px rgba(237, 194, 46, 0.8);
+}
+
+.game-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(13, 17, 23, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 8px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.game-message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.game-message p {
+    font-size: 3rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 20px 0;
+}
+
+#retry-btn {
+    background: var(--gradient-2);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 500px) {
+    .grid-cell {
+        font-size: 1.5rem;
+    }
+
+    .tile-128,
+    .tile-256,
+    .tile-512 {
+        font-size: 1.2rem;
+    }
+
+    .tile-1024,
+    .tile-2048 {
+        font-size: 1rem;
+    }
+}
