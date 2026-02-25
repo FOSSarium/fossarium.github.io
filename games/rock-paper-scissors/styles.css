@@ -1,0 +1,65 @@
+.game-container-wrapper {
+    max-width: 450px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-header {
+    margin-bottom: 15px;
+}
+
+.game-header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.p-score {
+    color: #2ed573;
+}
+
+.c-score {
+    color: #ff4757;
+}
+
+.choices {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.choice-btn {
+    font-size: 3rem;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 15px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: transform 0.15s, border-color 0.2s;
+}
+
+.choice-btn:hover {
+    transform: scale(1.15);
+    border-color: var(--accent-color);
+}
+
+.result {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    min-height: 30px;
+}
+
+.matchup {
+    font-size: 2.5rem;
+}

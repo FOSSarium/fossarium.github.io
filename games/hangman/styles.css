@@ -1,0 +1,97 @@
+.game-container-wrapper {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-header {
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.word-display {
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: 12px;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    min-height: 60px;
+}
+
+.lives {
+    font-weight: 700;
+    color: #ff4757;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.keyboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+}
+
+.key {
+    width: 36px;
+    height: 40px;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-family: 'Inter', sans-serif;
+}
+
+.key:hover:not(.used) {
+    border-color: var(--accent-color);
+    background: rgba(88, 166, 255, 0.1);
+}
+
+.key.used {
+    opacity: 0.3;
+    cursor: default;
+}
+
+.key.correct {
+    background: rgba(46, 213, 115, 0.2);
+    border-color: #2ed573;
+    color: #2ed573;
+}
+
+.key.wrong {
+    background: rgba(255, 71, 87, 0.2);
+    border-color: #ff4757;
+    color: #ff4757;
+}
+
+.msg {
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    min-height: 30px;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    background: var(--gradient-8);
+    color: #fff;
+}

@@ -1,0 +1,51 @@
+.game-container-wrapper {
+    max-width: 450px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-header {
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.box {
+    height: 300px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+    background: #ff4757;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.box.waiting {
+    background: #ffa502;
+}
+
+.box.go {
+    background: #2ed573;
+}
+
+.box.result {
+    background: var(--card-bg);
+    color: var(--text-color);
+    border: 1px solid var(--card-border);
+}
+
+.best {
+    font-weight: 700;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}

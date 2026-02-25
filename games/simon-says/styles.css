@@ -1,0 +1,81 @@
+.game-container-wrapper {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-header {
+    margin-bottom: 20px;
+}
+
+.game-header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.info {
+    font-weight: 700;
+    color: var(--accent-color);
+    margin-top: 5px;
+}
+
+.simon-board {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 280px;
+    margin: 0 auto 20px;
+}
+
+.simon-btn {
+    aspect-ratio: 1;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: filter 0.1s, transform 0.1s;
+    border: 3px solid transparent;
+}
+
+.simon-btn:nth-child(1) {
+    background: #2ed573;
+    border-color: #1ea95a;
+}
+
+.simon-btn:nth-child(2) {
+    background: #ff4757;
+    border-color: #d63044;
+}
+
+.simon-btn:nth-child(3) {
+    background: #ffa502;
+    border-color: #e09000;
+}
+
+.simon-btn:nth-child(4) {
+    background: #1e90ff;
+    border-color: #1570cc;
+}
+
+.simon-btn.lit {
+    filter: brightness(1.8);
+    transform: scale(1.08);
+}
+
+.msg {
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    min-height: 24px;
+}
+
+.action-btn {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    background: var(--gradient-5);
+    color: #fff;
+}

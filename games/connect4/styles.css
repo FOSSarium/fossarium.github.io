@@ -1,0 +1,100 @@
+.game-container-wrapper {
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-header {
+    margin-bottom: 15px;
+}
+
+.game-header h1 {
+    font-size: 2.2rem;
+    margin: 0;
+}
+
+.turn-indicator {
+    font-weight: 600;
+    margin-top: 5px;
+    color: var(--text-muted);
+}
+
+.turn-indicator .p1 {
+    color: #ff4757;
+}
+
+.turn-indicator .p2 {
+    color: #ffa502;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    background: rgba(31, 90, 180, 0.3);
+    border: 3px solid rgba(31, 90, 180, 0.5);
+    border-radius: 12px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+:root.light-theme .board {
+    background: rgba(31, 90, 180, 0.15);
+    border-color: rgba(31, 90, 180, 0.3);
+}
+
+.cell {
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.cell:hover {
+    transform: scale(1.05);
+}
+
+.cell.p1 {
+    background: #ff4757;
+    border-color: #ff6b7a;
+    box-shadow: 0 0 10px rgba(255, 71, 87, 0.4);
+}
+
+.cell.p2 {
+    background: #ffa502;
+    border-color: #ffbe33;
+    box-shadow: 0 0 10px rgba(255, 165, 2, 0.4);
+}
+
+.status-bar {
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.status-bar.success {
+    background: rgba(46, 213, 115, 0.15);
+    color: #2ed573;
+    border: 1px solid rgba(46, 213, 115, 0.3);
+}
+
+.status-bar.hidden {
+    display: none;
+}
+
+.action-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    background: var(--gradient-1);
+    color: #000;
+}

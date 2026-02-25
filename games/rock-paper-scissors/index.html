@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors - Spectrum</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="game-body">
+    <script>const s = localStorage.getItem('spectrum-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
+            Spectrum</a>
+        <div class="game-header">
+            <h1>Rock Paper Scissors</h1>
+        </div>
+        <div class="scoreboard"><span class="p-score">You: <span id="p-score">0</span></span><span class="c-score">CPU:
+                <span id="c-score">0</span></span></div>
+        <div class="choices"><button class="choice-btn" data-c="rock">🪨</button><button class="choice-btn"
+                data-c="paper">📄</button><button class="choice-btn" data-c="scissors">✂️</button></div>
+        <div class="result" id="result">Pick your move!</div>
+        <div class="matchup"><span id="player-pick">❓</span> vs <span id="cpu-pick">❓</span></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
