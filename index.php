@@ -92,7 +92,7 @@ function generateCategoryGrid($targetCategory)
         <header class="app-header">
             <div class="logo-container">
                 <ion-icon name="infinite-outline" class="logo-icon"></ion-icon>
-                <h1>Spectrum</h1>
+                <h1>FOSSarium</h1>
             </div>
             <p class="subtitle">The ultimate, ever-growing FOSS library.</p>
 

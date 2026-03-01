@@ -118,3 +118,102 @@ input[type="date"] {
     font-weight: bold;
     color: var(--text-color);
 }
+
+/* Theme Toggle Button */
+.theme-toggle-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+#theme-toggle {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#theme-toggle:hover {
+    transform: scale(1.1);
+    color: var(--accent-color);
+}
+
+/* Background animated blobs for dynamic feel */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(120px);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 25s infinite ease-in-out;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(88, 166, 255, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.blob-2 {
+    bottom: -20%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(163, 113, 247, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+    animation-delay: -5s;
+}
+
+.blob-3 {
+    top: 40%;
+    left: 60%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(55, 239, 125, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    animation-delay: -10s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.05);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+}
+
+:root.light-theme .blob-1 {
+    background: radial-gradient(circle, rgba(0, 86, 179, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+:root.light-theme .blob-2 {
+    background: radial-gradient(circle, rgba(163, 113, 247, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+:root.light-theme .blob-3 {
+    background: radial-gradient(circle, rgba(55, 239, 125, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+}
