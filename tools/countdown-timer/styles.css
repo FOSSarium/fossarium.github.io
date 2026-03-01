@@ -1,4 +1,4 @@
-/* ===== Spectrum Shared Base Styles ===== */
+/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -82,6 +82,6 @@ h1 {
 .hidden {
     display: none !important;
 }
-/* ===== End Spectrum Shared Base Styles ===== */
+/* ===== End FOSSarium Shared Base Styles ===== */
 
 .tool-container-wrapper{max-width:400px;width:100%;padding:20px;text-align:center}.tool-header{margin-bottom:20px}.tool-header h1{font-size:2.2rem;margin:0}.tool-subtitle{color:var(--text-muted);margin:5px 0 0 0}.timer-display{font-size:4.5rem;font-weight:900;font-family:"JetBrains Mono",monospace;color:var(--accent-color);margin:20px 0}.inputs{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:25px}.inputs input{width:60px;padding:12px;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-color);font-size:1.3rem;text-align:center;outline:0;font-family:"JetBrains Mono",monospace}.inputs span{font-size:1.5rem;font-weight:700;color:var(--text-muted)}.btns{display:flex;gap:10px;justify-content:center}.action-btn{padding:12px 25px;border:none;border-radius:10px;font-weight:700;font-family:"Inter",sans-serif;font-size:1rem;cursor:pointer}.action-btn.primary{background:var(--gradient-8);color:#fff}.action-btn.secondary{background:var(--card-bg);color:var(--text-color);border:1px solid var(--card-border)}

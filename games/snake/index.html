@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snake - Spectrum</title>
+    <title>Snake - FOSSarium</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="game-body">
     <script>
-        const savedTheme = localStorage.getItem('spectrum-theme');
+        const savedTheme = localStorage.getItem('fossarium-theme');
         if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
             document.documentElement.classList.add('light-theme');
         }
     </script>
     <div class="app-container game-container-wrapper">
-        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
 
         <div class="game-header">
             <div class="game-title">
@@ -49,8 +49,8 @@
 
         <div
             style="text-align: center; margin-top: 30px; font-family: 'Inter', sans-serif; color: var(--text-muted); font-size: 0.9rem;">
-            Credit - The Spectrum Project
-            <p style="font-size: 0.8rem; margin-top: 5px;">FOSS and built by Spectrum with love in 2026</p>
+            Credit - The FOSSarium Project
+            <p style="font-size: 0.8rem; margin-top: 5px;">FOSS and built by FOSSarium with love in 2026</p>
         </div>
     </div>
     <script src="script.js"></script>

@@ -35,7 +35,7 @@ function initTheme() {
     const icon = themeToggleBtn.querySelector('ion-icon');
 
     // Check local storage or system preference
-    const savedTheme = localStorage.getItem('spectrum-theme');
+    const savedTheme = localStorage.getItem('fossarium-theme');
     if (savedTheme === 'light') {
         document.documentElement.classList.add('light-theme');
         if (icon) icon.setAttribute('name', 'moon-outline');
@@ -51,10 +51,10 @@ function initTheme() {
         const isLight = document.documentElement.classList.contains('light-theme');
 
         if (isLight) {
-            localStorage.setItem('spectrum-theme', 'light');
+            localStorage.setItem('fossarium-theme', 'light');
             if (icon) icon.setAttribute('name', 'moon-outline');
         } else {
-            localStorage.setItem('spectrum-theme', 'dark');
+            localStorage.setItem('fossarium-theme', 'dark');
             if (icon) icon.setAttribute('name', 'sunny-outline');
         }
     });

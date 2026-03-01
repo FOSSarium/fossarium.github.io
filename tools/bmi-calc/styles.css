@@ -1,4 +1,4 @@
-/* ===== Spectrum Shared Base Styles ===== */
+/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -82,7 +82,7 @@ h1 {
 .hidden {
     display: none !important;
 }
-/* ===== End Spectrum Shared Base Styles ===== */
+/* ===== End FOSSarium Shared Base Styles ===== */
 
 .tool-container-wrapper {
     max-width: 420px;

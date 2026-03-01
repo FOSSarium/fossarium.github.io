@@ -1,4 +1,4 @@
-/* ===== Spectrum Shared Base Styles ===== */
+/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -82,6 +82,6 @@ h1 {
 .hidden {
     display: none !important;
 }
-/* ===== End Spectrum Shared Base Styles ===== */
+/* ===== End FOSSarium Shared Base Styles ===== */
 
 .tool-container-wrapper{max-width:500px;width:100%;padding:20px}.tool-header{margin-bottom:20px}.tool-header h1{font-size:2.2rem;margin:0}.tool-subtitle{color:var(--text-muted);margin:5px 0 0 0}label{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin:12px 0 6px}input,select,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-color);font-size:1rem;outline:0;box-sizing:border-box;font-family:"Inter",sans-serif}.action-btn{padding:12px 25px;border:none;border-radius:10px;font-weight:700;font-family:"Inter",sans-serif;font-size:1rem;cursor:pointer;margin-top:15px}.action-btn.primary{background:var(--gradient-5);color:#fff}.result-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:15px;margin-top:15px;font-family:"JetBrains Mono",monospace;min-height:30px}.preview-box{width:200px;height:200px;background:var(--gradient-5);margin:0 auto 20px;transition:border-radius .2s}.sliders{margin-bottom:15px}input[type=range]{width:100%;accent-color:var(--accent-color)}

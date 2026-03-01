@@ -1,4 +1,4 @@
-/* ===== Spectrum Shared Base Styles ===== */
+/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -82,6 +82,6 @@ h1 {
 .hidden {
     display: none !important;
 }
-/* ===== End Spectrum Shared Base Styles ===== */
+/* ===== End FOSSarium Shared Base Styles ===== */
 
 .tool-container-wrapper{max-width:600px;width:100%;padding:20px}.tool-header{margin-bottom:15px}.tool-header h1{font-size:2.2rem;margin:0}.tool-subtitle{color:var(--text-muted);margin:5px 0 0 0}textarea{width:100%;padding:15px;border-radius:10px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-color);font-size:1rem;outline:0;box-sizing:border-box;resize:vertical;margin-bottom:15px;font-family:"Inter",sans-serif}.btns{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}.case-btn{padding:8px 16px;border:1px solid var(--card-border);border-radius:8px;background:var(--card-bg);color:var(--text-color);font-weight:600;font-family:"Inter",sans-serif;cursor:pointer;font-size:.85rem;transition:border-color .2s}.case-btn:hover,.case-btn.active{border-color:var(--accent-color);color:var(--accent-color)}.result{background:rgba(22,27,34,.4);border:1px solid var(--card-border);border-radius:10px;padding:15px;font-size:1rem;min-height:40px;word-break:break-word}

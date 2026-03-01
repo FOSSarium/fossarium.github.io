@@ -1,4 +1,4 @@
-/* ===== Spectrum Shared Base Styles ===== */
+/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -82,6 +82,6 @@ h1 {
 .hidden {
     display: none !important;
 }
-/* ===== End Spectrum Shared Base Styles ===== */
+/* ===== End FOSSarium Shared Base Styles ===== */
 
 .game-wrapper{max-width:500px;width:100%;padding:20px;text-align:center}.game-title{font-size:2.2rem;margin:0 0 5px}.game-subtitle{color:var(--text-muted);margin:0 0 15px}.score-bar{display:flex;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:10px 15px;margin-bottom:15px;font-weight:700}.action-btn{padding:12px 25px;border:none;border-radius:10px;font-weight:700;font-family:"Inter",sans-serif;font-size:1rem;cursor:pointer;margin:5px}.action-btn.primary{background:var(--gradient-5);color:#fff}.cookie-count{font-size:2.5rem;font-weight:900;color:var(--accent-color);margin-bottom:5px}.cps{color:var(--text-muted);margin-bottom:20px;font-weight:600}.cookie{font-size:8rem;cursor:pointer;user-select:none;transition:transform .1s;display:inline-block}.cookie:active{transform:scale(0.9)}.cookie:hover{transform:scale(1.05)}.shop{text-align:left;margin-top:20px}.shop-item{display:flex;justify-content:space-between;align-items:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:10px 15px;margin-bottom:6px;cursor:pointer;transition:border-color .2s}.shop-item:hover{border-color:var(--accent-color)}.shop-item.disabled{opacity:.4;pointer-events:none}.item-info{text-align:left}.item-name{font-weight:700;font-size:.9rem}.item-desc{font-size:.7rem;color:var(--text-muted)}.item-cost{font-weight:800;color:var(--accent-color);font-family:"JetBrains Mono",monospace}

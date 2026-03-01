@@ -122,10 +122,11 @@ body {
     margin-bottom: 15px;
 }
 
-.logo-icon {
-    font-size: 3.5rem;
-    color: var(--accent-color);
-    filter: drop-shadow(0 0 15px rgba(88, 166, 255, 0.4));
+.logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(88, 166, 255, 0.4));
 }
 
 h1 {
@@ -421,8 +422,9 @@ h1 {
         grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
     }
 
-    .logo-icon {
-        font-size: 2.5rem;
+    .logo-img {
+        width: 45px;
+        height: 45px;
     }
 
     .subtitle {

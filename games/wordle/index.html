@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wordle Clone - Spectrum</title>
+    <title>Wordle Clone - FOSSarium</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -13,14 +13,14 @@
 
 <body class="game-body">
     <script>
-        const savedTheme = localStorage.getItem('spectrum-theme');
+        const savedTheme = localStorage.getItem('fossarium-theme');
         if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
             document.documentElement.classList.add('light-theme');
         }
     </script>
     <div class="app-container game-container-wrapper">
         <header class="game-header">
-            <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+            <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
             <h1>Wordle</h1>
             <div class="header-btns">
                 <button id="restart-btn" class="icon-btn" title="New Game"><ion-icon name="refresh"></ion-icon></button>
@@ -59,7 +59,7 @@
         <div id="toast" class="toast">Not in word list</div>
         <div
             style="text-align: center; margin-top: 30px; font-family: 'Inter', sans-serif; color: var(--text-muted); font-size: 0.9rem;">
-            Credit - The Spectrum Project
+            Credit - The FOSSarium Project
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 <?php
 /**
- * Dynamic Tool/Game Card Generator for Spectrum
+ * Dynamic Tool/Game Card Generator for FOSSarium
  */
 
 // Global cache for metadata
@@ -59,19 +59,19 @@ function generateCategoryGrid($targetCategory)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectrum - Premium FOSS Collection</title>
+    <title>FOSSarium - Premium FOSS Collection</title>
     <!-- Modern Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
     <!-- Ionicons for beautiful icons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-</head>
+    </head>
 
-<body>
+    <body>
     <script>
         // Prevent FOUC (Flash of Unstyled Content) by setting theme immediately
-        const savedTheme = localStorage.getItem('spectrum-theme');
+        const savedTheme = localStorage.getItem('fossarium-theme');
         if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
             document.documentElement.classList.add('light-theme');
         }
@@ -91,7 +91,7 @@ function generateCategoryGrid($targetCategory)
     <div class="app-container">
         <header class="app-header">
             <div class="logo-container">
-                <ion-icon name="infinite-outline" class="logo-icon"></ion-icon>
+                <img src="icon.png" alt="FOSSarium Logo" class="logo-img">
                 <h1>FOSSarium</h1>
             </div>
             <p class="subtitle">The ultimate, ever-growing FOSS library.</p>

@@ -1,6 +1,6 @@
 const input = document.getElementById('task-input'), list = document.getElementById('task-list');
-let tasks = JSON.parse(localStorage.getItem('spectrum-todos') || '[]');
-function save() { localStorage.setItem('spectrum-todos', JSON.stringify(tasks)); }
+let tasks = JSON.parse(localStorage.getItem('fossarium-todos') || '[]');
+function save() { localStorage.setItem('fossarium-todos', JSON.stringify(tasks)); }
 function render() {
     list.innerHTML = '';
     tasks.forEach((t, i) => {

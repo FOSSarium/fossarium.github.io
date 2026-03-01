@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UUID Generator - Spectrum</title>
+    <title>UUID Generator - FOSSarium</title>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
@@ -14,13 +14,13 @@
 
 <body class="game-body">
     <script>
-        const savedTheme = localStorage.getItem('spectrum-theme');
+        const savedTheme = localStorage.getItem('fossarium-theme');
         if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
             document.documentElement.classList.add('light-theme');
         }
     </script>
     <div class="app-container tool-container-wrapper">
-        <a href="../../index.html" class="back-button">&larr; Back to Spectrum</a>
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="tool-header">
             <h1>UUID Generator</h1>
             <p class="tool-subtitle">Generate random v4 UUIDs in bulk.</p>
