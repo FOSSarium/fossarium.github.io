@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Timer</h1>
+            <p class="tool-subtitle">A simple, focused countdown for your productivity and tasks.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="timer-display" id="display">00:00:00</div>
+
+            <div class="timer-inputs">
+                <div class="field">
+                    <label>Hours</label>
+                    <input type="number" id="hrs" min="0" max="99" placeholder="00">
+                </div>
+                <span>:</span>
+                <div class="field">
+                    <label>Minutes</label>
+                    <input type="number" id="mins" min="0" max="59" placeholder="00">
+                </div>
+                <span>:</span>
+                <div class="field">
+                    <label>Seconds</label>
+                    <input type="number" id="secs" min="0" max="59" placeholder="00">
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn primary-btn" id="start-btn">
+                    <ion-icon name="play-outline"></ion-icon> Start
+                </button>
+                <button class="btn secondary-btn" id="reset-btn">
+                    <ion-icon name="refresh-outline"></ion-icon> Reset
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
