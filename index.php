@@ -64,7 +64,7 @@ function generateCategoryGrid($targetCategory)
     <!-- Modern Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
-    <link rel="icon" href="./icon.png">
+    <link rel="icon" href="./icon.svg">
     <!-- Ionicons for beautiful icons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -93,7 +93,7 @@ function generateCategoryGrid($targetCategory)
     <div class="app-container">
         <header class="app-header">
             <div class="logo-container">
-                <img src="icon.png" alt="FOSSarium Logo" class="logo-img">
+                <img src="icon.svg" alt="FOSSarium Logo" class="logo-img">
                 <h1>FOSSarium</h1>
             </div>
             <p class="subtitle">The ultimate, ever-growing FOSS library.</p>
