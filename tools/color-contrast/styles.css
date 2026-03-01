@@ -169,7 +169,7 @@ input[type="text"] {
 }
 
 .result-card {
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 12px;
     padding: 15px;

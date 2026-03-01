@@ -130,7 +130,7 @@ body {
     color: var(--text-muted);
     font-family: 'JetBrains Mono', monospace;
     padding: 15px;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--card-bg);
     border-radius: 10px;
     border: 1px solid var(--card-border);
 }

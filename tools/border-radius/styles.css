@@ -75,7 +75,7 @@ body {
     justify-content: center;
     margin-bottom: 40px;
     padding: 40px;
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--card-bg);
     border-radius: 16px;
     border: 1px solid var(--card-border);
 }
