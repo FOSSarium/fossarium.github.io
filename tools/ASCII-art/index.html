@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Generator - FOSSarium</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Ionicons for beautiful icons -->
@@ -14,8 +14,13 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -26,10 +31,18 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>ASCII Art</h1>
-            <p class="tool-subtitle">Convert text into ASCII art banners.</p>
+            <p class="tool-subtitle">Convert text into professional ASCII art banners instantly.</p>
         </div>
-        <div class="input-row"><input type="text" id="text-input" placeholder="Type text..." value="SPECTRUM"><button
-                id="copy-btn" class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy</button></div>
+
+        <div class="input-container">
+            <div class="input-row">
+                <input type="text" id="text-input" placeholder="Type text here..." value="SPECTRUM">
+                <button id="copy-btn" class="action-btn secondary">
+                    <ion-icon name="copy-outline"></ion-icon> Copy Art
+                </button>
+            </div>
+        </div>
+
         <pre class="art-output" id="output"></pre>
     </div>
     <script src="script.js"></script>

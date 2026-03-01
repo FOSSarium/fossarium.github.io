@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -7,15 +6,6 @@
     --card-border: rgba(255, 255, 255, 0.05);
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
-    --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
 :root.light-theme {
@@ -34,117 +24,87 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
-}
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
-
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
-    margin: 0;
-    color: transparent;
-    background: linear-gradient(to right, var(--text-color), var(--accent-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    letter-spacing: -1.5px;
-}
-
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
 
 .tool-container-wrapper {
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
     padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .tool-header {
-    margin-bottom: 25px;
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 .tool-header h1 {
-    font-size: 2.2rem;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     margin: 0;
+    font-weight: 900;
 }
 
 .tool-subtitle {
     color: var(--text-muted);
-    margin: 5px 0 0 0;
+    margin: 10px 0 0 0;
+    font-size: 1.1rem;
 }
 
-.converter-grid {
+.converter-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 25px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .field label {
-    display: block;
     font-size: 0.8rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-bottom: 8px;
+    letter-spacing: 0.5px;
 }
 
 .field input {
     width: 100%;
-    padding: 12px;
-    border-radius: 8px;
+    padding: 16px;
+    border-radius: 12px;
     border: 1px solid var(--card-border);
-    background: var(--card-bg);
+    background: rgba(0, 0, 0, 0.2);
     color: var(--text-color);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
+    font-size: 1.2rem;
     outline: none;
+    transition: all 0.3s ease;
     box-sizing: border-box;
 }
 
 .field input:focus {
     border-color: var(--accent-color);
+    background: rgba(88, 166, 255, 0.05);
+    transform: translateY(-2px);
 }
 
-@media (max-width: 500px) {
-    .converter-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Theme Toggle Button */
 .theme-toggle-container {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     z-index: 100;
@@ -163,10 +123,56 @@ h1 {
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 #theme-toggle:hover {
     transform: scale(1.1);
     color: var(--accent-color);
+}
+
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(120px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 20s infinite ease-in-out;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(55, 239, 125, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(88, 166, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(20px, -20px); }
+}
+
+@media (max-width: 600px) {
+    .converter-card {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
 }

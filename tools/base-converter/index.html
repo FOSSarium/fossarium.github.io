@@ -6,17 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base Converter - FOSSarium</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
     <!-- Ionicons for beautiful icons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -27,13 +31,26 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Base Converter</h1>
-            <p class="tool-subtitle">Convert between Binary, Octal, Decimal, and Hex.</p>
+            <p class="tool-subtitle">Convert numbers between Binary, Octal, Decimal, and Hexadecimal instantly.</p>
         </div>
-        <div class="converter-grid">
-            <div class="field"><label>Decimal</label><input type="text" id="dec" placeholder="0"></div>
-            <div class="field"><label>Binary</label><input type="text" id="bin" placeholder="0"></div>
-            <div class="field"><label>Octal</label><input type="text" id="oct" placeholder="0"></div>
-            <div class="field"><label>Hexadecimal</label><input type="text" id="hex" placeholder="0"></div>
+        
+        <div class="converter-card">
+            <div class="field">
+                <label for="dec">Decimal (Base 10)</label>
+                <input type="text" id="dec" placeholder="e.g. 42">
+            </div>
+            <div class="field">
+                <label for="bin">Binary (Base 2)</label>
+                <input type="text" id="bin" placeholder="e.g. 101010">
+            </div>
+            <div class="field">
+                <label for="oct">Octal (Base 8)</label>
+                <input type="text" id="oct" placeholder="e.g. 52">
+            </div>
+            <div class="field">
+                <label for="hex">Hexadecimal (Base 16)</label>
+                <input type="text" id="hex" placeholder="e.g. 2A">
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

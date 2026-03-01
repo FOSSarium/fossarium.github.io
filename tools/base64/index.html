@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Base64 Encoder/Decoder - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Inter:wght@400;500;600&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Inter:wght@400;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Ionicons -->
@@ -13,7 +13,13 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body class="tool-body">
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -21,46 +27,35 @@
         </button>
     </div>
 
-    <script>
-        const savedTheme = localStorage.getItem('fossarium-theme');
-        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            document.documentElement.classList.add('light-theme');
-        }
-    </script>
-
     <div class="app-container tool-container-wrapper">
-        
-
         <div class="tool-header">
-            <div class="tool-title">
-                <div class="card-icon gradient-8"><ion-icon name="code-working-outline"></ion-icon></div>
-                <h1>Base64 Tool</h1>
-            </div>
-            <p>Encode or Decode text data instantly.</p>
+            <h1>Base64 Tool</h1>
+            <p class="tool-subtitle">Encode or decode data to Base64 format securely and instantly.</p>
         </div>
 
-        <div class="base64-container">
+        <div class="base64-card">
             <div class="tabs">
                 <button class="tab-btn active" data-tab="encode">Encode</button>
                 <button class="tab-btn" data-tab="decode">Decode</button>
             </div>
 
-            <div class="input-section">
-                <label for="input-text" id="input-label">Plain Text Input</label>
-                <textarea id="input-text" placeholder="Type or paste your text here..."></textarea>
-                <div class="action-row">
-                    <button class="btn secondary-btn" id="btn-clear"><ion-icon name="trash"></ion-icon> Clear</button>
-                    <button class="btn primary-btn" id="btn-process">Encode to Base64 <ion-icon
-                            name="arrow-down"></ion-icon></button>
+            <div class="input-output-grid">
+                <div class="pane">
+                    <label for="input-text" id="input-label">Plain Text Input</label>
+                    <textarea id="input-text" placeholder="Paste your text here..."></textarea>
+                    <div class="action-row">
+                        <button class="btn secondary-btn" id="btn-clear"><ion-icon name="trash-outline"></ion-icon> Clear</button>
+                        <button class="btn primary-btn" id="btn-process">Encode <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                    </div>
                 </div>
-            </div>
 
-            <div class="output-section">
-                <label for="output-text" id="output-label">Base64 Output</label>
-                <div class="output-wrapper">
+                <div class="pane">
+                    <label for="output-text" id="output-label">Base64 Output</label>
                     <textarea id="output-text" readonly placeholder="Result will appear here..."></textarea>
-                    <button class="copy-btn" id="btn-copy" title="Copy to clipboard"><ion-icon
-                            name="copy-outline"></ion-icon></button>
+                    <div class="action-row">
+                        <div style="flex: 1;"></div>
+                        <button class="btn secondary-btn" id="btn-copy"><ion-icon name="copy-outline"></ion-icon> Copy Result</button>
+                    </div>
                 </div>
             </div>
         </div>
