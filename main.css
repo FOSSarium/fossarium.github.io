@@ -237,6 +237,29 @@ h1 {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
+.card-credit {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 3px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    z-index: 2;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.item-card:hover .card-credit {
+    color: var(--accent-color);
+    background: rgba(88, 166, 255, 0.1);
+    border-color: rgba(88, 166, 255, 0.2);
+}
+
 .item-card::before {
     content: '';
     position: absolute;

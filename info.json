@@ -1,0 +1,44 @@
+{
+    "age-calc": {
+        "title": "Age Calculator",
+        "description": "Calculate your exact age in years, months, and days with precision.",
+        "icon-name": "calendar-outline",
+        "credit": "FOSSarium"
+    },
+    "snake": {
+        "title": "Retro Snake",
+        "description": "Classic arcade snake game with modern visuals.",
+        "icon-name": "analytics-outline",
+        "credit": "Retro Dev"
+    },
+    "ASCII-art": {
+        "title": "ASCII Art Generator",
+        "description": "Convert text into stylized ASCII art patterns.",
+        "icon-name": "text-outline",
+        "credit": "XYZ"
+    },
+    "2048": {
+        "title": "2048",
+        "description": "Join the numbers and get to the 2048 tile!",
+        "icon-name": "grid-outline",
+        "credit": "Gabriele Cirulli"
+    },
+    "binary-translator": {
+        "title": "Binary Translator",
+        "description": "Translate text to binary and vice versa.",
+        "icon-name": "code-working-outline",
+        "credit": "XYZ"
+    },
+    "minesweeper": {
+        "title": "Minesweeper",
+        "description": "Classic logic puzzle game.",
+        "icon-name": "radio-outline",
+        "credit": "XYZ"
+    },
+    "tic-tac-toe": {
+        "title": "Tic Tac Toe",
+        "description": "Classic X and O game.",
+        "icon-name": "grid-outline",
+        "credit": "XYZ"
+    }
+}

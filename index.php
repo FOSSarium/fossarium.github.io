@@ -2,6 +2,22 @@
 /**
  * Dynamic Tool/Game Card Generator for Spectrum
  */
+
+// Global cache for metadata
+$GLOBALS['project_metadata'] = null;
+
+function getProjectMetadata() {
+    if ($GLOBALS['project_metadata'] === null) {
+        $infoPath = __DIR__ . '/info.json';
+        if (file_exists($infoPath)) {
+            $GLOBALS['project_metadata'] = json_decode(file_get_contents($infoPath), true);
+        } else {
+            $GLOBALS['project_metadata'] = [];
+        }
+    }
+    return $GLOBALS['project_metadata'];
+}
+
 function generateCategoryGrid($directory)
 {
     if (!is_dir($directory))
@@ -10,6 +26,7 @@ function generateCategoryGrid($directory)
     $items = array_diff(scandir($directory), array('..', '.'));
     $html = "";
     $index = 1;
+    $metadata = getProjectMetadata();
 
     // Icon mapping based on common keywords in folder names
     $iconMap = [
@@ -94,22 +111,36 @@ function generateCategoryGrid($directory)
         if (is_dir($path) && file_exists($path . '/index.html')) {
             $title = ucwords(str_replace('-', ' ', $item));
             $description = "Modern FOSS tool.";
-            $fileContent = file_get_contents($path . '/index.html');
-            if (preg_match('/<p class="tool-subtitle">(.*?)<\/p>/s', $fileContent, $matches)) {
-                $description = trim(strip_tags($matches[1]));
-            } elseif (preg_match('/<p>(.*?)<\/p>/s', $fileContent, $matches)) {
-                $description = trim(strip_tags($matches[1]));
-            }
-
             $icon = 'cube-outline';
-            foreach ($iconMap as $key => $val) {
-                if (strpos($item, $key) !== false) {
-                    $icon = $val;
-                    break;
+            $credit = "";
+
+            if (isset($metadata[$item])) {
+                $info = $metadata[$item];
+                if (isset($info['title'])) $title = $info['title'];
+                if (isset($info['description'])) $description = $info['description'];
+                if (isset($info['icon-name'])) $icon = $info['icon-name'];
+                if (isset($info['credit'])) $credit = $info['credit'];
+            } else {
+                $fileContent = file_get_contents($path . '/index.html');
+                if (preg_match('/<p class="tool-subtitle">(.*?)<\/p>/s', $fileContent, $matches)) {
+                    $description = trim(strip_tags($matches[1]));
+                } elseif (preg_match('/<p>(.*?)<\/p>/s', $fileContent, $matches)) {
+                    $description = trim(strip_tags($matches[1]));
+                }
+
+                foreach ($iconMap as $key => $val) {
+                    if (strpos($item, $key) !== false) {
+                        $icon = $val;
+                        break;
+                    }
                 }
             }
+
             $gradientClass = "gradient-" . (($index % 9) + 1);
+            $creditHtml = $credit ? '<div class="card-credit">Credit: ' . htmlspecialchars($credit) . '</div>' : '';
+            
             $html .= '                    <a href="' . $directory . '/' . $item . '/index.html" class="item-card" data-title="' . htmlspecialchars($title) . '">
+                        ' . $creditHtml . '
                         <div class="card-icon ' . $gradientClass . '"><ion-icon name="' . $icon . '"></ion-icon></div>
                         <div class="card-content">
                             <h3>' . htmlspecialchars($title) . '</h3>
