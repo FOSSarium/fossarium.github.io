@@ -6,7 +6,8 @@
 // Global cache for metadata
 $GLOBALS['project_metadata'] = null;
 
-function getProjectMetadata() {
+function getProjectMetadata()
+{
     if ($GLOBALS['project_metadata'] === null) {
         $infoPath = __DIR__ . '/info.json';
         if (file_exists($infoPath)) {
@@ -26,19 +27,19 @@ function generateCategoryGrid($targetCategory)
 
     foreach ($metadata as $folderName => $info) {
         $category = isset($info['category']) ? $info['category'] : '';
-        
+
         if ($category === $targetCategory) {
             $title = isset($info['title']) ? $info['title'] : ucwords(str_replace('-', ' ', $folderName));
             $description = isset($info['description']) ? $info['description'] : "Modern FOSS tool.";
             $icon = isset($info['icon-name']) ? $info['icon-name'] : 'cube-outline';
             $credit = isset($info['credit']) ? $info['credit'] : "";
-            
+
             // Path depends on the category directory
             $path = $targetCategory . '/' . $folderName . '/index.html';
-            
+
             $gradientClass = "gradient-" . (($index % 9) + 1);
             $creditHtml = $credit ? '<div class="card-credit">Credit: ' . htmlspecialchars($credit) . '</div>' : '';
-            
+
             $html .= '                    <a href="' . $path . '" class="item-card" data-title="' . htmlspecialchars($title) . '">
                         ' . $creditHtml . '
                         <div class="card-icon ' . $gradientClass . '"><ion-icon name="' . $icon . '"></ion-icon></div>
@@ -63,12 +64,13 @@ function generateCategoryGrid($targetCategory)
     <!-- Modern Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./icon.png">
     <!-- Ionicons for beautiful icons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    </head>
+</head>
 
-    <body>
+<body>
     <script>
         // Prevent FOUC (Flash of Unstyled Content) by setting theme immediately
         const savedTheme = localStorage.getItem('fossarium-theme');
