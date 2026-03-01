@@ -1,1 +1,36 @@
 let cards=JSON.parse(localStorage.getItem("fossarium-flashcards")||"[]"),idx=0,showFront=true;function save(){localStorage.setItem("fossarium-flashcards",JSON.stringify(cards));renderList();}function addCard(){const f=document.getElementById("front").value,b=document.getElementById("back").value;if(!f||!b)return;cards.push({front:f,back:b});document.getElementById("front").value="";document.getElementById("back").value="";save();}function renderList(){document.getElementById("card-list").innerHTML=cards.map((c,i)=>`<div class="card-item"><span>${c.front} → ${c.back}</span><span class="del" onclick="cards.splice(${i},1);save();">✕</span></div>`).join("");}function showCard(){if(!cards.length)return;showFront=true;document.getElementById("card-face").textContent=cards[idx].front;document.getElementById("counter").textContent=(idx+1)+"/"+cards.length;}function startStudy(){if(!cards.length)return;idx=0;document.getElementById("edit-view").style.display="none";document.getElementById("study-view").style.display="";showCard();}document.getElementById("card").addEventListener("click",()=>{showFront=!showFront;document.getElementById("card-face").textContent=showFront?cards[idx].front:cards[idx].back;});function prev(){idx=Math.max(0,idx-1);showCard();}function next(){idx=Math.min(cards.length-1,idx+1);showCard();}renderList();
+
+
+function initTheme() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (!themeToggleBtn) return;
+
+    const icon = themeToggleBtn.querySelector('ion-icon');
+
+    const savedTheme = localStorage.getItem('fossarium-theme');
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+        if (icon) icon.setAttribute('name', 'moon-outline');
+    } else if (savedTheme === 'dark') {
+        document.documentElement.classList.remove('light-theme');
+        if (icon) icon.setAttribute('name', 'sunny-outline');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.classList.add('light-theme');
+        if (icon) icon.setAttribute('name', 'moon-outline');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+
+        if (isLight) {
+            localStorage.setItem('fossarium-theme', 'light');
+            if (icon) icon.setAttribute('name', 'moon-outline');
+        } else {
+            localStorage.setItem('fossarium-theme', 'dark');
+            if (icon) icon.setAttribute('name', 'sunny-outline');
+        }
+    });
+}
+
+initTheme();

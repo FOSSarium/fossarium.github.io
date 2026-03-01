@@ -14,8 +14,14 @@
 
 <body class="game-body">
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container tool-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Markdown Previewer</h1>
             <p class="tool-subtitle">Write Markdown, see live HTML preview.</p>

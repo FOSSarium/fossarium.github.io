@@ -14,6 +14,13 @@
 </head>
 
 <body class="tool-body">
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
     <script>
         const savedTheme = localStorage.getItem('fossarium-theme');
         if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
@@ -22,7 +29,7 @@
     </script>
 
     <div class="app-container tool-container-wrapper">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        
 
         <div class="tool-header">
             <div class="tool-title">
