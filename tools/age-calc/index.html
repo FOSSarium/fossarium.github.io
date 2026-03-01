@@ -6,20 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Age Calculator - Spectrum</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="game-body">
-    <script>const s = localStorage.getItem("spectrum-theme"); if (s === "light" || (!s && window.matchMedia("(prefers-color-scheme: light)").matches)) document.documentElement.classList.add("light-theme");</script>
-    <div class="app-container tool-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            Spectrum</a>
+<body>
+    <script>
+        const s = localStorage.getItem("spectrum-theme");
+        if (s === "light" || (!s && window.matchMedia("(prefers-color-scheme: light)").matches)) {
+            document.documentElement.classList.add("light-theme");
+        }
+    </script>
+    <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Age Calculator</h1>
-            <p class="tool-subtitle">Calculate exact age from birth date.</p>
-        </div><label>Birth Date</label><input type="date" id="dob">
-        <div class="result-box" id="result"></div>
+            <p class="tool-subtitle">Calculate exact age and discover more about your birth date.</p>
+        </div>
+        <div class="input-grid">
+            <div>
+                <label for="dob">Your Birth Date</label>
+                <input type="date" id="dob">
+            </div>
+        </div>
+        <div class="result-box" id="result" style="display: none;">
+            <div id="age-primary" class="age-primary"></div>
+            <div id="age-secondary" class="age-secondary"></div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
