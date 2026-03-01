@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
@@ -15,24 +15,24 @@
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
 
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
             <ion-icon name="sunny-outline"></ion-icon>
         </button>
     </div>
 
- class="tool-body">
     <div class="app-container tool-container-wrapper">
-        
-
         <div class="tool-header">
-            <div class="tool-title">
-                <div class="card-icon gradient-2"><ion-icon name="calculator-outline"></ion-icon></div>
-                <h1>Calculator</h1>
-            </div>
+            <h1>Calculator</h1>
+            <p class="tool-subtitle">A clean, focused tool for your daily mathematical needs.</p>
         </div>
 
-        <div class="calc-container">
+        <div class="calc-card">
             <div class="calc-display">
                 <div id="history" class="calc-history"></div>
                 <div id="result" class="calc-result">0</div>

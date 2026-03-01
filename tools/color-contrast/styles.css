@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -7,15 +6,6 @@
     --card-border: rgba(255, 255, 255, 0.05);
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
-    --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
 :root.light-theme {
@@ -34,144 +24,154 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
-}
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
-
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
-    margin: 0;
-    color: transparent;
-    background: linear-gradient(to right, var(--text-color), var(--accent-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    letter-spacing: -1.5px;
-}
-
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
 
 .tool-container-wrapper {
-    max-width: 600px;
+    max-width: 700px;
     width: 100%;
     padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .tool-header {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 .tool-header h1 {
-    font-size: 2.2rem;
+    font-size: clamp(2rem, 5vw, 3.5rem);
     margin: 0;
+    font-weight: 900;
+    background: linear-gradient(to right, var(--text-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .tool-subtitle {
     color: var(--text-muted);
-    margin: 5px 0 0 0;
+    margin: 10px 0 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
 
-.color-inputs {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+.tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 35px;
+    backdrop-filter: blur(15px);
+}
+
+.color-selection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+@media (max-width: 600px) {
+    .color-selection-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .color-field {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-}
-
-.color-field label {
-    font-weight: 700;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-transform: uppercase;
-}
-
-.color-field input[type="color"] {
-    width: 100%;
-    height: 50px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.color-field input[type="text"] {
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    color: var(--text-color);
-    font-family: monospace;
-    text-align: center;
-    font-size: 1rem;
-}
-
-.preview-box {
-    border-radius: 12px;
-    padding: 30px;
-    margin-bottom: 20px;
-    text-align: center;
-    transition: all 0.2s;
-}
-
-.preview-large {
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin: 0 0 10px 0;
-}
-
-.preview-normal {
-    font-size: 0.9rem;
-    margin: 0;
-}
-
-.results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr));
     gap: 10px;
 }
 
-.result-card {
-    background: var(--card-bg);
+.color-field label {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-row {
+    display: flex;
+    gap: 10px;
+}
+
+input[type="color"] {
+    width: 60px;
+    height: 50px;
     border: 1px solid var(--card-border);
     border-radius: 10px;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.1rem;
+    outline: none;
+    text-align: center;
+}
+
+.preview-container {
+    margin-bottom: 35px;
+}
+
+.preview-box {
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    border: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.preview-large {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 15px 0;
+}
+
+.preview-normal {
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+@media (max-width: 500px) {
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.result-card {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -179,16 +179,27 @@ h1 {
     gap: 5px;
 }
 
+.result-card.main {
+    background: var(--card-bg);
+    padding: 25px;
+}
+
 .result-label {
-    font-size: 0.75rem;
-    font-weight: 700;
+    font-size: 0.7rem;
+    font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
 }
 
 .result-value {
     font-size: 1.2rem;
-    font-weight: 700;
+    font-weight: 800;
+}
+
+.result-value.big {
+    font-size: 2.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent-color);
 }
 
 .result-value.pass {
@@ -201,7 +212,7 @@ h1 {
 
 /* Theme Toggle Button */
 .theme-toggle-container {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     z-index: 100;
@@ -221,9 +232,53 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 #theme-toggle:hover {
     transform: scale(1.1);
     color: var(--accent-color);
+}
+
+/* Background animated blobs */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(120px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 25s infinite ease-in-out;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(88, 166, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(163, 113, 247, 0.25) 0%, rgba(0, 0, 0, 0) 70%);
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
 }

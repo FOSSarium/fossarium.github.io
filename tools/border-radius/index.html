@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Border Radius Previewer - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Ionicons for beautiful icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Border Radius</h1>
+            <p class="tool-subtitle">Visualize and generate CSS border-radius properties with ease.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="preview-area">
+                <div class="preview-box" id="box"></div>
+            </div>
+
+            <div class="controls-grid">
+                <div class="field">
+                    <label>Top Left: <span id="v-tl">0</span>px</label>
+                    <input type="range" id="tl" min="0" max="200" value="30">
+                </div>
+                <div class="field">
+                    <label>Top Right: <span id="v-tr">0</span>px</label>
+                    <input type="range" id="tr" min="0" max="200" value="30">
+                </div>
+                <div class="field">
+                    <label>Bottom Right: <span id="v-br">0</span>px</label>
+                    <input type="range" id="br" min="0" max="200" value="30">
+                </div>
+                <div class="field">
+                    <label>Bottom Left: <span id="v-bl">0</span>px</label>
+                    <input type="range" id="bl" min="0" max="200" value="30">
+                </div>
+            </div>
+
+            <div class="result-box">
+                <code id="code">border-radius: 30px 30px 30px 30px;</code>
+                <button class="copy-btn" id="copy-btn" title="Copy to clipboard">
+                    <ion-icon name="copy-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box Model Visualizer - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Box Model</h1>
+            <p class="tool-subtitle">Visualize and master the fundamentals of CSS layout architecture.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="model-container">
+                <div class="margin-box">
+                    <span class="lbl">margin</span>
+                    <div class="border-box">
+                        <span class="lbl">border</span>
+                        <div class="padding-box">
+                            <span class="lbl">padding</span>
+                            <div class="content-box" id="content">100 x 80</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="field">
+                    <label>Margin</label>
+                    <input type="number" id="m" value="20">
+                </div>
+                <div class="field">
+                    <label>Border</label>
+                    <input type="number" id="b" value="3">
+                </div>
+                <div class="field">
+                    <label>Padding</label>
+                    <input type="number" id="p" value="20">
+                </div>
+                <div class="field">
+                    <label>Width</label>
+                    <input type="number" id="w" value="100">
+                </div>
+                <div class="field">
+                    <label>Height</label>
+                    <input type="number" id="h" value="80">
+                </div>
+            </div>
+
+            <div class="result-box">
+                <pre id="code">margin: 20px;
+border: 3px solid;
+padding: 20px;
+width: 100px;
+height: 80px;</pre>
+                <button class="copy-btn" id="copy-btn" title="Copy to clipboard">
+                    <ion-icon name="copy-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -7,15 +6,6 @@
     --card-border: rgba(255, 255, 255, 0.05);
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
-    --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
 :root.light-theme {
@@ -34,62 +24,140 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
-}
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
+.tool-container-wrapper {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
 
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
+.tool-header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.tool-header h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
     margin: 0;
-    color: transparent;
+    font-weight: 900;
     background: linear-gradient(to right, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
-    letter-spacing: -1.5px;
+    color: transparent;
 }
 
-.hidden {
-    display: none !important;
+.tool-subtitle {
+    color: var(--text-muted);
+    margin: 10px 0 0 0;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
 }
-/* ===== End FOSSarium Shared Base Styles ===== */
 
-.tool-container-wrapper{max-width:500px;width:100%;padding:20px}.tool-header{margin-bottom:20px}.tool-header h1{font-size:2.2rem;margin:0}.tool-subtitle{color:var(--text-muted);margin:5px 0 0 0}label{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin:12px 0 6px}input,select,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-color);font-size:1rem;outline:0;box-sizing:border-box;font-family:"Inter",sans-serif}.action-btn{padding:12px 25px;border:none;border-radius:10px;font-weight:700;font-family:"Inter",sans-serif;font-size:1rem;cursor:pointer;margin-top:15px}.action-btn.primary{background:var(--gradient-5);color:#fff}.result-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:15px;margin-top:15px;font-family:"JetBrains Mono",monospace;min-height:30px}.char-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(50px,1fr));gap:4px;margin-top:15px}.char-cell{background:var(--card-bg);border:1px solid var(--card-border);border-radius:6px;padding:10px;text-align:center;font-size:1.5rem;cursor:pointer;transition:transform .1s,border-color .2s}.char-cell:hover{transform:scale(1.15);border-color:var(--accent-color)}.char-cell .code{font-size:.5rem;color:var(--text-muted)}
+.tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    backdrop-filter: blur(10px);
+}
 
+.input-section {
+    margin-bottom: 30px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.field label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+select {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    border-color: var(--accent-color);
+}
+
+.char-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 10px;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Custom Scrollbar */
+.char-grid::-webkit-scrollbar {
+    width: 6px;
+}
+.char-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+.char-grid::-webkit-scrollbar-thumb {
+    background: var(--card-border);
+    border-radius: 10px;
+}
+
+.char-cell {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 15px 5px;
+    text-align: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.char-cell:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-color);
+    background: rgba(88, 166, 255, 0.1);
+    z-index: 2;
+}
+
+.char-cell .code {
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+}
 
 /* Theme Toggle Button */
 .theme-toggle-container {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     z-index: 100;
@@ -109,9 +177,53 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 #theme-toggle:hover {
     transform: scale(1.1);
     color: var(--accent-color);
+}
+
+/* Background animated blobs */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(120px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 25s infinite ease-in-out;
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(163, 113, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: radial-gradient(circle, rgba(88, 166, 255, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
 }

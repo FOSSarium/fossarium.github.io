@@ -5,15 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Contrast Checker - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
-    <!-- Ionicons for beautiful icons -->
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -21,45 +27,61 @@
         </button>
     </div>
 
-    <script>
-        const savedTheme = localStorage.getItem('fossarium-theme');
-        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            document.documentElement.classList.add('light-theme');
-        }
-    </script>
     <div class="app-container tool-container-wrapper">
-        
         <div class="tool-header">
             <h1>Contrast Checker</h1>
-            <p class="tool-subtitle">Test foreground/background WCAG contrast scores.</p>
+            <p class="tool-subtitle">Ensure accessibility by testing foreground and background color ratios.</p>
         </div>
-        <div class="color-inputs">
-            <div class="color-field">
-                <label>Foreground</label>
-                <input type="color" id="fg-color" value="#ffffff">
-                <input type="text" id="fg-hex" value="#ffffff">
+
+        <div class="tool-card">
+            <div class="color-selection-grid">
+                <div class="color-field">
+                    <label>Foreground</label>
+                    <div class="input-row">
+                        <input type="color" id="fg-color" value="#ffffff">
+                        <input type="text" id="fg-hex" value="#ffffff">
+                    </div>
+                </div>
+                <div class="color-field">
+                    <label>Background</label>
+                    <div class="input-row">
+                        <input type="color" id="bg-color" value="#000000">
+                        <input type="text" id="bg-hex" value="#000000">
+                    </div>
+                </div>
             </div>
-            <div class="color-field">
-                <label>Background</label>
-                <input type="color" id="bg-color" value="#000000">
-                <input type="text" id="bg-hex" value="#000000">
+
+            <div class="preview-container">
+                <div class="preview-box" id="preview">
+                    <p class="preview-large">Large Heading Text</p>
+                    <p class="preview-normal">This is normal body text to check readability against the background.</p>
+                </div>
             </div>
-        </div>
-        <div class="preview-box" id="preview">
-            <p class="preview-large">Large Text (18pt+)</p>
-            <p class="preview-normal">Normal body text (14px)</p>
-        </div>
-        <div class="results" id="results">
-            <div class="result-card"><span class="result-label">Contrast Ratio</span><span id="ratio"
-                    class="result-value">21:1</span></div>
-            <div class="result-card"><span class="result-label">WCAG AA Normal</span><span id="aa-normal"
-                    class="result-value pass">Pass</span></div>
-            <div class="result-card"><span class="result-label">WCAG AA Large</span><span id="aa-large"
-                    class="result-value pass">Pass</span></div>
-            <div class="result-card"><span class="result-label">WCAG AAA Normal</span><span id="aaa-normal"
-                    class="result-value pass">Pass</span></div>
-            <div class="result-card"><span class="result-label">WCAG AAA Large</span><span id="aaa-large"
-                    class="result-value pass">Pass</span></div>
+
+            <div class="results-grid" id="results">
+                <div class="result-card main">
+                    <span class="result-label">Contrast Ratio</span>
+                    <span id="ratio" class="result-value big">21.00:1</span>
+                </div>
+                <div class="status-grid">
+                    <div class="result-card">
+                        <span class="result-label">WCAG AA Normal</span>
+                        <span id="aa-normal" class="result-value pass">Pass</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="result-label">WCAG AA Large</span>
+                        <span id="aa-large" class="result-value pass">Pass</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="result-label">WCAG AAA Normal</span>
+                        <span id="aaa-normal" class="result-value pass">Pass</span>
+                    </div>
+                    <div class="result-card">
+                        <span class="result-label">WCAG AAA Large</span>
+                        <span id="aaa-large" class="result-value pass">Pass</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

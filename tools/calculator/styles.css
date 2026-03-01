@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -7,15 +6,6 @@
     --card-border: rgba(255, 255, 255, 0.05);
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
-    --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
 :root.light-theme {
@@ -34,170 +24,115 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
-}
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
-}
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
-
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
-    margin: 0;
-    color: transparent;
-    background: linear-gradient(to right, var(--text-color), var(--accent-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    letter-spacing: -1.5px;
-}
-
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
-
-.tool-body {
-    display: flex;
-    justify-content: center;
-    background-color: var(--bg-color);
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .tool-container-wrapper {
-    max-width: 450px;
+    max-width: 400px;
     width: 100%;
-    padding: 10px 20px;
-}
-
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.back-button:hover {
-    color: #fff;
-    text-decoration: none;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
 .tool-header {
     margin-bottom: 30px;
+    text-align: center;
 }
 
-.tool-title {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.tool-title h1 {
-    font-size: 2rem;
+.tool-header h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
     margin: 0;
+    font-weight: 900;
+    background: linear-gradient(to right, var(--text-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.card-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
+.tool-subtitle {
+    color: var(--text-muted);
+    margin: 8px 0 0 0;
+    font-size: 0.9rem;
 }
 
-.calc-container {
-    background: rgba(22, 27, 34, 0.6);
+.calc-card {
+    background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    max-height: 75vh;
-    display: flex;
-    flex-direction: column;
+    border-radius: 24px;
+    padding: 25px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
 .calc-display {
-    background: rgba(13, 17, 23, 0.8);
-    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 16px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: right;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+}
+
+:root.light-theme .calc-display {
+    background: #fff;
 }
 
 .calc-history {
-    min-height: 20px;
+    min-height: 24px;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-family: 'JetBrains Mono', monospace;
     margin-bottom: 5px;
 }
 
 .calc-result {
-    color: white;
     font-size: 3rem;
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--text-color);
     word-break: break-all;
     line-height: 1.1;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .calc-keypad {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
-    flex-grow: 1;
 }
 
 .calc-btn {
     border: none;
     border-radius: 12px;
-    font-size: 1.4rem;
-    font-family: inherit;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    height: min(60px, 8vh);
+    transition: all 0.2s ease;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .calc-btn:active {
-    transform: scale(0.95);
+    transform: scale(0.92);
 }
 
 .number {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--card-bg);
     color: var(--text-color);
+    border: 1px solid var(--card-border);
 }
 
 .number:hover {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--hover-bg);
 }
 
 .zero {
@@ -207,7 +142,7 @@ h1 {
 .operator {
     background: rgba(88, 166, 255, 0.15);
     color: var(--accent-color);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
 }
 
 .operator:hover {
@@ -215,28 +150,29 @@ h1 {
 }
 
 .utility {
-    background: rgba(139, 148, 158, 0.15);
+    background: rgba(139, 148, 158, 0.1);
     color: var(--text-muted);
     font-size: 1.1rem;
 }
 
 .utility:hover {
-    background: rgba(139, 148, 158, 0.25);
+    background: rgba(139, 148, 158, 0.2);
 }
 
 .equals {
-    background: var(--gradient-2);
-    color: #fff;
+    background: var(--accent-color);
+    color: white;
     font-size: 1.6rem;
 }
 
 .equals:hover {
-    box-shadow: 0 0 15px rgba(245, 175, 25, 0.4);
+    filter: brightness(1.1);
+    box-shadow: 0 0 20px rgba(88, 166, 255, 0.3);
 }
 
 /* Theme Toggle Button */
 .theme-toggle-container {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
     z-index: 100;
@@ -255,10 +191,53 @@ h1 {
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
 #theme-toggle:hover {
     transform: scale(1.1);
     color: var(--accent-color);
+}
+
+/* Background animated blobs */
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    filter: blur(120px);
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    animation: float 25s infinite ease-in-out;
+}
+
+.blob-1 {
+    top: -5%;
+    right: -5%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(circle, rgba(163, 113, 247, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+.blob-2 {
+    bottom: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(88, 166, 255, 0.3) 0%, rgba(0, 0, 0, 0) 70%);
+    animation-delay: -5s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.95); }
 }
