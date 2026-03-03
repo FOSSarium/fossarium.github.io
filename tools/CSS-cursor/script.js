@@ -16,7 +16,7 @@ function renderCursors() {
         div.className = 'cursor-box';
         div.style.cursor = c;
         div.innerHTML = `
-            <span class="cursor-name">${c}</span>
+            <span class="cursor-usage">cursor: ${c}</span>
         `;
         div.onclick = () => copyToClipboard(c, div);
         grid.appendChild(div);
@@ -29,9 +29,11 @@ function copyToClipboard(text, el) {
     const originalText = el.querySelector('.cursor-name').textContent;
     el.querySelector('.cursor-name').textContent = 'COPIED!';
     el.style.borderColor = 'var(--accent-color)';
+    el.style.color = '#3fb950';
     setTimeout(() => {
         el.querySelector('.cursor-name').textContent = originalText;
         el.style.borderColor = '';
+        el.style.color = '';
     }, 1000);
 }
 

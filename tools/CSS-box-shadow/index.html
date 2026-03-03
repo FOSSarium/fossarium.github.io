@@ -36,41 +36,51 @@
         <div class="tool-card">
             <div class="editor-grid">
                 <div class="controls-pane">
-                    <div class="field-group">
-                        <label>Horizontal Offset: <span id="h-val">5</span>px</label>
-                        <input type="range" id="h-offset" min="-50" max="50" value="5">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="shadows">Shadow Layers</button>
+                        <button class="tab-btn" data-tab="box">Box & Background</button>
                     </div>
-                    <div class="field-group">
-                        <label>Vertical Offset: <span id="v-val">5</span>px</label>
-                        <input type="range" id="v-offset" min="-50" max="50" value="5">
+
+                    <div class="tab-content" id="shadows-tab">
+                        <div id="layers-list">
+                            <!-- Layers will be dynamically added here -->
+                        </div>
+                        <button id="add-layer" class="secondary-btn">
+                            <ion-icon name="add-outline"></ion-icon> Add Layer
+                        </button>
                     </div>
-                    <div class="field-group">
-                        <label>Blur Radius: <span id="b-val">15</span>px</label>
-                        <input type="range" id="blur" min="0" max="100" value="15">
+
+                    <div class="tab-content hidden" id="box-tab">
+                        <div class="field-group">
+                            <label>Box Color</label>
+                            <input type="color" id="box-color" value="#58a6ff">
+                        </div>
+                        <div class="field-group">
+                            <label>Border Radius: <span id="br-val">16</span>px</label>
+                            <input type="range" id="border-radius" min="0" max="100" value="16">
+                        </div>
+                        <div class="field-group">
+                            <label>Container BG</label>
+                            <input type="color" id="bg-color-picker" value="#0a0a1a">
+                        </div>
                     </div>
-                    <div class="field-group">
-                        <label>Spread Radius: <span id="s-val">0</span>px</label>
-                        <input type="range" id="spread" min="-50" max="50" value="0">
-                    </div>
-                    <div class="field-group">
-                        <label>Shadow Color</label>
-                        <input type="color" id="shadow-color" value="#000000">
-                    </div>
-                    <div class="field-group">
-                        <label>Opacity: <span id="o-val">40</span>%</label>
-                        <input type="range" id="opacity" min="0" max="100" value="40">
-                    </div>
-                    <div class="field-group checkbox">
-                        <label class="checkbox-container">
-                            <input type="checkbox" id="inset">
-                            <span class="checkmark"></span>
-                            Inset Shadow
-                        </label>
+
+                    <div class="field-group presets-group">
+                        <label>Presets</label>
+                        <div class="presets-grid">
+                            <button class="preset-btn" data-preset="soft">Soft</button>
+                            <button class="preset-btn" data-preset="hard">Hard</button>
+                            <button class="preset-btn" data-preset="neon">Neon</button>
+                            <button class="preset-btn" data-preset="inner">Inner</button>
+                            <button class="preset-btn" data-preset="multi">Multi</button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="preview-pane">
-                    <div class="preview-box" id="preview-box"></div>
+                <div class="preview-pane-container">
+                    <div class="preview-pane" id="preview-pane">
+                        <div class="preview-box" id="preview-box"></div>
+                    </div>
                 </div>
             </div>
 

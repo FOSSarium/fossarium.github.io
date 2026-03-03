@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit Converter - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 
-    <!-- Ionicons for beautiful icons -->
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -19,35 +27,51 @@
         </button>
     </div>
 
->
-    <header>
-        <h1>Unit Converter</h1>
-    </header>
-    <main>
-        <section class="converter-card">
-            <h2>Length Converter</h2>
-            <div class="input-group">
-                <input type="number" id="inputValue" value="1" min="0">
-                <select id="inputUnit">
-                    <option value="meters">Meters</option>
-                    <option value="feet">Feet</option>
-                    <option value="inches">Inches</option>
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Unit Converter</h1>
+            <p class="tool-subtitle">Fast, accurate conversions across all standard measurements.</p>
+        </div>
+
+        <div class="tool-card main-converter">
+            <div class="category-nav">
+                <select id="category-select" class="fossarium-style-select">
+                    <option value="length">Length</option>
+                    <option value="weight">Mass / Weight</option>
+                    <option value="temp">Temperature</option>
+                    <option value="data">Digital Storage</option>
+                    <option value="speed">Speed</option>
+                    <option value="volume">Volume</option>
+
+                    <option value="fuel">Fuel Consumption</option>
+                    <option value="time">Time</option>
+                    <option value="energy">Energy</option>
+                    <option value="pressure">Pressure</option>
+                    <option value="power">Power</option>
+                    <option value="frequency">Frequency</option>
                 </select>
             </div>
-            <div class="output-group">
-                <p>Result:</p>
-                <span id="outputValue"></span>
-                <select id="outputUnit">
-                    <option value="feet">Feet</option>
-                    <option value="meters">Meters</option>
-                    <option value="inches">Inches</option>
-                </select>
+
+            <div class="conversion-ui">
+                <div class="conversion-box">
+                    <input type="number" id="input1" value="1" step="any">
+                    <select id="unit1"></select>
+                </div>
+                <div class="equals-sign">=</div>
+                <div class="conversion-box">
+                    <input type="number" id="input2" value="1" step="any">
+                    <select id="unit2"></select>
+                </div>
             </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2024 FOSSarium Project</p>
-    </footer>
+
+            <div class="formula-container" id="formula-display">
+                <!-- Formula will be shown here -->
+            </div>
+        </div>
+
+
+    </div>
     <script src="script.js"></script>
 </body>
+
 </html>

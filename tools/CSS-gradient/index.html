@@ -29,44 +29,56 @@
 
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
-            <h1>CSS Gradient</h1>
-            <p class="tool-subtitle">Design stunning gradients with precision controls and instant CSS output.</p>
+            <h1>Gradient Designer</h1>
+            <p class="tool-subtitle">Create complex multi-stop gradients with real-time visual feedback.</p>
         </div>
 
-        <div class="tool-card">
+        <div class="tool-card main-editor">
             <div class="editor-grid">
                 <div class="controls-pane">
                     <div class="field-group">
-                        <label for="type">Gradient Type</label>
-                        <select id="type">
-                            <option value="linear">Linear</option>
-                            <option value="radial">Radial</option>
-                        </select>
-                    </div>
-                    <div class="field-group" id="angle-ctrl">
-                        <label>Angle: <span id="angle-val">135</span>°</label>
-                        <input type="range" id="angle" min="0" max="360" value="135">
-                    </div>
-                    <div class="color-inputs">
-                        <div class="field-group">
-                            <label>Color 1</label>
-                            <input type="color" id="c1" value="#7F00FF">
+                        <label>Gradient Type</label>
+                        <div class="type-selector">
+                            <button class="type-btn active" data-type="linear">Linear</button>
+                            <button class="type-btn" data-type="radial">Radial</button>
                         </div>
+                    </div>
+
+                    <div id="linear-controls">
                         <div class="field-group">
-                            <label>Color 2</label>
-                            <input type="color" id="c2" value="#E100FF">
+                            <label>Angle: <span id="angle-val">135</span>°</label>
+                            <input type="range" id="angle" min="0" max="360" value="135">
+                        </div>
+                    </div>
+
+                    <div class="field-group">
+                        <label>Color Stops</label>
+                        <div id="stops-container">
+                            <!-- Stops will be added here -->
+                        </div>
+                        <button id="add-stop" class="secondary-btn">
+                            <ion-icon name="add-outline"></ion-icon> Add Color Stop
+                        </button>
+                    </div>
+
+                    <div class="field-group presets-group">
+                        <label>Presets</label>
+                        <div class="presets-grid" id="presets-grid">
+                            <!-- Presets will be added here -->
                         </div>
                     </div>
                 </div>
 
-                <div class="preview-pane">
-                    <div class="preview-box" id="preview"></div>
+                <div class="preview-pane-container">
+                    <div class="preview-pane" id="preview-display">
+                        <div class="preview-box" id="preview-box"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="code-section">
                 <div class="code-box">
-                    <code id="css-output">background: linear-gradient(135deg, #7F00FF, #E100FF);</code>
+                    <code id="css-output">background: linear-gradient(135deg, #7F00FF 0%, #E100FF 100%);</code>
                     <button class="copy-btn" id="copy-btn" title="Copy to clipboard">
                         <ion-icon name="copy-outline"></ion-icon>
                     </button>
