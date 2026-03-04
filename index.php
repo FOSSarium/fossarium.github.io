@@ -40,7 +40,7 @@ function generateCategoryGrid($targetCategory)
             $gradientClass = "gradient-" . (($index % 9) + 1);
             $creditHtml = $credit ? '<div class="card-credit">Credit: ' . htmlspecialchars($credit) . '</div>' : '';
 
-            $html .= '                    <a href="' . $path . '" class="item-card" data-title="' . htmlspecialchars($title) . '">
+            $html .= '                    <a target="_blank" rel="noopener noreferrer" href="' . $path . '" class="item-card" data-title="' . htmlspecialchars($title) . '">
                         ' . $creditHtml . '
                         <div class="card-icon ' . $gradientClass . '"><ion-icon name="' . $icon . '"></ion-icon></div>
                         <div class="card-content">
