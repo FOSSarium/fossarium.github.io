@@ -5,27 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Age Calculator - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- Ionicons for beautiful icons -->
+
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
 <body>
-    <script>
-        const s = localStorage.getItem("fossarium-theme");
-        if (s === "light" || (!s && window.matchMedia("(prefers-color-scheme: light)").matches)) {
-            document.documentElement.classList.add("light-theme");
-        }
-    </script>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
 
     <div class="background-blobs">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
     </div>
 
     <div class="theme-toggle-container">
@@ -36,18 +29,65 @@
 
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
-            <h1>Age Calculator</h1>
-            <p class="tool-subtitle">Calculate exact age and discover more about your birth date.</p>
+            <h1>Age Master</h1>
+            <p class="tool-subtitle">Precision age calculation with detailed life milestones and fun facts.</p>
         </div>
-        <div class="input-grid">
-            <div>
-                <label for="dob">Your Birth Date</label>
-                <input type="date" id="dob">
+
+        <div class="age-layout">
+            <div class="tool-card control-card">
+                <div class="field">
+                    <label for="dob">Enter Date of Birth</label>
+                    <div class="input-wrapper">
+                        <ion-icon name="calendar-outline"></ion-icon>
+                        <input type="date" id="dob" value="2000-01-01">
+                    </div>
+                </div>
+                
+                <div class="summary-card" id="summary-display">
+                    <div class="main-age" id="main-age-text">--</div>
+                    <div class="next-bday" id="next-bday-text">Next birthday in ...</div>
+                </div>
             </div>
-        </div>
-        <div class="result-box" id="result" style="display: none;">
-            <div id="age-primary" class="age-primary"></div>
-            <div id="age-secondary" class="age-secondary"></div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><ion-icon name="star-outline"></ion-icon></div>
+                    <div class="stat-info">
+                        <label>Zodiac Sign</label>
+                        <span id="stat-zodiac">--</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><ion-icon name="time-outline"></ion-icon></div>
+                    <div class="stat-info">
+                        <label>Day of Birth</label>
+                        <span id="stat-day">--</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><ion-icon name="heart-outline"></ion-icon></div>
+                    <div class="stat-info">
+                        <label>Est. Heartbeats</label>
+                        <span id="stat-hearts">--</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><ion-icon name="airplane-outline"></ion-icon></div>
+                    <div class="stat-info">
+                        <label>Orbit Count</label>
+                        <span id="stat-orbits">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <div class="tool-card breakdown-card">
+                    <label>Life Breakdown</label>
+                    <div class="breakdown-grid" id="breakdown-list">
+                        <!-- Breakdown items like total months, weeks, etc. -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

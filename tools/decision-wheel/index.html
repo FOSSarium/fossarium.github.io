@@ -35,7 +35,7 @@
 
         <div class="tool-card">
             <div class="wheel-section">
-                <canvas id="wheel" width="300" height="300"></canvas>
+                <canvas id="wheel" width="320" height="320"></canvas>
                 <div class="wheel-pointer"></div>
             </div>
 
@@ -50,9 +50,14 @@
                     <div class="result-text" id="result"></div>
                 </div>
 
-                <button id="spin-btn" class="btn primary-btn">
-                    <ion-icon name="sync-outline"></ion-icon> Spin the Wheel
-                </button>
+                <div class="btn-group">
+                    <button id="spin-btn" class="btn primary-btn">
+                        <ion-icon name="sync-outline"></ion-icon> Spin the Wheel
+                    </button>
+                    <button id="shuffle-btn" class="btn secondary-btn">
+                        <ion-icon name="color-palette-outline"></ion-icon> Shuffle Colors
+                    </button>
+                </div>
             </div>
         </div>
     </div>

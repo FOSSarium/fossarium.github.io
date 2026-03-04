@@ -3,7 +3,6 @@ const inputLabel = document.getElementById('input-label');
 const outputLabel = document.getElementById('output-label');
 const inputText = document.getElementById('input-text');
 const outputText = document.getElementById('output-text');
-const btnProcess = document.getElementById('btn-process');
 const btnClear = document.getElementById('btn-clear');
 const btnCopy = document.getElementById('btn-copy');
 const toast = document.getElementById('toast');
@@ -17,17 +16,15 @@ function setMode(mode) {
     tabs.forEach(t => t.classList.remove('active'));
     document.querySelector(`.tab-btn[data-tab="${mode}"]`).classList.add('active');
 
-    // Update UI labels and buttons
+    // Update UI labels
     if (mode === 'encode') {
         inputLabel.textContent = "Plain Text Input";
         inputText.placeholder = "Type or paste your text here...";
         outputLabel.textContent = "Base64 Output";
-        btnProcess.innerHTML = `Encode to Base64 <ion-icon name="arrow-down"></ion-icon>`;
     } else {
         inputLabel.textContent = "Base64 Input";
         inputText.placeholder = "Paste your Base64 encoded string here...";
         outputLabel.textContent = "Plain Text Output";
-        btnProcess.innerHTML = `Decode Base64 <ion-icon name="arrow-down"></ion-icon>`;
     }
 
     // Clear and re-process if there's text
@@ -76,14 +73,8 @@ tabs.forEach(tab => {
     });
 });
 
-btnProcess.addEventListener('click', processText);
-
-// Optional auto-process on input (debounced)
-let timeout = null;
-inputText.addEventListener('input', () => {
-    clearTimeout(timeout);
-    timeout = setTimeout(processText, 300);
-});
+// Live-process on input
+inputText.addEventListener('input', processText);
 
 btnClear.addEventListener('click', () => {
     inputText.value = "";

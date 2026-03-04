@@ -1,9 +1,11 @@
 const dobInput = document.getElementById("dob");
-const resultBox = document.getElementById("result");
-const agePrimary = document.getElementById("age-primary");
-const ageSecondary = document.getElementById("age-secondary");
-
-dobInput.value = "2000-01-01";
+const mainAgeText = document.getElementById("main-age-text");
+const nextBdayText = document.getElementById("next-bday-text");
+const statZodiac = document.getElementById("stat-zodiac");
+const statDay = document.getElementById("stat-day");
+const statHearts = document.getElementById("stat-hearts");
+const statOrbits = document.getElementById("stat-orbits");
+const breakdownList = document.getElementById("breakdown-list");
 
 function getZodiacSign(day, month) {
     const zodiacSigns = [
@@ -27,18 +29,18 @@ function getZodiacSign(day, month) {
             return zodiac.sign;
         }
     }
-    return "Unknown";
+    return "--";
 }
 
 function calculateAge() {
     const birthDate = new Date(dobInput.value);
-    if (isNaN(birthDate)) {
-        resultBox.style.display = "none";
+    if (isNaN(birthDate)) return;
+
+    const now = new Date();
+    if (birthDate > now) {
+        mainAgeText.textContent = "Future Born?";
         return;
     }
-
-    resultBox.style.display = "block";
-    const now = new Date();
 
     let years = now.getFullYear() - birthDate.getFullYear();
     let months = now.getMonth() - birthDate.getMonth();
@@ -46,71 +48,99 @@ function calculateAge() {
 
     if (days < 0) {
         months--;
-        days += new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += lastMonth.getDate();
     }
     if (months < 0) {
         years--;
         months += 12;
     }
 
-    agePrimary.innerHTML = `${years} <span style="font-size: 0.5em; color: var(--text-muted)">years</span> ${months} <span style="font-size: 0.5em; color: var(--text-muted)">months</span> ${days} <span style="font-size: 0.5em; color: var(--text-muted)">days</span>`;
+    // Main display
+    mainAgeText.innerHTML = `${years}y ${months}m ${days}d`;
 
+    // Stats
     const totalDays = Math.floor((now - birthDate) / (1000 * 60 * 60 * 24));
     const totalWeeks = Math.floor(totalDays / 7);
     const totalMonths = years * 12 + months;
-    
-    const birthDay = birthDate.toLocaleDateString('en-US', { weekday: 'long' });
-    const zodiacSign = getZodiacSign(birthDate.getDate(), birthDate.getMonth() + 1);
+    const totalHours = totalDays * 24;
+    const totalMinutes = totalHours * 60;
+    const totalSeconds = totalMinutes * 60;
 
+    statZodiac.textContent = getZodiacSign(birthDate.getDate(), birthDate.getMonth() + 1);
+    statDay.textContent = birthDate.toLocaleDateString('en-US', { weekday: 'long' });
+    
+    // Fun facts
+    const avgHeartRate = 72; // bpm
+    const estimatedHearts = totalMinutes * avgHeartRate;
+    statHearts.textContent = formatNumber(estimatedHearts);
+    statOrbits.textContent = years;
+
+    // Next Birthday
     const nextBirthday = new Date(now.getFullYear(), birthDate.getMonth(), birthDate.getDate());
     if (nextBirthday < now) {
         nextBirthday.setFullYear(now.getFullYear() + 1);
     }
-    const daysToBirthday = Math.ceil((nextBirthday - now) / (1000 * 60 * 60 * 24));
+    const diff = nextBirthday - now;
+    const daysToBday = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    nextBdayText.textContent = daysToBday === 0 ? "Today is your birthday! 🎉" : `Next birthday in ${daysToBday} days`;
 
-    ageSecondary.innerHTML = `
-        <div>Born on: <span>${birthDay}</span></div>
-        <div>Zodiac: <span>${zodiacSign}</span></div>
-        <div>Next B-day: <span>${daysToBirthday} days</span></div>
-        <div>Total Months: <span>${totalMonths.toLocaleString()}</span></div>
-        <div>Total Weeks: <span>${totalWeeks.toLocaleString()}</span></div>
-        <div>Total Days: <span>${totalDays.toLocaleString()}</span></div>
-    `;
+    // Breakdown
+    const breakdownData = [
+        { label: "Total Months", val: totalMonths },
+        { label: "Total Weeks", val: totalWeeks },
+        { label: "Total Days", val: totalDays },
+        { label: "Total Hours", val: totalHours },
+        { label: "Total Minutes", val: totalMinutes },
+        { label: "Total Seconds", val: totalSeconds }
+    ];
+
+    breakdownList.innerHTML = breakdownData.map(item => `
+        <div class="breakdown-item">
+            <span class="br-label">${item.label}</span>
+            <span class="br-val">${formatNumber(item.val)}</span>
+        </div>
+    `).join('');
+}
+
+function formatNumber(num) {
+    if (num >= 1e9) return (num / 1e9).toFixed(1) + 'B';
+    if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+    return num.toLocaleString();
 }
 
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (!themeToggleBtn) return;
-
     const icon = themeToggleBtn.querySelector('ion-icon');
-
-    // Check local storage or system preference
     const savedTheme = localStorage.getItem('fossarium-theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    } else if (savedTheme === 'dark') {
+    
+    const setDarkMode = () => {
         document.documentElement.classList.remove('light-theme');
         if (icon) icon.setAttribute('name', 'sunny-outline');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    };
+    const setLightMode = () => {
         document.documentElement.classList.add('light-theme');
         if (icon) icon.setAttribute('name', 'moon-outline');
+    };
+
+    if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        setLightMode();
+    } else {
+        setDarkMode();
     }
 
     themeToggleBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('light-theme');
-        const isLight = document.documentElement.classList.contains('light-theme');
-
-        if (isLight) {
-            localStorage.setItem('fossarium-theme', 'light');
-            if (icon) icon.setAttribute('name', 'moon-outline');
-        } else {
+        if (document.documentElement.classList.contains('light-theme')) {
+            setDarkMode();
             localStorage.setItem('fossarium-theme', 'dark');
-            if (icon) icon.setAttribute('name', 'sunny-outline');
+        } else {
+            setLightMode();
+            localStorage.setItem('fossarium-theme', 'light');
         }
     });
 }
 
 dobInput.addEventListener("input", calculateAge);
-calculateAge();
 initTheme();
+calculateAge();

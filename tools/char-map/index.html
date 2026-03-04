@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Map - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <!-- Ionicons -->
@@ -30,7 +30,7 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Character Map</h1>
-            <p class="tool-subtitle">Explore and copy unique symbols, arrows, and emojis for your projects.</p>
+            <p class="tool-subtitle">Explore and copy unique symbols, arrows, and characters from the entire Unicode set.</p>
         </div>
 
         <div class="tool-card">
@@ -38,12 +38,30 @@
                 <div class="field">
                     <label for="category">Category</label>
                     <select id="category">
+                        <option value="latin">Latin (Basic)</option>
+                        <option value="latin_ext">Latin Extended</option>
+                        <option value="greek">Greek & Coptic</option>
+                        <option value="cyrillic">Cyrillic</option>
+                        <option value="hebrew">Hebrew</option>
+                        <option value="arabic">Arabic</option>
+                        <option value="currency">Currency Symbols</option>
+                        <option value="math">Mathematical Operators</option>
                         <option value="arrows">Arrows</option>
-                        <option value="math">Mathematics</option>
-                        <option value="currency">Currency</option>
                         <option value="box">Box Drawing</option>
-                        <option value="emoji">Basic Emojis</option>
+                        <option value="geometric">Geometric Shapes</option>
+                        <option value="misc_sym">Miscellaneous Symbols</option>
+                        <option value="dingbats">Dingbats</option>
+                        <option value="braille">Braille Patterns</option>
+                        <option value="emojis">Emojis (Basic Set)</option>
+                        <option value="all">Common Range (All)</option>
                     </select>
+                </div>
+                <div class="field">
+                    <label for="search">Search (e.g. U+0041)</label>
+                    <div class="search-wrapper">
+                        <ion-icon name="search-outline"></ion-icon>
+                        <input type="text" id="search" placeholder="Enter hex code...">
+                    </div>
                 </div>
             </div>
 

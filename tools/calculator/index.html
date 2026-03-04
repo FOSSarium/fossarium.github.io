@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <title>Advanced Calculator - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
     <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
@@ -28,43 +29,32 @@
 
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
-            <h1>Calculator</h1>
-            <p class="tool-subtitle">A clean, focused tool for your daily mathematical needs.</p>
+            <h1>Advanced Calculator</h1>
+            <p class="tool-subtitle">Professional math tool with standard, scientific, and programmer modes.</p>
         </div>
 
-        <div class="calc-card">
-            <div class="calc-display">
-                <div id="history" class="calc-history"></div>
-                <div id="result" class="calc-result">0</div>
+        <div class="calc-main-container">
+            <div class="mode-selector">
+                <button class="mode-btn active" data-mode="standard">Standard</button>
+                <button class="mode-btn" data-mode="scientific">Scientific</button>
+                <button class="mode-btn" data-mode="programmer">Programmer</button>
+                <button class="mode-btn" data-mode="statistics">Statistics</button>
             </div>
-            <div class="calc-keypad">
-                <button class="calc-btn utility" data-action="clear">AC</button>
-                <button class="calc-btn utility" data-action="delete">DEL</button>
-                <button class="calc-btn utility" data-action="percentage">%</button>
-                <button class="calc-btn operator" data-action="/">÷</button>
 
-                <button class="calc-btn number" data-number="7">7</button>
-                <button class="calc-btn number" data-number="8">8</button>
-                <button class="calc-btn number" data-number="9">9</button>
-                <button class="calc-btn operator" data-action="*">×</button>
+            <div class="calc-card">
+                <div class="calc-display">
+                    <div id="history" class="calc-history"></div>
+                    <div id="result" class="calc-result">0</div>
+                    <div id="secondary-display" class="calc-secondary hidden"></div>
+                </div>
 
-                <button class="calc-btn number" data-number="4">4</button>
-                <button class="calc-btn number" data-number="5">5</button>
-                <button class="calc-btn number" data-number="6">6</button>
-                <button class="calc-btn operator" data-action="-">−</button>
-
-                <button class="calc-btn number" data-number="1">1</button>
-                <button class="calc-btn number" data-number="2">2</button>
-                <button class="calc-btn number" data-number="3">3</button>
-                <button class="calc-btn operator" data-action="+">+</button>
-
-                <button class="calc-btn number zero" data-number="0">0</button>
-                <button class="calc-btn number" data-number=".">.</button>
-                <button class="calc-btn equals" data-action="=">=</button>
+                <!-- Shared Keypad Base -->
+                <div class="keypad-container" id="keypad">
+                    <!-- Keypads will be dynamically swapped or toggled here -->
+                </div>
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 

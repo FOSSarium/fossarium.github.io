@@ -1,20 +1,21 @@
 :root {
-    --bg-color: #050510;
+    --bg-color: #06061a;
     --text-color: #e6edf3;
-    --text-muted: #8b949e;
-    --card-bg: rgba(22, 27, 34, 0.4);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --hover-bg: rgba(33, 38, 45, 0.7);
+    --text-muted: #88aadd;
+    --card-bg: rgba(13, 17, 23, 0.7);
+    --card-border: rgba(88, 166, 255, 0.15);
+    --hover-bg: rgba(88, 166, 255, 0.1);
     --accent-color: #58a6ff;
+    --accent-glow: rgba(88, 166, 255, 0.3);
 }
 
 :root.light-theme {
-    --bg-color: #f8f9fa;
+    --bg-color: #f0f4f8;
     --text-color: #1a1a2e;
-    --text-muted: #6c757d;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --card-border: rgba(0, 0, 0, 0.08);
-    --hover-bg: rgba(240, 244, 248, 0.9);
+    --text-muted: #64748b;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --card-border: rgba(88, 166, 255, 0.2);
+    --hover-bg: rgba(88, 166, 255, 0.1);
     --accent-color: #0056b3;
 }
 
@@ -34,7 +35,7 @@ body {
 }
 
 .tool-container-wrapper {
-    max-width: 500px;
+    max-width: 550px;
     width: 100%;
     padding: 20px;
     position: relative;
@@ -42,15 +43,15 @@ body {
 }
 
 .tool-header {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
 .tool-header h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
     margin: 0;
     font-weight: 900;
-    background: linear-gradient(to right, var(--text-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -59,155 +60,212 @@ body {
 .tool-subtitle {
     color: var(--text-muted);
     margin: 10px 0 0 0;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-size: 1.1rem;
 }
 
 .tool-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 24px;
-    padding: 35px;
-    backdrop-filter: blur(15px);
+    border-radius: 32px;
+    padding: 40px;
+    backdrop-filter: blur(20px);
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
 }
 
 .config-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 20px;
 }
 
 .field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
 }
 
 .field label {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 input, select {
     width: 100%;
-    padding: 12px 15px;
-    border-radius: 10px;
+    padding: 14px 18px;
+    border-radius: 12px;
     border: 1px solid var(--card-border);
-    background: var(--card-bg);
+    background: rgba(88, 166, 255, 0.05);
     color: var(--text-color);
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
+    font-size: 1.05rem;
     outline: none;
     transition: all 0.3s ease;
 }
 
 input:focus, select:focus {
     border-color: var(--accent-color);
-    background: var(--hover-bg);
+    background: rgba(88, 166, 255, 0.1);
+    box-shadow: 0 0 15px rgba(88, 166, 255, 0.1);
+}
+
+.quick-roll-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 10px;
+}
+
+.quick-btn {
+    background: rgba(88, 166, 255, 0.1);
+    border: 1px solid var(--card-border);
+    color: var(--accent-color);
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    transform: translateY(-2px);
 }
 
 .dice-display {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 15px;
     justify-content: center;
-    min-height: 60px;
+    min-height: 80px;
+    perspective: 1000px;
 }
 
 .die {
-    width: 60px;
-    height: 60px;
-    background: var(--card-bg);
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--card-bg), var(--hover-bg));
     border: 2px solid var(--accent-color);
-    border-radius: 12px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 900;
-    color: var(--text-color);
+    color: var(--accent-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    text-shadow: 0 0 10px var(--accent-glow);
+}
+
+.die.rolling {
+    animation: shake 0.5s infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.die.pop {
     animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes pop {
-    0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+    0% { transform: scale(0.5) rotate(-45deg); opacity: 0; }
     100% { transform: scale(1) rotate(0); opacity: 1; }
 }
 
 .summary-area {
     text-align: center;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.02);
-    border-radius: 16px;
+    padding: 25px;
+    background: rgba(88, 166, 255, 0.05);
+    border-radius: 20px;
     border: 1px solid var(--card-border);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
 .total-label {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
 }
 
 .total-value {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 900;
     color: var(--accent-color);
     line-height: 1;
+    text-shadow: 0 0 20px var(--accent-glow);
 }
 
 .btn {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     border: none;
-    border-radius: 12px;
+    border-radius: 16px;
     background: var(--accent-color);
     color: white;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
 }
 
-.btn:hover {
-    filter: brightness(1.1);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(88, 166, 255, 0.3);
+.btn:hover:not(:disabled) {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(88, 166, 255, 0.4);
+}
+
+.btn:active:not(:disabled) {
+    transform: translateY(-1px);
 }
 
 .history-section {
-    padding-top: 20px;
+    padding-top: 25px;
     border-top: 1px solid var(--card-border);
 }
 
 .history-label {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 800;
     color: var(--text-muted);
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-align: center;
+    letter-spacing: 1px;
 }
 
 .history-list {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     font-family: 'JetBrains Mono', monospace;
     text-align: center;
-    line-height: 1.6;
-    max-height: 80px;
+    line-height: 1.8;
+    max-height: 120px;
     overflow-y: auto;
+    padding-right: 5px;
 }
 
 /* Theme Toggle Button */
@@ -231,7 +289,6 @@ input:focus, select:focus {
     font-size: 1.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
 }
 
@@ -281,4 +338,18 @@ input:focus, select:focus {
     0%, 100% { transform: translate(0, 0) scale(1); }
     33% { transform: translate(30px, -50px) scale(1.05); }
     66% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--card-border);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-color);
 }

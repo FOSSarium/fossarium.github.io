@@ -98,8 +98,56 @@ function updatePreview(headers, rows) {
     previewTable.innerHTML = html;
 }
 
-// Event Listeners
-csvInput.addEventListener('input', convert);
+const urlInput = document.getElementById('url-input');
+const fetchBtn = document.getElementById('fetch-btn');
+const pasteBtn = document.getElementById('paste-btn');
+
+// ... (existing helper functions: parseCSV, convert, updatePreview) ...
+
+// Fetch from URL
+fetchBtn.addEventListener('click', async () => {
+    const url = urlInput.value.trim();
+    if (!url) return;
+
+    fetchBtn.disabled = true;
+    const icon = fetchBtn.querySelector('ion-icon');
+    icon.setAttribute('name', 'refresh-outline');
+    icon.classList.add('spinning');
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const text = await response.text();
+        csvInput.value = text;
+        convert();
+    } catch (e) {
+        alert('Error fetching URL: ' + e.message);
+    } finally {
+        fetchBtn.disabled = false;
+        icon.setAttribute('name', 'arrow-forward-outline');
+        icon.classList.remove('spinning');
+    }
+});
+
+// Paste from Button
+pasteBtn.addEventListener('click', async () => {
+    try {
+        const text = await navigator.clipboard.readText();
+        csvInput.value = text;
+        convert();
+    } catch (err) {
+        alert('Failed to read clipboard. Please use Ctrl+V directly.');
+    }
+});
+
+// Global Paste (Ctrl+V)
+document.addEventListener('paste', (e) => {
+    if (e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'INPUT') {
+        const text = (e.clipboardData || window.clipboardData).getData('text');
+        csvInput.value = text;
+        convert();
+    }
+});
 indentSelect.addEventListener('change', convert);
 headerRowCheckbox.addEventListener('change', convert);
 

@@ -34,10 +34,25 @@
         </div>
 
         <div class="tool-card">
-            <div class="upload-area" id="drop-zone">
-                <ion-icon name="cloud-upload-outline"></ion-icon>
-                <p>Drag & Drop CSV file or <span>Browse</span></p>
-                <input type="file" id="file-input" accept=".csv" hidden>
+            <div class="input-methods">
+                <div class="upload-area" id="drop-zone">
+                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                    <p>Drag & Drop CSV file or <span>Browse</span></p>
+                    <input type="file" id="file-input" accept=".csv" hidden>
+                </div>
+                <div class="method-divider"><span>OR</span></div>
+                <div class="url-input-area">
+                    <div class="url-field">
+                        <ion-icon name="link-outline"></ion-icon>
+                        <input type="text" id="url-input" placeholder="Paste CSV URL (e.g. https://example.com/data.csv)">
+                        <button id="fetch-btn" class="icon-btn" title="Fetch URL">
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <button id="paste-btn" class="secondary-btn full-width">
+                        <ion-icon name="clipboard-outline"></ion-icon> Paste from Clipboard
+                    </button>
+                </div>
             </div>
 
             <div class="settings-bar">

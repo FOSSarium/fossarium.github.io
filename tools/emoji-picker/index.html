@@ -35,12 +35,20 @@
 
         <div class="tool-card">
             <div class="search-section">
-                <div class="field">
-                    <div class="search-box">
-                        <ion-icon name="search-outline"></ion-icon>
-                        <input type="text" id="search" placeholder="Search emojis...">
-                    </div>
+                <div class="search-box">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="text" id="search" placeholder="Search emojis by name...">
                 </div>
+            </div>
+
+            <div class="categories-tab" id="category-tabs">
+                <button class="category-btn active" data-category="all">All</button>
+                <button class="category-btn" data-category="smileys">Smileys</button>
+                <button class="category-btn" data-category="animals">Animals</button>
+                <button class="category-btn" data-category="food">Food</button>
+                <button class="category-btn" data-category="activities">Activities</button>
+                <button class="category-btn" data-category="objects">Objects</button>
+                <button class="category-btn" data-category="symbols">Symbols</button>
             </div>
 
             <div class="emoji-grid" id="grid">
@@ -53,6 +61,12 @@
             </div>
         </div>
     </div>
+
+    <div class="copied-badge" id="copied-badge">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        Copied to clipboard!
+    </div>
+
     <script src="script.js"></script>
 </body>
 

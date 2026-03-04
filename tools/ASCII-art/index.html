@@ -5,11 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASCII Art Generator - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- Ionicons for beautiful icons -->
+
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
@@ -31,19 +30,48 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>ASCII Art</h1>
-            <p class="tool-subtitle">Convert text into professional ASCII art banners instantly.</p>
+            <p class="tool-subtitle">Design professional text banners with multiple ASCII font styles.</p>
         </div>
 
-        <div class="input-container">
-            <div class="input-row">
-                <input type="text" id="text-input" placeholder="Type text here..." value="SPECTRUM">
-                <button id="copy-btn" class="action-btn secondary">
-                    <ion-icon name="copy-outline"></ion-icon> Copy Art
+        <div class="ascii-layout">
+            <div class="tool-card settings-card">
+                <div class="field">
+                    <label>Input Text</label>
+                    <input type="text" id="text-input" placeholder="Type here..." value="FOSS">
+                </div>
+
+                <div class="field">
+                    <label>Font Style</label>
+                    <select id="font-select">
+                        <option value="block">Block (Heavy)</option>
+                        <option value="thin">Thin (Minimal)</option>
+                        <option value="rounded">Rounded (Soft)</option>
+                        <option value="digital">Digital (Clock)</option>
+                    </select>
+                </div>
+
+                <div class="field">
+                    <label>Fill Character</label>
+                    <div class="char-presets">
+                        <button class="char-btn active" data-char="#">#</button>
+                        <button class="char-btn" data-char="@">@</button>
+                        <button class="char-btn" data-char="*">*</button>
+                        <button class="char-btn" data-char="0">0</button>
+                        <button class="char-btn" data-char="+">+</button>
+                    </div>
+                </div>
+
+                <button id="copy-btn" class="btn primary-btn">
+                    <ion-icon name="copy-outline"></ion-icon> Copy ASCII Art
                 </button>
             </div>
-        </div>
 
-        <pre class="art-output" id="output"></pre>
+            <div class="output-section">
+                <div class="output-container">
+                    <pre id="output"></pre>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

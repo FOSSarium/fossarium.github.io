@@ -4,16 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON to CSV - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <title>JSON to CSV Converter - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -24,15 +30,83 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>JSON to CSV</h1>
-            <p class="tool-subtitle">Convert flat JSON arrays to CSV format.</p>
+            <p class="tool-subtitle">Transform structured JSON arrays into clean comma-separated values instantly.</p>
         </div>
-        <div class="actions-bar"><button id="convert-btn" class="action-btn primary"><ion-icon
-                    name="swap-horizontal-outline"></ion-icon> Convert</button><button id="copy-btn"
-                class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy</button></div>
-        <div class="editor-layout">
-            <div class="editor-pane"><label>JSON Input</label><textarea id="input"
-                    placeholder='[{"name":"Alice","age":30},{"name":"Bob","age":25}]'></textarea></div>
-            <div class="editor-pane"><label>CSV Output</label><textarea id="output" readonly></textarea></div>
+
+        <div class="tool-card">
+            <div class="input-methods">
+                <div class="upload-area" id="drop-zone">
+                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                    <p>Drag & Drop JSON file or <span>Browse</span></p>
+                    <input type="file" id="file-input" accept=".json" hidden>
+                </div>
+                <div class="method-divider"><span>OR</span></div>
+                <div class="url-input-area">
+                    <div class="url-field">
+                        <ion-icon name="link-outline"></ion-icon>
+                        <input type="text" id="url-input" placeholder="Paste JSON URL (e.g. https://api.example.com/data)">
+                        <button id="fetch-btn" class="icon-btn" title="Fetch URL">
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <button id="paste-btn" class="secondary-btn full-width">
+                        <ion-icon name="clipboard-outline"></ion-icon> Paste from Clipboard
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-bar">
+                <div class="setting-group">
+                    <label>Delimiter</label>
+                    <select id="delimiter-select">
+                        <option value=",">Comma (,)</option>
+                        <option value=";">Semicolon (;)</option>
+                        <option value="tab">Tab</option>
+                    </select>
+                </div>
+                <div class="setting-group checkbox">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="include-headers" checked>
+                        <span class="checkmark"></span>
+                        Include Header Row
+                    </label>
+                </div>
+            </div>
+
+            <div class="editor-layout">
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>JSON Input</label>
+                        <button class="icon-btn" id="clear-btn" title="Clear">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <textarea id="json-input" placeholder='[&#10;  {"name": "Alice", "age": 30, "city": "NYC"},&#10;  {"name": "Bob", "age": 25, "city": "LA"}&#10;]'></textarea>
+                </div>
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>CSV Output</label>
+                        <div class="header-actions">
+                            <button class="icon-btn" id="copy-btn" title="Copy">
+                                <ion-icon name="copy-outline"></ion-icon>
+                            </button>
+                            <button class="icon-btn" id="download-btn" title="Download">
+                                <ion-icon name="download-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="csv-output" readonly placeholder="CSV result will appear here..."></textarea>
+                </div>
+            </div>
+
+            <div id="preview-section" class="preview-section hidden">
+                <div class="pane-header">
+                    <label>Data Preview</label>
+                </div>
+                <div class="table-container">
+                    <table id="preview-table"></table>
+                </div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
