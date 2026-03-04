@@ -34,24 +34,64 @@
         </div>
 
         <div class="tool-card">
+            <div class="upload-area" id="drop-zone">
+                <ion-icon name="cloud-upload-outline"></ion-icon>
+                <p>Drag & Drop CSV file or <span>Browse</span></p>
+                <input type="file" id="file-input" accept=".csv" hidden>
+            </div>
+
+            <div class="settings-bar">
+                <div class="setting-group">
+                    <label>Indentation</label>
+                    <select id="indent-select">
+                        <option value="2">2 Spaces</option>
+                        <option value="4">4 Spaces</option>
+                        <option value="tab">Tabs</option>
+                        <option value="0">Minified</option>
+                    </select>
+                </div>
+                <div class="setting-group checkbox">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="header-row" checked>
+                        <span class="checkmark"></span>
+                        First row is header
+                    </label>
+                </div>
+            </div>
+
             <div class="editor-layout">
                 <div class="editor-pane">
-                    <label for="csv-input">CSV Input</label>
+                    <div class="pane-header">
+                        <label>CSV Input</label>
+                        <button class="icon-btn" id="clear-btn" title="Clear">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
                     <textarea id="csv-input" placeholder="name,age,city&#10;Alice,30,NYC&#10;Bob,25,LA"></textarea>
                 </div>
                 <div class="editor-pane">
-                    <label for="json-output">JSON Output</label>
+                    <div class="pane-header">
+                        <label>JSON Output</label>
+                        <div class="header-actions">
+                            <button class="icon-btn" id="copy-btn" title="Copy">
+                                <ion-icon name="copy-outline"></ion-icon>
+                            </button>
+                            <button class="icon-btn" id="download-btn" title="Download">
+                                <ion-icon name="download-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
                     <textarea id="json-output" readonly placeholder="JSON result will appear here..."></textarea>
                 </div>
             </div>
 
-            <div class="action-footer">
-                <button id="convert-btn" class="btn primary-btn">
-                    <ion-icon name="swap-horizontal-outline"></ion-icon> Convert Now
-                </button>
-                <button id="copy-btn" class="btn secondary-btn">
-                    <ion-icon name="copy-outline"></ion-icon> Copy JSON
-                </button>
+            <div id="preview-section" class="preview-section hidden">
+                <div class="pane-header">
+                    <label>Data Preview</label>
+                </div>
+                <div class="table-container">
+                    <table id="preview-table"></table>
+                </div>
             </div>
         </div>
     </div>

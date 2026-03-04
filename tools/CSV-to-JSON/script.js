@@ -1,35 +1,170 @@
 const csvInput = document.getElementById('csv-input');
 const jsonOutput = document.getElementById('json-output');
-const convertBtn = document.getElementById('convert-btn');
+const clearBtn = document.getElementById('clear-btn');
 const copyBtn = document.getElementById('copy-btn');
+const downloadBtn = document.getElementById('download-btn');
+const fileInput = document.getElementById('file-input');
+const dropZone = document.getElementById('drop-zone');
+const indentSelect = document.getElementById('indent-select');
+const headerRowCheckbox = document.getElementById('header-row');
+const previewSection = document.getElementById('preview-section');
+const previewTable = document.getElementById('preview-table');
 
-function convertCsvToJson() {
-    const csv = csvInput.value.trim();
-    if (!csv) {
+function parseCSV(text) {
+    const lines = [];
+    let currentRow = [];
+    let currentField = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (inQuotes) {
+            if (char === '"' && nextChar === '"') {
+                currentField += '"';
+                i++;
+            } else if (char === '"') {
+                inQuotes = false;
+            } else {
+                currentField += char;
+            }
+        } else {
+            if (char === '"') {
+                inQuotes = true;
+            } else if (char === ',') {
+                currentRow.push(currentField.trim());
+                currentField = '';
+            } else if (char === '\n' || char === '\r') {
+                currentRow.push(currentField.trim());
+                if (currentRow.length > 0 || currentField !== '') {
+                    lines.push(currentRow);
+                }
+                currentRow = [];
+                currentField = '';
+                if (char === '\r' && nextChar === '\n') i++;
+            } else {
+                currentField += char;
+            }
+        }
+    }
+    if (currentRow.length > 0 || currentField !== '') {
+        currentRow.push(currentField.trim());
+        lines.push(currentRow);
+    }
+    return lines;
+}
+
+function convert() {
+    const csvText = csvInput.value.trim();
+    if (!csvText) {
         jsonOutput.value = '';
+        previewSection.classList.add('hidden');
         return;
     }
 
-    try {
-        const lines = csv.split('\n').map(l => l.trim()).filter(l => l);
-        if (lines.length === 0) return;
+    const rows = parseCSV(csvText);
+    if (rows.length === 0) return;
 
-        const headers = lines[0].split(',').map(h => h.trim());
-        const result = lines.slice(1).map(line => {
-            const vals = line.split(',').map(v => v.trim());
+    let result;
+    const hasHeader = headerRowCheckbox.checked;
+
+    if (hasHeader) {
+        const headers = rows[0];
+        result = rows.slice(1).map(row => {
             const obj = {};
-            headers.forEach((h, i) => {
-                obj[h] = vals[i] !== undefined ? vals[i] : '';
+            headers.forEach((header, i) => {
+                obj[header] = row[i] !== undefined ? row[i] : null;
             });
             return obj;
         });
-
-        jsonOutput.value = JSON.stringify(result, null, 2);
-    } catch (e) {
-        jsonOutput.value = 'Error parsing CSV: ' + e.message;
+        updatePreview(headers, rows.slice(1, 11)); // Preview first 10 rows
+    } else {
+        result = rows;
+        updatePreview(null, rows.slice(0, 10));
     }
+
+    const indent = indentSelect.value === 'tab' ? '\t' : parseInt(indentSelect.value);
+    jsonOutput.value = JSON.stringify(result, null, indent);
+    previewSection.classList.remove('hidden');
 }
 
+function updatePreview(headers, rows) {
+    let html = '';
+    if (headers) {
+        html += `<thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>`;
+    }
+    html += `<tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody>`;
+    previewTable.innerHTML = html;
+}
+
+// Event Listeners
+csvInput.addEventListener('input', convert);
+indentSelect.addEventListener('change', convert);
+headerRowCheckbox.addEventListener('change', convert);
+
+clearBtn.addEventListener('click', () => {
+    csvInput.value = '';
+    convert();
+});
+
+copyBtn.addEventListener('click', () => {
+    if (!jsonOutput.value) return;
+    navigator.clipboard.writeText(jsonOutput.value);
+    const icon = copyBtn.querySelector('ion-icon');
+    copyBtn.style.color = 'var(--success)';
+    icon.setAttribute('name', 'checkmark-outline');
+    setTimeout(() => {
+        copyBtn.style.color = '';
+        icon.setAttribute('name', 'copy-outline');
+    }, 1500);
+});
+
+downloadBtn.addEventListener('click', () => {
+    if (!jsonOutput.value) return;
+    const blob = new Blob([jsonOutput.value], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'converted.json';
+    a.click();
+    URL.revokeObjectURL(url);
+});
+
+// File Upload Logic
+dropZone.addEventListener('click', () => fileInput.click());
+
+fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) handleFile(file);
+});
+
+dropZone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropZone.classList.add('drag-over');
+});
+
+dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag-over');
+});
+
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file) handleFile(file);
+});
+
+function handleFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        csvInput.value = e.target.result;
+        convert();
+    };
+    reader.readAsText(file);
+}
+
+// Theme Logic
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (!themeToggleBtn) return;
@@ -47,22 +182,5 @@ function initTheme() {
     });
 }
 
-convertBtn.addEventListener('click', convertCsvToJson);
-
-copyBtn.addEventListener('click', () => {
-    const json = jsonOutput.value;
-    if (!json) return;
-    
-    navigator.clipboard.writeText(json);
-    const icon = copyBtn.querySelector('ion-icon');
-    const originalName = icon.getAttribute('name');
-    icon.setAttribute('name', 'checkmark-outline');
-    copyBtn.style.color = 'var(--accent-color)';
-    
-    setTimeout(() => {
-        icon.setAttribute('name', originalName);
-        copyBtn.style.color = '';
-    }, 1500);
-});
-
 initTheme();
+convert();
