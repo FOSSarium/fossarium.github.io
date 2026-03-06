@@ -1,36 +1,128 @@
-let cards=JSON.parse(localStorage.getItem("fossarium-flashcards")||"[]"),idx=0,showFront=true;function save(){localStorage.setItem("fossarium-flashcards",JSON.stringify(cards));renderList();}function addCard(){const f=document.getElementById("front").value,b=document.getElementById("back").value;if(!f||!b)return;cards.push({front:f,back:b});document.getElementById("front").value="";document.getElementById("back").value="";save();}function renderList(){document.getElementById("card-list").innerHTML=cards.map((c,i)=>`<div class="card-item"><span>${c.front} → ${c.back}</span><span class="del" onclick="cards.splice(${i},1);save();">✕</span></div>`).join("");}function showCard(){if(!cards.length)return;showFront=true;document.getElementById("card-face").textContent=cards[idx].front;document.getElementById("counter").textContent=(idx+1)+"/"+cards.length;}function startStudy(){if(!cards.length)return;idx=0;document.getElementById("edit-view").style.display="none";document.getElementById("study-view").style.display="";showCard();}document.getElementById("card").addEventListener("click",()=>{showFront=!showFront;document.getElementById("card-face").textContent=showFront?cards[idx].front:cards[idx].back;});function prev(){idx=Math.max(0,idx-1);showCard();}function next(){idx=Math.min(cards.length-1,idx+1);showCard();}renderList();
+let cards = JSON.parse(localStorage.getItem("fossarium-flashcards") || "[]");
+let currentIndex = 0;
+let isFlipped = false;
 
+const mainView = document.getElementById('main-view');
+const studyView = document.getElementById('study-view');
+const cardList = document.getElementById('card-list');
+const deckCount = document.getElementById('deck-count');
+const studyCard = document.getElementById('study-card');
+const studyCardFront = document.getElementById('study-card-front');
+const studyCardBack = document.getElementById('study-card-back');
+const counter = document.getElementById('counter');
 
+function save() {
+    localStorage.setItem("fossarium-flashcards", JSON.stringify(cards));
+    renderList();
+}
+
+function addCard() {
+    const front = document.getElementById("front").value.trim();
+    const back = document.getElementById("back").value.trim();
+    if (!front || !back) return;
+    cards.push({ front, back });
+    document.getElementById("front").value = "";
+    document.getElementById("back").value = "";
+    save();
+}
+
+function deleteCard(index) {
+    cards.splice(index, 1);
+    save();
+}
+
+function renderList() {
+    deckCount.textContent = cards.length;
+    cardList.innerHTML = cards.map((c, i) => `
+        <div class="card-item">
+            <span>${c.front.substring(0, 30)}${c.front.length > 30 ? '...' : ''}</span>
+            <div class="del" onclick="deleteCard(${i})"><ion-icon name="trash-outline"></ion-icon></div>
+        </div>
+    `).join("");
+}
+
+function startStudy() {
+    if (cards.length === 0) return;
+    currentIndex = 0;
+    isFlipped = false;
+    studyCard.classList.remove('flipped');
+    mainView.classList.add('hidden');
+    studyView.classList.remove('hidden');
+    updateStudyCard();
+}
+
+function endStudy() {
+    studyView.classList.add('hidden');
+    mainView.classList.remove('hidden');
+}
+
+function updateStudyCard() {
+    studyCardFront.textContent = cards[currentIndex].front;
+    studyCardBack.textContent = cards[currentIndex].back;
+    counter.textContent = `${currentIndex + 1} / ${cards.length}`;
+}
+
+function next() {
+    if (currentIndex < cards.length - 1) {
+        currentIndex++;
+        isFlipped = false;
+        studyCard.classList.remove('flipped');
+        setTimeout(updateStudyCard, 150);
+    }
+}
+
+function prev() {
+    if (currentIndex > 0) {
+        currentIndex--;
+        isFlipped = false;
+        studyCard.classList.remove('flipped');
+        setTimeout(updateStudyCard, 150);
+    }
+}
+
+studyCard.addEventListener('click', () => {
+    isFlipped = !isFlipped;
+    studyCard.classList.toggle('flipped', isFlipped);
+});
+
+document.getElementById('start-study').addEventListener('click', startStudy);
+
+// Theme Logic
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
-    if (!themeToggleBtn) return;
-
     const icon = themeToggleBtn.querySelector('ion-icon');
-
     const savedTheme = localStorage.getItem('fossarium-theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    } else if (savedTheme === 'dark') {
+    
+    const setDarkMode = () => {
         document.documentElement.classList.remove('light-theme');
         if (icon) icon.setAttribute('name', 'sunny-outline');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    };
+    const setLightMode = () => {
         document.documentElement.classList.add('light-theme');
         if (icon) icon.setAttribute('name', 'moon-outline');
+    };
+
+    if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        setLightMode();
+    } else {
+        setDarkMode();
     }
 
     themeToggleBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('light-theme');
-        const isLight = document.documentElement.classList.contains('light-theme');
-
-        if (isLight) {
-            localStorage.setItem('fossarium-theme', 'light');
-            if (icon) icon.setAttribute('name', 'moon-outline');
-        } else {
+        if (document.documentElement.classList.contains('light-theme')) {
+            setDarkMode();
             localStorage.setItem('fossarium-theme', 'dark');
-            if (icon) icon.setAttribute('name', 'sunny-outline');
+        } else {
+            setLightMode();
+            localStorage.setItem('fossarium-theme', 'light');
         }
     });
 }
 
 initTheme();
+renderList();
+window.deleteCard = deleteCard;
+window.addCard = addCard;
+window.next = next;
+window.prev = prev;
+window.endStudy = endStudy;

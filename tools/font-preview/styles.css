@@ -1,117 +1,140 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
-    --bg-color: #050510;
+    --bg-color: #06061a;
     --text-color: #e6edf3;
-    --text-muted: #8b949e;
-    --card-bg: rgba(22, 27, 34, 0.4);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --hover-bg: rgba(33, 38, 45, 0.7);
+    --text-muted: #88aadd;
+    --card-bg: rgba(13, 17, 23, 0.8);
+    --card-border: rgba(88, 166, 255, 0.2);
+    --hover-bg: rgba(88, 166, 255, 0.15);
     --accent-color: #58a6ff;
-    --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
+    --accent-glow: rgba(88, 166, 255, 0.4);
+    --inner-bg: rgba(88, 166, 255, 0.08);
 }
 
 :root.light-theme {
-    --bg-color: #f8f9fa;
+    --bg-color: #f0f4f8;
     --text-color: #1a1a2e;
-    --text-muted: #6c757d;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --card-border: rgba(0, 0, 0, 0.08);
-    --hover-bg: rgba(240, 244, 248, 0.9);
+    --text-muted: #64748b;
+    --card-bg: rgba(255, 255, 255, 0.9);
+    --card-border: rgba(0, 86, 179, 0.2);
+    --hover-bg: rgba(88, 166, 255, 0.1);
     --accent-color: #0056b3;
 }
 
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
-}
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    min-height: 100vh;
+    padding: 40px 20px;
 }
 
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
-
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
-    margin: 0;
-    color: transparent;
-    background: linear-gradient(to right, var(--text-color), var(--accent-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    letter-spacing: -1.5px;
+.tool-container-wrapper {
+    max-width: 1000px;
+    width: 100%;
 }
 
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
+.tool-header { text-align: center; margin-bottom: 40px; }
+.tool-header h1 { font-size: 3.5rem; font-weight: 900; background: linear-gradient(135deg, var(--text-color), var(--accent-color)); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 0; }
+.tool-subtitle { color: var(--text-muted); font-size: 1.1rem; }
 
-.tool-container-wrapper{max-width:500px;width:100%;padding:20px}.tool-header{margin-bottom:20px}.tool-header h1{font-size:2.2rem;margin:0}.tool-subtitle{color:var(--text-muted);margin:5px 0 0 0}label{display:block;font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin:12px 0 6px}input,select,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid var(--card-border);background:var(--card-bg);color:var(--text-color);font-size:1rem;outline:0;box-sizing:border-box;font-family:"Inter",sans-serif}.action-btn{padding:12px 25px;border:none;border-radius:10px;font-weight:700;font-family:"Inter",sans-serif;font-size:1rem;cursor:pointer;margin-top:15px}.action-btn.primary{background:var(--gradient-5);color:#fff}.result-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:15px;margin-top:15px;font-family:"JetBrains Mono",monospace;min-height:30px}.font-list{margin-top:15px}.font-item{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:15px;margin-bottom:8px;cursor:pointer;transition:border-color .2s}.font-item:hover{border-color:var(--accent-color)}.font-name{font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;margin-bottom:5px}.font-sample{line-height:1.4}
-
-
-/* Theme Toggle Button */
-.theme-toggle-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-}
-
-#theme-toggle {
+.tool-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    color: var(--text-color);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 32px;
+    padding: 35px;
+    backdrop-filter: blur(15px);
+    margin-bottom: 40px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
-#theme-toggle:hover {
-    transform: scale(1.1);
-    color: var(--accent-color);
+.control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+@media (max-width: 750px) { .control-grid { grid-template-columns: 1fr; gap: 25px; } }
+
+.field label { display: block; font-size: 0.85rem; font-weight: 800; color: var(--accent-color); text-transform: uppercase; margin-bottom: 12px; letter-spacing: 1px; }
+.field label span { font-family: 'JetBrains Mono', monospace; }
+
+input[type="text"] {
+    width: 100%;
+    padding: 16px 22px;
+    border-radius: 16px;
+    border: 2px solid var(--card-border);
+    background: var(--inner-bg);
+    color: var(--text-color);
+    font-size: 1.1rem;
+    outline: none;
+    transition: 0.3s;
 }
+
+input[type="text"]:focus { border-color: var(--accent-color); background: rgba(88, 166, 255, 0.12); }
+
+input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 8px;
+    background: var(--card-border);
+    border-radius: 10px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.font-list { display: flex; flex-direction: column; gap: 25px; }
+
+.font-item {
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 32px;
+    padding: 35px;
+    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.font-item:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-5px);
+    background: var(--hover-bg);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.font-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid var(--card-border);
+    padding-bottom: 12px;
+}
+
+.font-name { font-weight: 900; font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+.copy-hint { font-size: 0.75rem; font-weight: 800; color: var(--accent-color); }
+
+.font-sample { line-height: 1.5; word-break: break-all; transition: font-size 0.2s ease; color: var(--text-color); }
+
+/* Theme & Blobs */
+.theme-toggle-container { position: fixed; top: 20px; right: 20px; z-index: 100; }
+#theme-toggle { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-color); width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
+.background-blobs { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; filter: blur(120px); opacity: 0.5; }
+.blob { position: absolute; border-radius: 50%; animation: float 25s infinite ease-in-out; }
+.blob-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(163, 113, 247, 0.4) 0%, rgba(0,0,0,0) 70%); }
+.blob-2 { bottom: -10%; right: -10%; width: 70vw; height: 70vw; background: radial-gradient(circle, rgba(88, 166, 255, 0.4) 0%, rgba(0,0,0,0) 70%); }
+@keyframes float { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(30px, -30px); } }
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--card-border); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-color); }

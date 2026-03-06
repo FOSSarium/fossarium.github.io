@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Text Generator - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <script>const s=localStorage.getItem('fossarium-theme');if(s==='light'||(!s&&window.matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Gradient Text</h1>
+            <p class="tool-subtitle">Create eye-catching text with customizable multi-color gradients.</p>
+        </div>
+        <div class="tool-card">
+            <div class="field"><label for="text">Text Input</label><input type="text" id="text" value="Gradient Text"></div>
+            <div class="field"><label>Gradient Colors</label><div class="color-stops" id="stops"></div></div>
+            <button id="add-color" class="btn secondary-btn"><ion-icon name="add-outline"></ion-icon> Add Color</button>
+            <div class="preview" id="preview">Gradient Text</div>
+            <div class="code-output-card">
+                <div class="code-header"><label>Generated CSS</label><button id="copy-btn" class="icon-btn" title="Copy CSS"><ion-icon name="copy-outline"></ion-icon></button></div>
+                <pre><code id="code"></code></pre>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex to RGB Converter - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+<body>
+    <script>const s=localStorage.getItem('fossarium-theme');if(s==='light'||(!s&&window.matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header"><h1>Hex ↔ RGB</h1><p class="tool-subtitle">Instantly convert colors with a visual picker and detailed values.</p></div>
+        <div class="converter-layout">
+            <div class="tool-card color-preview" id="preview">
+                <input type="color" id="color-picker" value="#58a6ff">
+            </div>
+            <div class="tool-card controls-card">
+                <div class="field-group">
+                    <div class="field"><label for="hex">HEX Code</label><input type="text" id="hex" value="#58A6FF"></div>
+                    <button class="icon-btn copy-btn" data-target="hex"><ion-icon name="copy-outline"></ion-icon></button>
+                </div>
+                <div class="rgb-container">
+                    <label>RGB Values</label>
+                    <div class="rgb-grid">
+                        <div class="field"><label for="r">Red</label><input type="number" id="r" value="88" min="0" max="255"></div>
+                        <div class="field"><label for="g">Green</label><input type="number" id="g" value="166" min="0" max="255"></div>
+                        <div class="field"><label for="b">Blue</label><input type="number" id="b" value="255" min="0" max="255"></div>
+                    </div>
+                    <button class="btn secondary-btn copy-btn" data-target="rgb" style="margin-top: 15px;"><ion-icon name="copy-outline"></ion-icon> Copy RGB</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

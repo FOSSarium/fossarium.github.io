@@ -1,36 +1,97 @@
-function update(){const cols=parseInt(document.getElementById("cols").value),rows=parseInt(document.getElementById("rows").value),gap=parseInt(document.getElementById("gap").value);const c=document.getElementById("container");c.style.gridTemplateColumns=`repeat(${cols}, 1fr)`;c.style.gridTemplateRows=`repeat(${rows}, 1fr)`;c.style.gap=gap+"px";c.innerHTML="";for(let i=0;i<cols*rows;i++){const d=document.createElement("div");d.className="grid-cell";d.textContent=i+1;c.appendChild(d);}document.getElementById("code").textContent=`display: grid;\ngrid-template-columns: repeat(${cols}, 1fr);\ngrid-template-rows: repeat(${rows}, 1fr);\ngap: ${gap}px;`;}document.querySelectorAll("input").forEach(e=>e.addEventListener("input",update));update();
+const colsInput = document.getElementById('cols');
+const rowsInput = document.getElementById('rows');
+const colGapInput = document.getElementById('col-gap');
+const rowGapInput = document.getElementById('row-gap');
+const container = document.getElementById('container');
+const codeEl = document.getElementById('code');
+const copyBtn = document.getElementById('copy-btn');
 
+function update() {
+    const cols = colsInput.value.trim() || '1fr 1fr 1fr';
+    const rows = rowsInput.value.trim() || '1fr 1fr';
+    const colGap = colGapInput.value || 0;
+    const rowGap = rowGapInput.value || 0;
 
+    try {
+        container.style.gridTemplateColumns = cols;
+        container.style.gridTemplateRows = rows;
+        container.style.columnGap = colGap + 'px';
+        container.style.rowGap = rowGap + 'px';
+
+        // Count items based on gaps/spaces
+        const colCount = cols.split(/\s+/).length;
+        const rowCount = rows.split(/\s+/).length;
+        const total = colCount * rowCount;
+
+        if (total > 0 && total < 200) {
+            container.innerHTML = '';
+            for (let i = 1; i <= total; i++) {
+                const div = document.createElement('div');
+                div.className = 'grid-cell';
+                div.textContent = i;
+                container.appendChild(div);
+            }
+        }
+
+        codeEl.textContent = `.grid-container {
+  display: grid;
+  grid-template-columns: ${cols};
+  grid-template-rows: ${rows};
+  column-gap: ${colGap}px;
+  row-gap: ${rowGap}px;
+}`;
+    } catch (e) {
+        // Silently fail for invalid CSS grid syntax during typing
+    }
+}
+
+[colsInput, rowsInput, colGapInput, rowGapInput].forEach(el => {
+    el.addEventListener('input', update);
+});
+
+copyBtn.addEventListener('click', () => {
+    navigator.clipboard.writeText(codeEl.textContent);
+    const icon = copyBtn.querySelector('ion-icon');
+    const originalName = icon.getAttribute('name');
+    icon.setAttribute('name', 'checkmark-outline');
+    copyBtn.style.color = '#3fb950';
+    setTimeout(() => {
+        icon.setAttribute('name', originalName);
+        copyBtn.style.color = '';
+    }, 1500);
+});
+
+// Theme Logic
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
-    if (!themeToggleBtn) return;
-
     const icon = themeToggleBtn.querySelector('ion-icon');
-
     const savedTheme = localStorage.getItem('fossarium-theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    } else if (savedTheme === 'dark') {
+    
+    const setDarkMode = () => {
         document.documentElement.classList.remove('light-theme');
         if (icon) icon.setAttribute('name', 'sunny-outline');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    };
+    const setLightMode = () => {
         document.documentElement.classList.add('light-theme');
         if (icon) icon.setAttribute('name', 'moon-outline');
+    };
+
+    if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+        setLightMode();
+    } else {
+        setDarkMode();
     }
 
     themeToggleBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('light-theme');
-        const isLight = document.documentElement.classList.contains('light-theme');
-
-        if (isLight) {
-            localStorage.setItem('fossarium-theme', 'light');
-            if (icon) icon.setAttribute('name', 'moon-outline');
-        } else {
+        if (document.documentElement.classList.contains('light-theme')) {
+            setDarkMode();
             localStorage.setItem('fossarium-theme', 'dark');
-            if (icon) icon.setAttribute('name', 'sunny-outline');
+        } else {
+            setLightMode();
+            localStorage.setItem('fossarium-theme', 'light');
         }
     });
 }
 
 initTheme();
+update();
