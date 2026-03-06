@@ -133,17 +133,6 @@ body {
     text-align: center;
 }
 
-/* Remove arrows/spinners from number input */
-.input-wrapper input::-webkit-outer-spin-button,
-.input-wrapper input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.input-wrapper input[type=number] {
-    -moz-appearance: textfield;
-}
-
 .input-unit {
     color: var(--text-muted);
     font-weight: 800;
