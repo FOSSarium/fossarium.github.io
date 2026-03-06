@@ -127,7 +127,7 @@ function generateCategoryGrid($targetCategory)
         </main>
 
         <footer class="app-footer">
-            <p>Made with ❤ by FOSSarium &bull; <a href="https://github.com/fossarium" target="_blank"><ion-icon
+            <p>Made with ❤️ by FOSSarium &bull; <a href="https://github.com/fossarium" target="_blank"><ion-icon
                         name="logo-github"></ion-icon> FOSSarium on GitHub</a></p>
         </footer>
 
