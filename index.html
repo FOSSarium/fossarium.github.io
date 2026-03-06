@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOSSarium - Premium FOSS Collection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" href="./icon.svg">
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>
+        // Prevent FOUC (Flash of Unstyled Content) by setting theme immediately
+        const savedTheme = localStorage.getItem('fossarium-theme');
+        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+            document.documentElement.classList.add('light-theme');
+        }
+    </script>
+    
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-container">
+                <img src="icon.svg" alt="FOSSarium Logo" class="logo-img">
+                <h1>FOSSarium</h1>
+            </div>
+            <p class="subtitle">The ultimate, ever-growing FOSS library.</p>
+
+            <div class="search-container">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="searchInput" placeholder="Search games and tools...">
+            </div>
+        </header>
+
+        <main class="app-main">
+            <section class="category-section" id="tools-section">
+                <div class="section-header">
+                    <h2><ion-icon name="hammer-outline"></ion-icon> Tools</h2>
+                </div>
+                <div class="item-grid" id="tools-grid"></div>
+            </section>
+
+            <section class="category-section" id="games-section">
+                <div class="section-header">
+                    <h2><ion-icon name="game-controller-outline"></ion-icon> Games</h2>
+                </div>
+                <div class="item-grid" id="games-grid"></div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <p>Made with ❤️ by FOSSarium &bull; <a href="https://github.com/fossarium" target="_blank"><ion-icon
+                        name="logo-github"></ion-icon> FOSSarium on GitHub</a></p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Helper function to mimic PHP's htmlspecialchars() to prevent XSS
+            function escapeHTML(str) {
+                if (typeof str !== 'string') return str;
+                return str.replace(/[&<>'"]/g, 
+                    tag => ({
+                        '&': '&amp;',
+                        '<': '&lt;',
+                        '>': '&gt;',
+                        "'": '&#39;',
+                        '"': '&quot;'
+                    }[tag] || tag)
+                );
+            }
+
+            // Helper function to mimic PHP's ucwords(str_replace('-', ' ', $str))
+            function formatTitle(str) {
+                return str.replace(/-/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+            }
+
+            // Fetch and render the data
+            async function loadFossariumData() {
+                try {
+                    // Note: This requires a local web server to bypass CORS issues!
+                    const response = await fetch('info.json');
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    const metadata = await response.json();
+
+                    // Generate HTML for a specific category
+                    function generateCategoryGrid(targetCategory) {
+                        let html = "";
+                        let index = 1;
+
+                        for (const [folderName, info] of Object.entries(metadata)) {
+                            const category = info.category || '';
+
+                            if (category === targetCategory) {
+                                const title = info.title || formatTitle(folderName);
+                                const description = info.description || "Modern FOSS tool.";
+                                const icon = info['icon-name'] || 'cube-outline';
+                                const credit = info.credit || "";
+
+                                const path = `${targetCategory}/${folderName}/index.html`;
+                                const gradientClass = `gradient-${(index % 9) + 1}`;
+                                const creditHtml = credit ? `<div class="card-credit">Credit: ${escapeHTML(credit)}</div>` : '';
+
+                                html += `
+                                    <a target="_blank" rel="noopener noreferrer" href="${path}" class="item-card" data-title="${escapeHTML(title)}">
+                                        ${creditHtml}
+                                        <div class="card-icon ${gradientClass}"><ion-icon name="${icon}"></ion-icon></div>
+                                        <div class="card-content">
+                                            <h3>${escapeHTML(title)}</h3>
+                                            <p>${escapeHTML(description)}</p>
+                                        </div>
+                                    </a>\n`;
+                                index++;
+                            }
+                        }
+                        return html;
+                    }
+
+                    // Inject the generated HTML into the DOM
+                    document.getElementById('tools-grid').innerHTML = generateCategoryGrid('tools');
+                    document.getElementById('games-grid').innerHTML = generateCategoryGrid('games');
+
+                } catch (error) {
+                    console.error("Failed to load project metadata:", error);
+                    document.getElementById('tools-grid').innerHTML = "<p>Error loading tools.</p>";
+                    document.getElementById('games-grid').innerHTML = "<p>Error loading games.</p>";
+                }
+            }
+
+            // Execute the function
+            loadFossariumData();
+        });
+    </script>
+</body>
+
+</html>
