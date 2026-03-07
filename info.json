@@ -286,13 +286,6 @@
         "credit": "FOSSarium",
         "category": "tools"
     },
-    "ip-lookup": {
-        "title": "IP Lookup",
-        "description": "Get location and network info from any IP.",
-        "icon-name": "location-outline",
-        "credit": "FOSSarium",
-        "category": "tools"
-    },
     "json-formatter": {
         "title": "JSON Formatter",
         "description": "Prettify and validate your JSON data.",

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Icon Search - FOSSarium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Icon Explorer</h1>
+            <p class="tool-subtitle">Search, preview, and copy names for Ionicons to use in your web projects.</p>
+        </div>
+
+        <div class="search-container">
+            <div class="search-wrapper">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="search" placeholder="Search icons (e.g. 'home', 'arrow', 'user')..." autofocus>
+            </div>
+            <div class="search-info" id="search-info">
+                Showing <span id="count">0</span> icons
+            </div>
+        </div>
+
+        <div class="icon-grid" id="grid">
+            <!-- Icons will be rendered here -->
+        </div>
+
+        <div id="toast" class="toast hidden">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <span id="toast-message">Copied to clipboard!</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
