@@ -12,6 +12,20 @@ const startBtn = document.getElementById("start-btn");
 const resetBtn = document.getElementById("reset-btn");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalOk = document.getElementById("modal-ok");
+const modalIcon = document.querySelector(".modal-icon");
+const modalTitle = document.getElementById("modal-title");
+const modalMessage = document.getElementById("modal-message");
+
+function showModal(icon, title, message) {
+    if (icon) modalIcon.setAttribute("name", icon);
+    if (title) modalTitle.textContent = title;
+    if (message) modalMessage.textContent = message;
+    modalOverlay.classList.remove("hidden");
+}
+
+function hideModal() {
+    modalOverlay.classList.add("hidden");
+}
 
 function formatTime(s) {
     const h = Math.floor(s / 3600);
@@ -42,7 +56,7 @@ function playBeep() {
 function startAlert() {
     playBeep();
     soundInterval = setInterval(playBeep, 1500);
-    modalOverlay.classList.remove("hidden");
+    showModal("alarm-outline", "Time's Up!", "The countdown has finished. Your timer has reached zero.");
 }
 
 function stopAlert() {
@@ -50,7 +64,7 @@ function stopAlert() {
         clearInterval(soundInterval);
         soundInterval = null;
     }
-    modalOverlay.classList.add("hidden");
+    hideModal();
 }
 
 function startTimer() {

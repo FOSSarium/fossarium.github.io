@@ -3,6 +3,20 @@ const result = document.getElementById("result");
 const startBtn = document.getElementById("start-btn");
 const modalOverlay = document.getElementById("modal-overlay");
 const modalOk = document.getElementById("modal-ok");
+const modalIcon = document.querySelector(".modal-icon");
+const modalTitle = document.querySelector(".modal-card h2");
+const modalMessage = document.querySelector(".modal-card p");
+
+function showModal(icon, title, message) {
+    modalIcon.setAttribute("name", icon);
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    modalOverlay.classList.remove("hidden");
+}
+
+function hideModal() {
+    modalOverlay.classList.add("hidden");
+}
 
 // Set default target to 1 month from now
 const d = new Date();
@@ -31,7 +45,7 @@ function playBeep() {
 function startAlert() {
     playBeep();
     soundInterval = setInterval(playBeep, 1500);
-    modalOverlay.classList.remove("hidden");
+    showModal("trophy-outline", "Target Reached!", "The countdown has finished. The moment you were waiting for is here!");
 }
 
 function stopAlert() {
@@ -39,7 +53,7 @@ function stopAlert() {
         clearInterval(soundInterval);
         soundInterval = null;
     }
-    modalOverlay.classList.add("hidden");
+    hideModal();
 }
 
 function update() {
@@ -93,7 +107,7 @@ function startCountdown() {
 
     const targetDate = new Date(target.value);
     if (isNaN(targetDate) || targetDate <= new Date()) {
-        alert("Please select a valid future date and time.");
+        showModal("alert-circle-outline", "Invalid Date", "Please select a valid future date and time.");
         return;
     }
 
