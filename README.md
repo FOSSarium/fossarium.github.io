@@ -14,6 +14,13 @@ Instead of scattered repositories, lists, and websites, Fossarium aims to become
 
 ---
 
+## 🧪 Live Testing URL
+
+You can test the latest build of the project here:
+**[View Live](https://fossarium.github.io/)**
+
+---
+
 ## 📚 What Fossarium Is
 
 Fossarium is a **curated and community-driven library** of:
@@ -46,22 +53,6 @@ A place where:
 * 🔎 Make discovering open-source tools easier
 * 🌱 Encourage developers to share their work
 * 🧠 Create a living knowledge base for FOSS
-
----
-
-## 🧭 Project Structure
-
-Fossarium will organize projects into categories such as:
-
-* AI / Machine Learning
-* Developer Tools
-* Productivity
-* Education
-* Creative Software
-* Security / Privacy
-* Utilities
-
-More categories will be added as the library grows.
 
 ---
 
