@@ -77,7 +77,7 @@ You can help by:
 * 📚 Adding new resources
 
 Contribution portal:
-**[Submit to Fossarium](ADD_YOUR_LINK_HERE)**
+**[Submit to Fossarium](https://forms.gle/TYq9GFsAuxBU3EXC8)**
 
 ---
 
@@ -113,4 +113,4 @@ If you like this project:
 
 * <big>Special Thanks to [@CharanKatyal](https://github.com/CharanKatyal) for **Creating and Maintaining Releases and Builds**</big>
 
-# &#x20;[Contribution portal](https://google.com)
+# &#x20;[Contribution portal](https://forms.gle/TYq9GFsAuxBU3EXC8)
