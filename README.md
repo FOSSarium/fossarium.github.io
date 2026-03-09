@@ -1,4 +1,9 @@
 # 🌱 Fossarium
+> [!WARNING]
+> Some games and tools are currently in progress and may not be working as expected.
+
+> [!IMPORTANT]
+> However some tools from age-calc to icon-search are marked complete, if you find anythin' in these tools do report on Contribution Portal.
 
 **Fossarium** is an **ever-growing library of Free and Open Source Software (FOSS)**.
 
@@ -13,12 +18,7 @@ Instead of scattered repositories, lists, and websites, Fossarium aims to become
 
 Fossarium is a **curated and community-driven library** of:
 
-* 🧰 Developer tools
-* 🌐 Open-source websites
-* 🤖 AI tools
-* 📱 Apps
-* 🎨 Creative software
-* 📖 Educational resources
+* 📱 Games
 * ⚙️ Utilities and system tools
 
 Everything inside Fossarium is **Free and Open Source**.
@@ -94,7 +94,7 @@ Contribution portal:
 
 ## 📜 License
 
-This project follows open-source principles.
+This project is lisensed under `FOSSarium Lisense` and follows open-source principles.
 See the `LICENSE` file for details.
 
 ---
@@ -107,6 +107,10 @@ If you like this project:
 * 📢 Share Fossarium
 * 🧩 Contribute new projects
 
-# &#x20;[Contribution portal](https://google.com)
-
 <big><big>Together we can build a **living library of open-source software.**</big></big>
+
+# Contributors
+
+* <big>Special Thanks to [@CharanKatyal](https://github.com/CharanKatyal) for **Creating and Maintaining Releases and Builds**</big>
+
+# &#x20;[Contribution portal](https://google.com)
