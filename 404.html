@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"> -->
     <style>
         :root {
             --primary-color: #007bff;
             --background-color: #f8f9fa;
             --text-color: #212529;
         }
+
+        @font-face {
+            font-family: 'Poppins';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url(Assets/fonts/Poppins.woff2) format('woff2');
+            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--background-color);
@@ -22,24 +33,29 @@
             margin: 0;
             text-align: center;
         }
+
         .container {
             max-width: 600px;
             padding: 2rem;
         }
+
         h1 {
             font-size: 6rem;
             font-weight: 600;
             color: var(--primary-color);
             margin: 0;
         }
+
         h2 {
             font-size: 1.5rem;
             margin: 1rem 0;
         }
+
         p {
             font-size: 1rem;
             color: #6c757d;
         }
+
         a {
             display: inline-block;
             margin-top: 2rem;
@@ -51,17 +67,21 @@
             font-weight: 600;
             transition: background-color 0.2s;
         }
+
         a:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>404</h1>
         <h2>Oops! Page Not Found.</h2>
-        <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+        <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+        </p>
         <a href="/">Go to Homepage</a>
     </div>
 </body>
+
 </html>
