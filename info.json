@@ -1000,13 +1000,6 @@
         "credit": "FOSSarium",
         "category": "games"
     },
-    "solitaire": {
-        "title": "Solitaire",
-        "description": "The classic card game of patience.",
-        "icon-name": "card-outline",
-        "credit": "FOSSarium",
-        "category": "games"
-    },
     "space-invaders": {
         "title": "Space Invaders",
         "description": "Defend the Earth from waves of aliens.",
@@ -1053,7 +1046,7 @@
         "title": "Tetris",
         "description": "Arrange falling blocks to clear lines.",
         "icon-name": "grid-outline",
-        "credit": "Alexey Pajitnov",
+        "credit": "FOSSarium, Alexey Pajitnov",
         "category": "games"
     },
     "tic-tac-toe": {
