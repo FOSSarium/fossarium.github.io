@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcard Maker - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
+
 <body>
-    <script>const s=localStorage.getItem('fossarium-theme');if(s==='light'||(!s&&window.matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light-theme');</script>
-    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
-    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon
+                name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Flashcards</h1>
@@ -21,13 +29,18 @@
         <div id="main-view">
             <div class="tool-card add-card-form">
                 <div class="input-grid">
-                    <div class="field"><label for="front">Front (Question)</label><textarea id="front" rows="3" placeholder="e.g., What is the capital of France?"></textarea></div>
-                    <div class="field"><label for="back">Back (Answer)</label><textarea id="back" rows="3" placeholder="e.g., Paris"></textarea></div>
+                    <div class="field"><label for="front">Front (Question)</label><textarea id="front" rows="3"
+                            placeholder="e.g., What is the capital of France?"></textarea></div>
+                    <div class="field"><label for="back">Back (Answer)</label><textarea id="back" rows="3"
+                            placeholder="e.g., Paris"></textarea></div>
                 </div>
-                <button onclick="addCard()" class="btn primary-btn"><ion-icon name="add-circle-outline"></ion-icon> Add Card</button>
+                <button onclick="addCard()" class="btn primary-btn"><ion-icon name="add-circle-outline"></ion-icon> Add
+                    Card</button>
             </div>
             <div class="tool-card card-list-container">
-                <div class="list-header"><label>Your Deck (<span id="deck-count">0</span>)</label><button id="start-study" class="btn secondary-btn"><ion-icon name="school-outline"></ion-icon> Study Now</button></div>
+                <div class="list-header"><label>Your Deck (<span id="deck-count">0</span>)</label><button
+                        id="start-study" class="btn secondary-btn"><ion-icon name="school-outline"></ion-icon> Study
+                        Now</button></div>
                 <div class="card-list" id="card-list"></div>
             </div>
         </div>
@@ -39,13 +52,16 @@
                 </div>
             </div>
             <div class="study-controls">
-                <button onclick="prev()" class="btn secondary-btn"><ion-icon name="arrow-back-outline"></ion-icon> Prev</button>
+                <button onclick="prev()" class="btn secondary-btn"><ion-icon name="arrow-back-outline"></ion-icon>
+                    Prev</button>
                 <div class="counter" id="counter">0/0</div>
-                <button onclick="next()" class="btn secondary-btn">Next <ion-icon name="arrow-forward-outline"></ion-icon></button>
+                <button onclick="next()" class="btn secondary-btn">Next <ion-icon
+                        name="arrow-forward-outline"></ion-icon></button>
             </div>
             <button onclick="endStudy()" class="text-btn">Return to Editor</button>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

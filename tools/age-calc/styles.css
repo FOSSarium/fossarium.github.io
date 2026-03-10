@@ -1,3 +1,12 @@
+/* Local Inter Variable Font */
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 380;
+    font-display: swap;
+    src: url('/assets/fonts/Inter.woff2') format('woff2');
+}
+
 :root {
     --bg-color: #06061a;
     --text-color: #e6edf3;
@@ -65,7 +74,7 @@ body {
 .age-layout {
     display: grid;
     grid-template-columns: 350px 1fr;
-    grid-template-areas: 
+    grid-template-areas:
         "control stats"
         "breakdown stats";
     gap: 25px;
@@ -74,7 +83,7 @@ body {
 @media (max-width: 900px) {
     .age-layout {
         grid-template-columns: 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "control"
             "stats"
             "breakdown";
@@ -322,21 +331,34 @@ input:focus {
 }
 
 @keyframes float {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.05); }
-    66% { transform: translate(-20px, 20px) scale(0.95); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -50px) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
 }
 
 ::-webkit-scrollbar {
     width: 6px;
 }
+
 ::-webkit-scrollbar-track {
     background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
     background: var(--card-border);
     border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent-color);
 }

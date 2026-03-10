@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CSS Grid Generator - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
+
 <body>
-    <script>const s=localStorage.getItem('fossarium-theme');if(s==='light'||(!s&&window.matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light-theme');</script>
-    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
-    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon
+                name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
-        <div class="tool-header"><h1>CSS Grid Generator</h1><p class="tool-subtitle">Visually create complex grid layouts and export the code.</p></div>
+        <div class="tool-header">
+            <h1>CSS Grid Generator</h1>
+            <p class="tool-subtitle">Visually create complex grid layouts and export the code.</p>
+        </div>
         <div class="grid-layout">
             <div class="tool-card controls-pane">
                 <div class="control-group">
                     <div class="group-header">
                         <label>Columns</label>
-                        <button id="add-col-btn" class="icon-btn small-btn" title="Add Column"><ion-icon name="add-outline"></ion-icon></button>
+                        <button id="add-col-btn" class="icon-btn small-btn" title="Add Column"><ion-icon
+                                name="add-outline"></ion-icon></button>
                     </div>
                     <div id="col-settings" class="track-settings"></div>
                 </div>
@@ -28,7 +40,8 @@
                 <div class="control-group">
                     <div class="group-header">
                         <label>Rows</label>
-                        <button id="add-row-btn" class="icon-btn small-btn" title="Add Row"><ion-icon name="add-outline"></ion-icon></button>
+                        <button id="add-row-btn" class="icon-btn small-btn" title="Add Row"><ion-icon
+                                name="add-outline"></ion-icon></button>
                     </div>
                     <div id="row-settings" class="track-settings"></div>
                 </div>
@@ -44,13 +57,17 @@
                     </div>
                 </div>
             </div>
-            <div class="tool-card preview-pane"><div class="grid-container" id="container"></div></div>
+            <div class="tool-card preview-pane">
+                <div class="grid-container" id="container"></div>
+            </div>
         </div>
         <div class="tool-card code-output-card">
-            <div class="code-header"><label>Generated CSS</label><button id="copy-btn" class="icon-btn" title="Copy CSS"><ion-icon name="copy-outline"></ion-icon></button></div>
+            <div class="code-header"><label>Generated CSS</label><button id="copy-btn" class="icon-btn"
+                    title="Copy CSS"><ion-icon name="copy-outline"></ion-icon></button></div>
             <pre><code id="code"></code></pre>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hash Generator - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
+
 <body>
-    <script>const s=localStorage.getItem('fossarium-theme');if(s==='light'||(!s&&window.matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light-theme');</script>
-    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
-    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon
+                name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
-        <div class="tool-header"><h1>Hash Generator</h1><p class="tool-subtitle">Securely generate SHA-256, SHA-512, and other hashes in real-time.</p></div>
+        <div class="tool-header">
+            <h1>Hash Generator</h1>
+            <p class="tool-subtitle">Securely generate SHA-256, SHA-512, and other hashes in real-time.</p>
+        </div>
         <div class="tool-card">
-            <div class="field"><label for="text-input">Input Text</label><textarea id="text-input" rows="4" placeholder="Enter text to hash..."></textarea></div>
+            <div class="field"><label for="text-input">Input Text</label><textarea id="text-input" rows="4"
+                    placeholder="Enter text to hash..."></textarea></div>
             <div class="hash-results">
                 <div class="hash-item">
-                    <div class="hash-label"><span>SHA-256</span><button class="copy-btn" data-target="sha256"><ion-icon name="copy-outline"></ion-icon></button></div>
+                    <div class="hash-label"><span>SHA-256</span><button class="copy-btn" data-target="sha256"><ion-icon
+                                name="copy-outline"></ion-icon></button></div>
                     <input type="text" id="sha256" readonly>
                 </div>
                 <div class="hash-item">
-                    <div class="hash-label"><span>SHA-512</span><button class="copy-btn" data-target="sha512"><ion-icon name="copy-outline"></ion-icon></button></div>
+                    <div class="hash-label"><span>SHA-512</span><button class="copy-btn" data-target="sha512"><ion-icon
+                                name="copy-outline"></ion-icon></button></div>
                     <input type="text" id="sha512" readonly>
                 </div>
                 <div class="hash-item">
-                    <div class="hash-label"><span>SHA-1</span><button class="copy-btn" data-target="sha1"><ion-icon name="copy-outline"></ion-icon></button></div>
+                    <div class="hash-label"><span>SHA-1</span><button class="copy-btn" data-target="sha1"><ion-icon
+                                name="copy-outline"></ion-icon></button></div>
                     <input type="text" id="sha1" readonly>
                 </div>
             </div>
@@ -35,4 +50,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

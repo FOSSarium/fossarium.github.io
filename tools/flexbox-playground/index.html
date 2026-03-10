@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flexbox Playground - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
+
 <body>
-    <script>const s=localStorage.getItem('fossarium-theme');if(s==='light'||(!s&&window.matchMedia('(prefers-color-scheme: light)').matches))document.documentElement.classList.add('light-theme');</script>
-    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
-    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Theme"><ion-icon
+                name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Flexbox Playground</h1>
@@ -22,14 +30,37 @@
             <div class="tool-card controls-pane">
                 <div class="control-group">
                     <label>Flex Container</label>
-                    <div class="field"><label for="flex-direction">flex-direction</label><select id="flex-direction"><option>row</option><option>column</option><option>row-reverse</option><option>column-reverse</option></select></div>
-                    <div class="field"><label for="justify-content">justify-content</label><select id="justify-content"><option>flex-start</option><option>flex-end</option><option>center</option><option>space-between</option><option>space-around</option><option>space-evenly</option></select></div>
-                    <div class="field"><label for="align-items">align-items</label><select id="align-items"><option>stretch</option><option>flex-start</option><option>flex-end</option><option>center</option><option>baseline</option></select></div>
-                    <div class="field"><label for="flex-wrap">flex-wrap</label><select id="flex-wrap"><option>nowrap</option><option>wrap</option><option>wrap-reverse</option></select></div>
+                    <div class="field"><label for="flex-direction">flex-direction</label><select id="flex-direction">
+                            <option>row</option>
+                            <option>column</option>
+                            <option>row-reverse</option>
+                            <option>column-reverse</option>
+                        </select></div>
+                    <div class="field"><label for="justify-content">justify-content</label><select id="justify-content">
+                            <option>flex-start</option>
+                            <option>flex-end</option>
+                            <option>center</option>
+                            <option>space-between</option>
+                            <option>space-around</option>
+                            <option>space-evenly</option>
+                        </select></div>
+                    <div class="field"><label for="align-items">align-items</label><select id="align-items">
+                            <option>stretch</option>
+                            <option>flex-start</option>
+                            <option>flex-end</option>
+                            <option>center</option>
+                            <option>baseline</option>
+                        </select></div>
+                    <div class="field"><label for="flex-wrap">flex-wrap</label><select id="flex-wrap">
+                            <option>nowrap</option>
+                            <option>wrap</option>
+                            <option>wrap-reverse</option>
+                        </select></div>
                 </div>
                 <div class="control-group">
                     <label>Items</label>
-                    <div class="field"><label for="item-count">Number of items</label><input type="range" id="item-count" min="1" max="10" value="3"></div>
+                    <div class="field"><label for="item-count">Number of items</label><input type="range"
+                            id="item-count" min="1" max="10" value="3"></div>
                 </div>
             </div>
             <div class="tool-card preview-pane">
@@ -37,10 +68,12 @@
             </div>
         </div>
         <div class="tool-card code-output-card">
-            <div class="code-header"><label>Generated CSS</label><button id="copy-btn" class="icon-btn" title="Copy CSS"><ion-icon name="copy-outline"></ion-icon></button></div>
+            <div class="code-header"><label>Generated CSS</label><button id="copy-btn" class="icon-btn"
+                    title="Copy CSS"><ion-icon name="copy-outline"></ion-icon></button></div>
             <pre><code id="code"></code></pre>
         </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

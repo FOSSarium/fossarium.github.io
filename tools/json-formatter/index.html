@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Formatter - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
 </head>
 
 <body class="game-body">
@@ -25,16 +27,19 @@
         }
     </script>
     <div class="app-container tool-container-wrapper">
-        
+
         <div class="tool-header">
             <h1>JSON Formatter</h1>
             <p class="tool-subtitle">Beautify, minify, and validate JSON instantly.</p>
         </div>
 
         <div class="actions-bar">
-            <button id="format-btn" class="action-btn primary"><ion-icon name="code-outline"></ion-icon> Beautify</button>
-            <button id="minify-btn" class="action-btn secondary"><ion-icon name="remove-outline"></ion-icon> Minify</button>
-            <button id="validate-btn" class="action-btn secondary"><ion-icon name="checkmark-circle-outline"></ion-icon> Validate</button>
+            <button id="format-btn" class="action-btn primary"><ion-icon name="code-outline"></ion-icon>
+                Beautify</button>
+            <button id="minify-btn" class="action-btn secondary"><ion-icon name="remove-outline"></ion-icon>
+                Minify</button>
+            <button id="validate-btn" class="action-btn secondary"><ion-icon name="checkmark-circle-outline"></ion-icon>
+                Validate</button>
             <button id="copy-btn" class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy</button>
             <button id="clear-btn" class="action-btn danger"><ion-icon name="trash-outline"></ion-icon> Clear</button>
         </div>
@@ -44,11 +49,13 @@
         <div class="editor-layout">
             <div class="editor-pane">
                 <label for="json-input">Input</label>
-                <textarea id="json-input" spellcheck="false" placeholder='Paste your JSON here...\n\n{"name": "FOSSarium", "type": "FOSS"}'></textarea>
+                <textarea id="json-input" spellcheck="false"
+                    placeholder='Paste your JSON here...\n\n{"name": "FOSSarium", "type": "FOSS"}'></textarea>
             </div>
             <div class="editor-pane">
                 <label for="json-output">Output</label>
-                <textarea id="json-output" spellcheck="false" readonly placeholder="Formatted output will appear here..."></textarea>
+                <textarea id="json-output" spellcheck="false" readonly
+                    placeholder="Formatted output will appear here..."></textarea>
             </div>
         </div>
     </div>

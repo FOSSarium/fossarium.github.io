@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="./icon.svg">
     <!-- Ionicons for beautiful icons -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
 <body>
@@ -103,7 +103,7 @@
                 '"': '&quot;',
                 "'": '&#039;'
             };
-            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
+            return text.toString().replace(/[&<>"']/g, function (m) { return map[m]; });
         }
 
         /**
