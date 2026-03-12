@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List - FOSSarium</title>
+    <meta name="description" content="A beautiful, persistent todo list with categories and local storage.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-
-    <div class="theme-toggle-container">
-        <button id="theme-toggle" title="Toggle Light/Dark Theme">
-            <ion-icon name="sunny-outline"></ion-icon>
-        </button>
-    </div>
-
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Light/Dark Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
-        <div class="tool-header">
-            <h1>To-Do List</h1>
-            <p class="tool-subtitle">Local storage task manager.</p>
+        <div class="tool-header"><h1>Todo List</h1><p class="tool-subtitle">Manage tasks with persistence — everything is saved locally.</p></div>
+        <div class="tool-card">
+            <div class="add-row">
+                <input type="text" id="todo-input" placeholder="What needs to be done?" autofocus>
+                <button id="add-btn" class="add-btn"><ion-icon name="add-outline"></ion-icon></button>
+            </div>
+            <div class="filter-row">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="done">Done</button>
+            </div>
+            <div class="todo-list" id="todo-list"></div>
+            <div class="footer-row">
+                <span class="count" id="count">0 items</span>
+                <button class="clear-btn" id="clear-done"><ion-icon name="trash-outline"></ion-icon> Clear done</button>
+            </div>
         </div>
-        <div class="add-row"><input type="text" id="task-input" placeholder="Add a new task..."><button id="add-btn"
-                class="action-btn primary"><ion-icon name="add-outline"></ion-icon></button></div>
-        <ul id="task-list"></ul>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

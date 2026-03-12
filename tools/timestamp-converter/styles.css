@@ -1,197 +1,37 @@
-/* ===== FOSSarium Shared Base Styles ===== */
-:root {
-    --bg-color: #050510;
-    --text-color: #e6edf3;
-    --text-muted: #8b949e;
-    --card-bg: rgba(22, 27, 34, 0.4);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --hover-bg: rgba(33, 38, 45, 0.7);
-    --accent-color: #58a6ff;
-    --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
-}
-
-:root.light-theme {
-    --bg-color: #f8f9fa;
-    --text-color: #1a1a2e;
-    --text-muted: #6c757d;
-    --card-bg: rgba(255, 255, 255, 0.8);
-    --card-border: rgba(0, 0, 0, 0.08);
-    --hover-bg: rgba(240, 244, 248, 0.9);
-    --accent-color: #0056b3;
-}
-
-body {
-    margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
-}
-
-.app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
-}
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
-}
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
-
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
-    margin: 0;
-    color: transparent;
-    background: linear-gradient(to right, var(--text-color), var(--accent-color));
-    -webkit-background-clip: text;
-    background-clip: text;
-    letter-spacing: -1.5px;
-}
-
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
-
-.tool-container-wrapper {
-    max-width: 550px;
-    width: 100%;
-    padding: 20px
-}
-
-.tool-header {
-    margin-bottom: 15px
-}
-
-.tool-header h1 {
-    font-size: 2.2rem;
-    margin: 0
-}
-
-.tool-subtitle {
-    color: var(--text-muted);
-    margin: 5px 0 0 0
-}
-
-.now-box {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 12px;
-    text-align: center;
-    font-weight: 700;
-    font-family: 'JetBrains Mono', monospace;
-    margin-bottom: 20px;
-    color: var(--accent-color)
-}
-
-.section {
-    margin-bottom: 20px
-}
-
-.section label {
-    display: block;
-    font-size: .8rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    margin-bottom: 8px
-}
-
-.section input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--card-border);
-    background: var(--card-bg);
-    color: var(--text-color);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 1rem;
-    outline: 0;
-    box-sizing: border-box;
-    margin-bottom: 8px
-}
-
-.sm-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    font-size: .85rem;
-    cursor: pointer;
-    background: var(--gradient-1);
-    color: #000;
-    margin-bottom: 8px
-}
-
-.result-box {
-    background: rgba(22, 27, 34, .4);
-    border: 1px solid var(--card-border);
-    border-radius: 8px;
-    padding: 12px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: .9rem;
-    min-height: 20px;
-    color: var(--accent-color)
-}
-
-/* Theme Toggle Button */
-.theme-toggle-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-}
-
-#theme-toggle {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    color: var(--text-color);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-#theme-toggle:hover {
-    transform: scale(1.1);
-    color: var(--accent-color);
-}
+:root{--bg-color:#050510;--text-color:#e6edf3;--text-muted:#8b949e;--card-bg:rgba(22,27,34,0.4);--card-border:rgba(255,255,255,0.05);--hover-bg:rgba(33,38,45,0.7);--accent-color:#58a6ff;--accent-glow:rgba(88,166,255,0.3);--gradient-1:linear-gradient(135deg,#1fa2ff,#12d8fa,#a6ffcb);--gradient-2:linear-gradient(135deg,#f12711,#f5af19)}
+:root.light-theme{--bg-color:#f8f9fa;--text-color:#1a1a2e;--text-muted:#6c757d;--card-bg:rgba(255,255,255,0.8);--card-border:rgba(0,0,0,0.08);--hover-bg:rgba(240,244,248,0.9);--accent-color:#0056b3;--accent-glow:rgba(0,86,179,0.15)}
+body{margin:0;font-family:'Inter',-apple-system,sans-serif;background-color:var(--bg-color);color:var(--text-color);line-height:1.5;overflow-x:hidden;min-height:100vh}
+.background-blobs{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden;opacity:.6;pointer-events:none}
+.blob{position:absolute;width:40vw;height:40vw;border-radius:50%;filter:blur(80px);animation:move 20s infinite alternate ease-in-out}
+.blob-1{top:-10%;left:-10%;background:var(--gradient-1);opacity:.2}.blob-2{bottom:-10%;right:-10%;background:var(--gradient-2);opacity:.15;animation-delay:-5s}
+@keyframes move{from{transform:translate(0,0) scale(1)}to{transform:translate(10%,10%) scale(1.1)}}
+.app-container{max-width:1200px;margin:0 auto;padding:60px 20px 40px}.tool-container-wrapper{max-width:560px}
+.tool-header{margin-bottom:25px;text-align:center}
+.tool-header h1{font-size:clamp(2rem,6vw,3.5rem);font-weight:900;margin:0;color:transparent;background:linear-gradient(to right,var(--text-color),var(--accent-color));-webkit-background-clip:text;background-clip:text;letter-spacing:-1.5px}
+.tool-subtitle{color:var(--text-muted);font-size:1.05rem;margin:10px auto 0}
+.theme-toggle-container{position:absolute;top:20px;right:20px;z-index:100}
+#theme-toggle{background:var(--card-bg);border:1px solid var(--card-border);color:var(--text-color);width:45px;height:45px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;transition:all .3s;backdrop-filter:blur(10px)}
+#theme-toggle:hover{transform:scale(1.1);color:var(--accent-color);box-shadow:0 0 15px var(--accent-glow)}
+.tool-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:20px;padding:30px;backdrop-filter:blur(15px)}
+.live-clock{text-align:center;margin-bottom:20px;padding:16px;background:var(--hover-bg);border-radius:14px;border:1px solid var(--card-border)}
+.clock-label{display:block;font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.clock-value{font-family:'JetBrains Mono',monospace;font-size:clamp(1.5rem,5vw,2rem);font-weight:900;color:var(--accent-color);cursor:pointer}
+.clock-value:hover{text-decoration:underline}
+.mode-tabs{display:flex;gap:6px;margin-bottom:20px;background:var(--hover-bg);border-radius:12px;padding:4px}
+.mode-btn{flex:1;padding:11px;border:none;border-radius:10px;background:transparent;color:var(--text-muted);font-size:.85rem;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .2s}
+.mode-btn:hover{color:var(--text-color)}.mode-btn.active{background:var(--accent-color);color:#fff;box-shadow:0 4px 12px var(--accent-glow)}
+label{font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;display:block}
+.input-row{display:flex;gap:8px;margin-bottom:16px}
+.input-row input{flex:1}
+input[type="number"],input[type="datetime-local"]{width:100%;padding:14px 16px;border-radius:12px;border:1px solid var(--card-border);background:var(--hover-bg);color:var(--text-color);font-size:1rem;font-family:'JetBrains Mono',monospace;outline:none;box-sizing:border-box;transition:border-color .2s}
+input:focus{border-color:var(--accent-color)}
+.now-btn{padding:12px 18px;border:1px solid var(--card-border);border-radius:12px;background:var(--hover-bg);color:var(--accent-color);font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .15s;white-space:nowrap}
+.now-btn:hover{border-color:var(--accent-color);background:rgba(88,166,255,.1)}
+.result-grid{display:flex;flex-direction:column;gap:8px}
+.result-item{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--hover-bg);border-radius:10px;border:1px solid var(--card-border);cursor:pointer;transition:border-color .15s}
+.result-item:hover{border-color:var(--accent-color)}
+.r-label{font-size:.8rem;font-weight:700;color:var(--text-muted);text-transform:uppercase}
+.r-value{font-family:'JetBrains Mono',monospace;font-size:.88rem;font-weight:600;color:var(--text-color);text-align:right;word-break:break-all}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:12px 25px;border-radius:50px;display:flex;align-items:center;gap:10px;box-shadow:0 10px 30px rgba(0,0,0,.3);z-index:1000;font-weight:600;transition:all .3s}
+.toast ion-icon{font-size:1.4rem}.hidden{display:none!important}
+@media(max-width:500px){.tool-card{padding:20px 16px}}

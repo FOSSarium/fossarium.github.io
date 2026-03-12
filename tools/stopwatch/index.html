@@ -1,74 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stopwatch - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet">
+    <meta name="description" content="Track elapsed time with precision lap support and millisecond accuracy.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- Ionicons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
-
-<body class="tool-body">
-
-    <div class="theme-toggle-container">
-        <button id="theme-toggle" title="Toggle Light/Dark Theme">
-            <ion-icon name="sunny-outline"></ion-icon>
-        </button>
-    </div>
-
-    <script>
-        const savedTheme = localStorage.getItem('fossarium-theme');
-        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            document.documentElement.classList.add('light-theme');
-        }
-    </script>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Light/Dark Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
 
     <div class="app-container tool-container-wrapper">
-
-
         <div class="tool-header">
-            <div class="tool-title">
-                <div class="card-icon gradient-5"><ion-icon name="stopwatch-outline"></ion-icon></div>
-                <h1>Stopwatch</h1>
-            </div>
+            <h1>Stopwatch</h1>
+            <p class="tool-subtitle">Precision timing with lap support and millisecond accuracy.</p>
         </div>
-
-        <div class="stopwatch-container">
+        <div class="tool-card">
             <div class="time-display" id="display">
-                <span class="digits" id="hours">00</span>:<span class="digits" id="minutes">00</span>:<span
-                    class="digits" id="seconds">00</span><span class="milliseconds" id="milliseconds">.00</span>
+                <span class="digits" id="hours">00</span>:<span class="digits" id="minutes">00</span>:<span class="digits" id="seconds">00</span><span class="ms" id="ms">.00</span>
             </div>
-
             <div class="controls">
-                <button id="btn-start" class="btn primary-btn"><ion-icon name="play-outline"></ion-icon> Start</button>
-                <button id="btn-pause" class="btn secondary-btn hidden"><ion-icon name="pause-outline"></ion-icon>
-                    Pause</button>
-                <button id="btn-lap" class="btn utility-btn" disabled><ion-icon name="flag-outline"></ion-icon>
-                    Lap</button>
-                <button id="btn-reset" class="btn danger-btn"><ion-icon name="refresh-outline"></ion-icon>
-                    Reset</button>
+                <button id="start-btn" class="play-btn"><ion-icon name="play-outline" id="play-icon"></ion-icon></button>
+                <button id="lap-btn" class="secondary-btn" disabled><ion-icon name="flag-outline"></ion-icon> Lap</button>
+                <button id="reset-btn" class="secondary-btn"><ion-icon name="refresh-outline"></ion-icon> Reset</button>
             </div>
-
-            <div class="laps-container">
-                <div class="laps-header">
-                    <span>Lap</span>
-                    <span>Lap Time</span>
-                    <span>Total Time</span>
-                </div>
-                <ul id="laps-list" class="laps-list">
-                    <!-- Laps inserted here via JS -->
-                </ul>
+            <div class="laps-container hidden" id="laps-container">
+                <div class="laps-header"><span>Lap</span><span>Lap Time</span><span>Total</span></div>
+                <div class="laps-list" id="laps-list"></div>
             </div>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
-
 </html>

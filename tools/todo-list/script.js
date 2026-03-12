@@ -1,53 +1,64 @@
-const input = document.getElementById('task-input'), list = document.getElementById('task-list');
-let tasks = JSON.parse(localStorage.getItem('fossarium-todos') || '[]');
-function save() { localStorage.setItem('fossarium-todos', JSON.stringify(tasks)); }
+const STORAGE_KEY = 'fossarium-todos';
+let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+let filter = 'all';
+const input = document.getElementById('todo-input'), list = document.getElementById('todo-list'), countEl = document.getElementById('count');
+
+function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(todos)); }
+
 function render() {
-    list.innerHTML = '';
-    tasks.forEach((t, i) => {
-        const li = document.createElement('li');
-        if (t.done) li.classList.add('done');
-        li.innerHTML = `<input type="checkbox" ${t.done ? 'checked' : ''}><span>${t.text}</span><button>✕</button>`;
-        li.querySelector('input').addEventListener('change', () => { tasks[i].done = !tasks[i].done; save(); render(); });
-        li.querySelector('button').addEventListener('click', () => { tasks.splice(i, 1); save(); render(); });
-        list.appendChild(li);
-    });
+    const filtered = todos.filter(t => filter === 'all' || (filter === 'active' && !t.done) || (filter === 'done' && t.done));
+    list.innerHTML = filtered.map(t => `
+        <div class="todo-item${t.done ? ' done' : ''}" data-id="${t.id}">
+            <button class="todo-check" data-action="toggle">${t.done ? '✓' : ''}</button>
+            <span class="todo-text">${esc(t.text)}</span>
+            <button class="todo-del" data-action="delete"><ion-icon name="close-outline"></ion-icon></button>
+        </div>`).join('');
+    const active = todos.filter(t => !t.done).length;
+    countEl.textContent = `${active} item${active !== 1 ? 's' : ''} left`;
 }
-function addTask() { const text = input.value.trim(); if (!text) return; tasks.push({ text, done: false }); input.value = ''; save(); render(); }
-document.getElementById('add-btn').addEventListener('click', addTask);
-input.addEventListener('keydown', e => { if (e.key === 'Enter') addTask(); });
+
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function addTodo() {
+    const text = input.value.trim();
+    if (!text) return;
+    todos.unshift({ id: Date.now(), text, done: false });
+    input.value = ''; save(); render();
+}
+
+list.addEventListener('click', e => {
+    const item = e.target.closest('[data-action]');
+    if (!item) return;
+    const id = parseInt(e.target.closest('.todo-item').dataset.id);
+    if (item.dataset.action === 'toggle') {
+        const t = todos.find(x => x.id === id);
+        if (t) t.done = !t.done;
+    } else if (item.dataset.action === 'delete') {
+        todos = todos.filter(x => x.id !== id);
+    }
+    save(); render();
+});
+
+document.getElementById('add-btn').addEventListener('click', addTodo);
+input.addEventListener('keydown', e => { if (e.key === 'Enter') addTodo(); });
+
+document.querySelectorAll('.filter-btn').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active'); filter = b.dataset.filter; render();
+}));
+
+document.getElementById('clear-done').addEventListener('click', () => { todos = todos.filter(t => !t.done); save(); render(); });
+
 render();
 
-
-function initTheme() {
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    if (!themeToggleBtn) return;
-
-    const icon = themeToggleBtn.querySelector('ion-icon');
-
-    const savedTheme = localStorage.getItem('fossarium-theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    } else if (savedTheme === 'dark') {
-        document.documentElement.classList.remove('light-theme');
-        if (icon) icon.setAttribute('name', 'sunny-outline');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    }
-
-    themeToggleBtn.addEventListener('click', () => {
+(function() {
+    const b = document.getElementById('theme-toggle'), icon = b.querySelector('ion-icon');
+    const u = t => icon.setAttribute('name', t === 'light' ? 'moon-outline' : 'sunny-outline');
+    const sv = localStorage.getItem('fossarium-theme');
+    if (sv) u(sv); else if (matchMedia('(prefers-color-scheme:light)').matches) u('light');
+    b.addEventListener('click', () => {
         document.documentElement.classList.toggle('light-theme');
-        const isLight = document.documentElement.classList.contains('light-theme');
-
-        if (isLight) {
-            localStorage.setItem('fossarium-theme', 'light');
-            if (icon) icon.setAttribute('name', 'moon-outline');
-        } else {
-            localStorage.setItem('fossarium-theme', 'dark');
-            if (icon) icon.setAttribute('name', 'sunny-outline');
-        }
+        const l = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', l ? 'light' : 'dark'); u(l ? 'light' : 'dark');
     });
-}
-
-initTheme();
+})();
