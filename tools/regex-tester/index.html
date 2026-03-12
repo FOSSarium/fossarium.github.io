@@ -5,18 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Regex Tester - FOSSarium</title>
+    <meta name="description" content="Test and debug regular expressions in real-time with match highlighting.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -27,19 +31,71 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Regex Tester</h1>
-            <p class="tool-subtitle">Test regular expressions against text in real-time.</p>
+            <p class="tool-subtitle">Test, debug, and visualize regular expressions in real-time.</p>
         </div>
-        <div class="regex-input-row"><span class="regex-slash">/</span><input type="text" id="regex-input"
-                placeholder="your regex here"><span class="regex-slash">/</span><input type="text" id="flags-input"
-                value="g" class="flags-input"></div>
-        <div id="status" class="status-bar hidden"></div>
-        <div class="editor-pane"><label>Test String</label><textarea id="test-input"
-                placeholder="Enter test text..."></textarea></div>
-        <div class="matches-section">
-            <h3>Matches (<span id="match-count">0</span>)</h3>
-            <div id="matches-output" class="matches-output"></div>
+
+        <div class="tool-card">
+            <div class="regex-input-section">
+                <label for="regex-input">Regular Expression</label>
+                <div class="regex-row">
+                    <span class="regex-delim">/</span>
+                    <input type="text" id="regex-input" placeholder="your pattern here" spellcheck="false">
+                    <span class="regex-delim">/</span>
+                    <input type="text" id="flags-input" class="flags-input" value="g" placeholder="flags" spellcheck="false">
+                </div>
+            </div>
+
+            <div class="flag-toggles">
+                <button class="flag-btn active" data-flag="g" title="Global">g</button>
+                <button class="flag-btn" data-flag="i" title="Case insensitive">i</button>
+                <button class="flag-btn" data-flag="m" title="Multiline">m</button>
+                <button class="flag-btn" data-flag="s" title="Dotall">s</button>
+                <button class="flag-btn" data-flag="u" title="Unicode">u</button>
+            </div>
+
+            <div class="test-input-section">
+                <label for="test-input">Test String</label>
+                <div class="test-area-wrap">
+                    <div class="highlighted-text" id="highlighted-text"></div>
+                    <textarea id="test-input" placeholder="Enter text to test against..." rows="5" spellcheck="false"></textarea>
+                </div>
+            </div>
+
+            <div class="match-info" id="match-info">
+                <div class="match-stat">
+                    <span class="match-count" id="match-count">0</span>
+                    <span class="match-label">Matches</span>
+                </div>
+                <div class="match-stat">
+                    <span class="match-count" id="group-count">0</span>
+                    <span class="match-label">Groups</span>
+                </div>
+            </div>
+
+            <div class="error-box hidden" id="error-box">
+                <ion-icon name="alert-circle-outline"></ion-icon>
+                <span id="error-text"></span>
+            </div>
+
+            <div class="matches-section hidden" id="matches-section">
+                <h3><ion-icon name="list-outline"></ion-icon> Match Details</h3>
+                <div class="matches-list" id="matches-list"></div>
+            </div>
+
+            <div class="presets-section">
+                <h3><ion-icon name="bookmark-outline"></ion-icon> Common Patterns</h3>
+                <div class="preset-grid">
+                    <button class="preset-btn" data-regex="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" data-flags="g">Email</button>
+                    <button class="preset-btn" data-regex="https?://[^\s]+" data-flags="g">URL</button>
+                    <button class="preset-btn" data-regex="\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b" data-flags="g">IP Address</button>
+                    <button class="preset-btn" data-regex="#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})\b" data-flags="g">Hex Color</button>
+                    <button class="preset-btn" data-regex="\(\d{3}\)\s?\d{3}-\d{4}" data-flags="g">Phone</button>
+                    <button class="preset-btn" data-regex="\d{4}-\d{2}-\d{2}" data-flags="g">Date</button>
+                </div>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 

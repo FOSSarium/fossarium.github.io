@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Checker - FOSSarium</title>
+    <meta name="description" content="Verify if any number is prime, explore nearby primes, and discover prime factorizations.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Prime Checker</h1>
+            <p class="tool-subtitle">Verify primality, explore nearby primes, and find factorizations.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="input-group">
+                <label for="num-input">Enter a number</label>
+                <div class="input-row">
+                    <input type="number" id="num-input" placeholder="e.g. 97" min="0" autocomplete="off">
+                    <button id="check-btn" class="action-btn">
+                        <ion-icon name="flash-outline"></ion-icon> Check
+                    </button>
+                </div>
+            </div>
+
+            <div class="result-card hidden" id="result-card">
+                <div class="result-badge" id="result-badge">
+                    <ion-icon id="result-icon" name="checkmark-circle"></ion-icon>
+                    <span id="result-text"></span>
+                </div>
+                <div class="result-detail" id="result-detail"></div>
+            </div>
+
+            <div class="section hidden" id="factorization-section">
+                <h3><ion-icon name="git-branch-outline"></ion-icon> Prime Factorization</h3>
+                <div class="factor-chips" id="factor-chips"></div>
+            </div>
+
+            <div class="section hidden" id="nearby-section">
+                <h3><ion-icon name="ellipsis-horizontal-outline"></ion-icon> Nearby Primes</h3>
+                <div class="nearby-grid" id="nearby-grid"></div>
+            </div>
+
+            <div class="quick-checks">
+                <h3><ion-icon name="rocket-outline"></ion-icon> Quick Check</h3>
+                <div class="quick-grid">
+                    <button class="quick-btn" data-val="2">2</button>
+                    <button class="quick-btn" data-val="7">7</button>
+                    <button class="quick-btn" data-val="13">13</button>
+                    <button class="quick-btn" data-val="97">97</button>
+                    <button class="quick-btn" data-val="100">100</button>
+                    <button class="quick-btn" data-val="541">541</button>
+                    <button class="quick-btn" data-val="997">997</button>
+                    <button class="quick-btn" data-val="7919">7919</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
