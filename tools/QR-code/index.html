@@ -5,13 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Create QR codes for URLs, text, WiFi credentials, and more.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 </head>
 
-<body class="game-body">
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -19,25 +29,80 @@
         </button>
     </div>
 
-    <script>
-        const savedTheme = localStorage.getItem('fossarium-theme');
-        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            document.documentElement.classList.add('light-theme');
-        }
-    </script>
     <div class="app-container tool-container-wrapper">
-
         <div class="tool-header">
-            <h1>QR Code Generator</h1>
-            <p class="tool-subtitle">Create QR codes from text or URLs.</p>
+            <h1>QR Code</h1>
+            <p class="tool-subtitle">Generate QR codes for URLs, text, and more — entirely client-side.</p>
         </div>
-        <div class="input-group">
-            <input type="text" id="qr-input" placeholder="Enter text or URL...">
-            <button id="generate-btn" class="action-btn primary"><ion-icon name="qr-code-outline"></ion-icon>
-                Generate</button>
+
+        <div class="tool-card">
+            <div class="input-section">
+                <label for="qr-input">Content</label>
+                <textarea id="qr-input" placeholder="Enter a URL, text, or any content..." rows="3"></textarea>
+            </div>
+
+            <div class="options-row">
+                <div class="option-group">
+                    <label for="qr-size">Size</label>
+                    <select id="qr-size">
+                        <option value="128">128 × 128</option>
+                        <option value="200">200 × 200</option>
+                        <option value="256" selected>256 × 256</option>
+                        <option value="350">350 × 350</option>
+                        <option value="512">512 × 512</option>
+                    </select>
+                </div>
+                <div class="option-group">
+                    <label for="qr-correction">Error Correction</label>
+                    <select id="qr-correction">
+                        <option value="L">Low (7%)</option>
+                        <option value="M" selected>Medium (15%)</option>
+                        <option value="Q">Quartile (25%)</option>
+                        <option value="H">High (30%)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="color-row">
+                <div class="color-group">
+                    <label for="qr-fg">Foreground</label>
+                    <div class="color-pick">
+                        <input type="color" id="qr-fg" value="#000000">
+                        <span id="fg-hex">#000000</span>
+                    </div>
+                </div>
+                <div class="color-group">
+                    <label for="qr-bg">Background</label>
+                    <div class="color-pick">
+                        <input type="color" id="qr-bg" value="#ffffff">
+                        <span id="bg-hex">#ffffff</span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="generate-btn" class="generate-btn">
+                <ion-icon name="qr-code-outline"></ion-icon> Generate QR Code
+            </button>
+
+            <div class="qr-output hidden" id="qr-output">
+                <div class="qr-canvas" id="qr-canvas"></div>
+                <div class="qr-actions">
+                    <button class="action-btn" id="download-png">
+                        <ion-icon name="download-outline"></ion-icon> PNG
+                    </button>
+                    <button class="action-btn" id="copy-qr">
+                        <ion-icon name="copy-outline"></ion-icon> Copy
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="qr-display" id="qr-display"></div>
     </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

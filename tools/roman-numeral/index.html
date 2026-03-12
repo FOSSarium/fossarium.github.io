@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roman Numeral Converter - FOSSarium</title>
+    <meta name="description" content="Convert integers to Roman numerals and Roman numerals to integers.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Roman Numerals</h1>
+            <p class="tool-subtitle">Convert between integers and Roman numerals effortlessly.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="mode-tabs">
+                <button class="mode-btn active" data-mode="to-roman">Number → Roman</button>
+                <button class="mode-btn" data-mode="to-number">Roman → Number</button>
+            </div>
+
+            <div class="converter-section" id="to-roman-section">
+                <label for="number-input">Enter a number (1 – 3,999)</label>
+                <div class="input-row">
+                    <input type="number" id="number-input" placeholder="e.g. 2024" min="1" max="3999">
+                    <button class="copy-btn" id="copy-roman" title="Copy result"><ion-icon name="copy-outline"></ion-icon></button>
+                </div>
+                <div class="result-display" id="roman-result">
+                    <span class="result-text" id="roman-text">—</span>
+                </div>
+            </div>
+
+            <div class="converter-section hidden" id="to-number-section">
+                <label for="roman-input">Enter Roman numeral</label>
+                <div class="input-row">
+                    <input type="text" id="roman-input" placeholder="e.g. MMXXIV" spellcheck="false">
+                    <button class="copy-btn" id="copy-number" title="Copy result"><ion-icon name="copy-outline"></ion-icon></button>
+                </div>
+                <div class="result-display" id="number-result">
+                    <span class="result-text" id="number-text">—</span>
+                </div>
+            </div>
+
+            <div class="reference-section">
+                <h3><ion-icon name="book-outline"></ion-icon> Reference Chart</h3>
+                <div class="ref-grid">
+                    <div class="ref-item"><span class="ref-roman">I</span><span class="ref-num">1</span></div>
+                    <div class="ref-item"><span class="ref-roman">IV</span><span class="ref-num">4</span></div>
+                    <div class="ref-item"><span class="ref-roman">V</span><span class="ref-num">5</span></div>
+                    <div class="ref-item"><span class="ref-roman">IX</span><span class="ref-num">9</span></div>
+                    <div class="ref-item"><span class="ref-roman">X</span><span class="ref-num">10</span></div>
+                    <div class="ref-item"><span class="ref-roman">XL</span><span class="ref-num">40</span></div>
+                    <div class="ref-item"><span class="ref-roman">L</span><span class="ref-num">50</span></div>
+                    <div class="ref-item"><span class="ref-roman">XC</span><span class="ref-num">90</span></div>
+                    <div class="ref-item"><span class="ref-roman">C</span><span class="ref-num">100</span></div>
+                    <div class="ref-item"><span class="ref-roman">CD</span><span class="ref-num">400</span></div>
+                    <div class="ref-item"><span class="ref-roman">D</span><span class="ref-num">500</span></div>
+                    <div class="ref-item"><span class="ref-roman">CM</span><span class="ref-num">900</span></div>
+                    <div class="ref-item"><span class="ref-roman">M</span><span class="ref-num">1000</span></div>
+                </div>
+            </div>
+
+            <div class="quick-section">
+                <h3><ion-icon name="rocket-outline"></ion-icon> Quick Convert</h3>
+                <div class="quick-grid">
+                    <button class="quick-btn" data-val="42">42</button>
+                    <button class="quick-btn" data-val="100">100</button>
+                    <button class="quick-btn" data-val="666">666</button>
+                    <button class="quick-btn" data-val="1776">1776</button>
+                    <button class="quick-btn" data-val="2024">2024</button>
+                    <button class="quick-btn" data-val="3999">3999</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
