@@ -5,16 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Word Counter - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Count words, characters, sentences with keyword density and reading level.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -25,20 +31,61 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Word Counter</h1>
-            <p class="tool-subtitle">Real-time word, character, and sentence counts.</p>
+            <p class="tool-subtitle">Real-time word, character, and sentence counts with keyword density.</p>
         </div>
-        <div class="stats-row">
-            <div class="stat-box"><span class="stat-val" id="words">0</span><span class="stat-label">Words</span></div>
-            <div class="stat-box"><span class="stat-val" id="chars">0</span><span class="stat-label">Characters</span>
+
+        <div class="tool-card">
+            <div class="stats-row">
+                <div class="stat-box accent">
+                    <ion-icon name="text-outline"></ion-icon>
+                    <span class="stat-val" id="words">0</span>
+                    <span class="stat-label">Words</span>
+                </div>
+                <div class="stat-box">
+                    <ion-icon name="keypad-outline"></ion-icon>
+                    <span class="stat-val" id="chars">0</span>
+                    <span class="stat-label">Characters</span>
+                </div>
+                <div class="stat-box">
+                    <ion-icon name="chatbubble-outline"></ion-icon>
+                    <span class="stat-val" id="sentences">0</span>
+                    <span class="stat-label">Sentences</span>
+                </div>
+                <div class="stat-box">
+                    <ion-icon name="document-text-outline"></ion-icon>
+                    <span class="stat-val" id="paragraphs">0</span>
+                    <span class="stat-label">Paragraphs</span>
+                </div>
+                <div class="stat-box">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <span class="stat-val" id="reading-time">0</span>
+                    <span class="stat-label">Min Read</span>
+                </div>
+                <div class="stat-box">
+                    <ion-icon name="school-outline"></ion-icon>
+                    <span class="stat-val" id="reading-level">—</span>
+                    <span class="stat-label">Grade</span>
+                </div>
             </div>
-            <div class="stat-box"><span class="stat-val" id="sentences">0</span><span
-                    class="stat-label">Sentences</span></div>
-            <div class="stat-box"><span class="stat-val" id="paragraphs">0</span><span
-                    class="stat-label">Paragraphs</span></div>
-            <div class="stat-box"><span class="stat-val" id="reading-time">0</span><span class="stat-label">Min
-                    Read</span></div>
-        </div><textarea id="text-input" placeholder="Start typing or paste your text here..."></textarea>
+
+            <div class="pane-header">
+                <label>Text Input</label>
+                <button class="icon-btn" id="clear-btn" title="Clear">
+                    <ion-icon name="trash-outline"></ion-icon>
+                </button>
+            </div>
+
+            <textarea id="text-input" placeholder="Start typing or paste your text here..."></textarea>
+
+            <div id="density-section" class="density-section hidden">
+                <div class="pane-header">
+                    <label>Top Keywords</label>
+                </div>
+                <div class="density-bars" id="density-bars"></div>
+            </div>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 

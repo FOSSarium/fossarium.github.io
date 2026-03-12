@@ -1,15 +1,117 @@
-version: 2.0
-features:
-- tools
-- games
-config:
-theme: dark
-responsive: true</textarea></div>
-<div class="editor-pane"><label>JSON</label><textarea id="json" readonly
-    style="font-family:JetBrains Mono,monospace;font-size:.85rem;background:rgba(22,27,34,.4)"></textarea></div>
-</div>
-</div>
-<script src="script.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YAML to JSON Converter - FOSSarium</title>
+    <meta name="description" content="Convert YAML configuration files to JSON format instantly.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Ionicons -->
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+
+    <!-- js-yaml for parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4/dist/js-yaml.min.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>YAML to JSON</h1>
+            <p class="tool-subtitle">Convert YAML configuration files into structured JSON instantly.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="input-methods">
+                <div class="upload-area" id="drop-zone">
+                    <ion-icon name="cloud-upload-outline"></ion-icon>
+                    <p>Drag & Drop YAML file or <span>Browse</span></p>
+                    <input type="file" id="file-input" accept=".yaml,.yml" hidden>
+                </div>
+                <div class="method-divider"><span>OR</span></div>
+                <div class="url-input-area">
+                    <div class="url-field">
+                        <ion-icon name="link-outline"></ion-icon>
+                        <input type="text" id="url-input"
+                            placeholder="Paste YAML URL (e.g. https://example.com/config.yml)">
+                        <button id="fetch-btn" class="icon-btn" title="Fetch URL">
+                            <ion-icon name="arrow-forward-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <button id="paste-btn" class="secondary-btn full-width">
+                        <ion-icon name="clipboard-outline"></ion-icon> Paste from Clipboard
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-bar">
+                <div class="setting-group">
+                    <label>Indentation</label>
+                    <select id="indent-select">
+                        <option value="2">2 Spaces</option>
+                        <option value="4">4 Spaces</option>
+                        <option value="tab">Tabs</option>
+                        <option value="0">Minified</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="editor-layout">
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>YAML Input</label>
+                        <button class="icon-btn" id="clear-btn" title="Clear">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <textarea id="yaml-input" placeholder="version: 2.0&#10;features:&#10;  - tools&#10;  - games&#10;config:&#10;  theme: dark&#10;  responsive: true"></textarea>
+                </div>
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>JSON Output</label>
+                        <div class="header-actions">
+                            <button class="icon-btn" id="copy-btn" title="Copy">
+                                <ion-icon name="copy-outline"></ion-icon>
+                            </button>
+                            <button class="icon-btn" id="download-btn" title="Download">
+                                <ion-icon name="download-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="json-output" readonly placeholder="JSON result will appear here..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal-card">
+            <ion-icon name="alert-circle-outline" class="modal-icon"></ion-icon>
+            <h2>Notice</h2>
+            <p>Message goes here.</p>
+            <button id="modal-ok" class="modal-btn">OK</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

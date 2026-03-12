@@ -1,52 +1,83 @@
-const input = document.getElementById('input');
-const output = document.getElementById('output');
+const inputEl = document.getElementById('input');
+const outputEl = document.getElementById('output');
+const clearBtn = document.getElementById('clear-btn');
+const copyBtn = document.getElementById('copy-btn');
+const swapBtn = document.getElementById('swap-btn');
+const encodeType = document.getElementById('encode-type');
 
-document.getElementById('encode-btn').addEventListener('click', () => {
-    output.value = encodeURIComponent(input.value);
-});
+let mode = 'encode';
 
-document.getElementById('decode-btn').addEventListener('click', () => {
+function convert() {
+    const val = inputEl.value;
+    if (!val) { outputEl.value = ''; return; }
+
     try {
-        output.value = decodeURIComponent(input.value);
+        if (mode === 'encode') {
+            outputEl.value = encodeType.value === 'component'
+                ? encodeURIComponent(val)
+                : encodeURI(val);
+        } else {
+            outputEl.value = encodeType.value === 'component'
+                ? decodeURIComponent(val)
+                : decodeURI(val);
+        }
     } catch (e) {
-        output.value = 'Error: ' + e.message;
+        outputEl.value = '⚠ Error: ' + e.message;
     }
+}
+
+inputEl.addEventListener('input', convert);
+encodeType.addEventListener('change', convert);
+
+// Mode pills
+document.querySelectorAll('.pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        mode = pill.dataset.mode;
+        convert();
+    });
 });
 
-document.getElementById('copy-btn').addEventListener('click', () => {
-    if (output.value) navigator.clipboard.writeText(output.value);
+clearBtn.addEventListener('click', () => {
+    inputEl.value = '';
+    outputEl.value = '';
+    inputEl.focus();
 });
 
+copyBtn.addEventListener('click', () => {
+    if (!outputEl.value) return;
+    navigator.clipboard.writeText(outputEl.value);
+    const icon = copyBtn.querySelector('ion-icon');
+    copyBtn.style.color = 'var(--success)';
+    icon.setAttribute('name', 'checkmark-outline');
+    setTimeout(() => {
+        copyBtn.style.color = '';
+        icon.setAttribute('name', 'copy-outline');
+    }, 1500);
+});
 
+swapBtn.addEventListener('click', () => {
+    const temp = outputEl.value;
+    inputEl.value = temp;
+    convert();
+});
+
+// Theme
 function initTheme() {
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (!themeToggleBtn) return;
-
     const icon = themeToggleBtn.querySelector('ion-icon');
-
-    const savedTheme = localStorage.getItem('fossarium-theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    } else if (savedTheme === 'dark') {
-        document.documentElement.classList.remove('light-theme');
-        if (icon) icon.setAttribute('name', 'sunny-outline');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    const saved = localStorage.getItem('fossarium-theme');
+    if (saved === 'light' || (!saved && window.matchMedia('(prefers-color-scheme: light)').matches)) {
         document.documentElement.classList.add('light-theme');
         if (icon) icon.setAttribute('name', 'moon-outline');
     }
-
     themeToggleBtn.addEventListener('click', () => {
         document.documentElement.classList.toggle('light-theme');
         const isLight = document.documentElement.classList.contains('light-theme');
-
-        if (isLight) {
-            localStorage.setItem('fossarium-theme', 'light');
-            if (icon) icon.setAttribute('name', 'moon-outline');
-        } else {
-            localStorage.setItem('fossarium-theme', 'dark');
-            if (icon) icon.setAttribute('name', 'sunny-outline');
-        }
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        if (icon) icon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
     });
 }
 

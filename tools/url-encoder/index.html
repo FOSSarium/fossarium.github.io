@@ -5,15 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Encoder/Decoder - FOSSarium</title>
+    <meta name="description" content="Safely encode and decode URL strings with multiple encoding modes.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -22,25 +29,61 @@
     </div>
 
     <div class="app-container tool-container-wrapper">
-
         <div class="tool-header">
-            <h1>URL Encoder</h1>
-            <p class="tool-subtitle">Percent-encode or decode URI strings.</p>
+            <h1>URL Encode/Decode</h1>
+            <p class="tool-subtitle">Percent-encode or decode URI strings with real-time conversion.</p>
         </div>
-        <div class="actions-bar">
-            <button id="encode-btn" class="action-btn primary"><ion-icon name="lock-closed-outline"></ion-icon>
-                Encode</button>
-            <button id="decode-btn" class="action-btn secondary"><ion-icon name="lock-open-outline"></ion-icon>
-                Decode</button>
-            <button id="copy-btn" class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy
-                Output</button>
-        </div>
-        <div class="editor-layout">
-            <div class="editor-pane"><label>Input</label><textarea id="input"
-                    placeholder="Enter text or URL..."></textarea></div>
-            <div class="editor-pane"><label>Output</label><textarea id="output" readonly></textarea></div>
+
+        <div class="tool-card">
+            <div class="settings-bar">
+                <div class="setting-group">
+                    <label>Mode</label>
+                    <div class="mode-pills">
+                        <button class="pill active" data-mode="encode">
+                            <ion-icon name="lock-closed-outline"></ion-icon> Encode
+                        </button>
+                        <button class="pill" data-mode="decode">
+                            <ion-icon name="lock-open-outline"></ion-icon> Decode
+                        </button>
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>Type</label>
+                    <select id="encode-type">
+                        <option value="component">encodeURIComponent</option>
+                        <option value="uri">encodeURI</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="editor-layout">
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>Input</label>
+                        <button class="icon-btn" id="clear-btn" title="Clear">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
+                    <textarea id="input" placeholder="Enter text or URL to encode/decode..."></textarea>
+                </div>
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>Output</label>
+                        <div class="header-actions">
+                            <button class="icon-btn" id="copy-btn" title="Copy">
+                                <ion-icon name="copy-outline"></ion-icon>
+                            </button>
+                            <button class="icon-btn" id="swap-btn" title="Swap Input/Output">
+                                <ion-icon name="swap-vertical-outline"></ion-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <textarea id="output" readonly placeholder="Result will appear here..."></textarea>
+                </div>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 

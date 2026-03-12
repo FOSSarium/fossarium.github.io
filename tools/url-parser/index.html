@@ -5,18 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>URL Parser - FOSSarium</title>
+    <meta name="description" content="Break down URLs into protocol, host, path, query parameters and more.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -27,12 +31,42 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>URL Parser</h1>
-            <p class="tool-subtitle">Extract components from a URL string.</p>
-        </div><input type="text" id="url-input" class="url-input"
-            placeholder="https://example.com:8080/path?key=value#hash"
-            value="https://example.com:8080/path/to/page?name=John&age=25#section">
-        <div class="parts-grid" id="parts"></div>
+            <p class="tool-subtitle">Extract and inspect every component of a URL in real-time.</p>
+        </div>
+
+        <div class="tool-card">
+            <div class="url-input-wrapper">
+                <ion-icon name="link-outline"></ion-icon>
+                <input type="text" id="url-input"
+                    placeholder="https://example.com:8080/path/to/page?name=John&age=25#section"
+                    value="https://example.com:8080/path/to/page?name=John&age=25#section">
+                <button class="icon-btn" id="clear-btn" title="Clear">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+            </div>
+
+            <div class="parts-grid" id="parts-grid"></div>
+
+            <div id="params-section" class="params-section hidden">
+                <div class="pane-header">
+                    <label>Query Parameters</label>
+                </div>
+                <div class="table-container">
+                    <table id="params-table">
+                        <thead>
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="params-body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 
