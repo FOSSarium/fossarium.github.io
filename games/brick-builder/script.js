@@ -1,32 +1,150 @@
-const canvas = document.getElementById('canvas'), ctx = canvas.getContext('2d'), palette = document.getElementById('palette');
-const W = 400, CELL = 20, COLS = W / CELL, ROWS = W / CELL;
-const colors = ['#ff4757', '#ffa502', '#2ed573', '#1e90ff', '#a55eea', '#ff6348', '#fff', '#2c2c54', '#eccc68', '#ff6b81'];
-let grid = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
-let currentColor = colors[0];
+(() => {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const paletteEl = document.getElementById('palette');
+    const helpOverlay = document.getElementById('help-overlay');
+    const isLight = () => document.documentElement.classList.contains('light-theme');
 
-colors.forEach((c, i) => {
-    const sw = document.createElement('div');
-    sw.className = 'swatch' + (i === 0 ? ' active' : '');
-    sw.style.background = c;
-    sw.addEventListener('click', () => { palette.querySelectorAll('.swatch').forEach(s => s.classList.remove('active')); sw.classList.add('active'); currentColor = c; });
-    palette.appendChild(sw);
-});
+    const COLORS = ['#ff4757','#ff6b81','#ffa502','#ffdd59','#2ed573','#1e90ff','#a55eea','#e056fd','#00d2d3','#ff9f43','#5f27cd','#01a3a4','#f8b500','#ee5a24','#2c3e50','#ecf0f1'];
+    let gridSize = 16, currentColor = COLORS[0], tool = 'paint', showGrid = true;
+    let grid = [];
+    let W, H;
 
-function draw() {
-    ctx.clearRect(0, 0, W, W);
-    ctx.strokeStyle = 'rgba(128,128,128,0.15)';
-    for (let r = 0; r < ROWS; r++) for (let c = 0; c < COLS; c++) {
-        ctx.strokeRect(c * CELL, r * CELL, CELL, CELL);
-        if (grid[r][c]) { ctx.fillStyle = grid[r][c]; ctx.fillRect(c * CELL, r * CELL, CELL, CELL); }
+    function resize() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        W = H = Math.floor(rect.width);
+        canvas.width = W; canvas.height = H;
     }
-}
 
-canvas.addEventListener('click', e => {
-    const rect = canvas.getBoundingClientRect();
-    const c = Math.floor((e.clientX - rect.left) / rect.width * COLS);
-    const r = Math.floor((e.clientY - rect.top) / rect.height * ROWS);
-    if (r >= 0 && r < ROWS && c >= 0 && c < COLS) { grid[r][c] = grid[r][c] === currentColor ? null : currentColor; draw(); }
-});
+    function initGrid() {
+        grid = [];
+        for (let r = 0; r < gridSize; r++) {
+            grid[r] = [];
+            for (let c = 0; c < gridSize; c++) grid[r][c] = null;
+        }
+    }
 
-document.getElementById('clear-btn').addEventListener('click', () => { grid = Array.from({ length: ROWS }, () => Array(COLS).fill(null)); draw(); });
-draw();
+    function buildPalette() {
+        paletteEl.innerHTML = '';
+        COLORS.forEach(color => {
+            const div = document.createElement('div');
+            div.className = 'color-swatch' + (color === currentColor ? ' active' : '');
+            div.style.background = color;
+            div.addEventListener('click', () => {
+                currentColor = color;
+                tool = 'paint';
+                updateTools();
+                paletteEl.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+                div.classList.add('active');
+            });
+            paletteEl.appendChild(div);
+        });
+    }
+
+    function updateTools() {
+        document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tool + '-tool').classList.add('active');
+    }
+
+    function render() {
+        resize();
+        const cellW = W / gridSize, cellH = H / gridSize;
+        const bg = isLight() ? '#e8ecf2' : '#0a0e18';
+        ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+        for (let r = 0; r < gridSize; r++) {
+            for (let c = 0; c < gridSize; c++) {
+                if (grid[r][c]) {
+                    ctx.fillStyle = grid[r][c];
+                    ctx.fillRect(c * cellW + 0.5, r * cellH + 0.5, cellW - 1, cellH - 1);
+                    // Highlight
+                    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+                    ctx.fillRect(c * cellW + 1, r * cellH + 1, cellW - 2, 3);
+                }
+            }
+        }
+
+        if (showGrid) {
+            ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.04)';
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i <= gridSize; i++) {
+                ctx.beginPath(); ctx.moveTo(i * cellW, 0); ctx.lineTo(i * cellW, H); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, i * cellH); ctx.lineTo(W, i * cellH); ctx.stroke();
+            }
+        }
+    }
+
+    function getCell(e) {
+        const rect = canvas.getBoundingClientRect();
+        const x = (e.clientX || e.touches[0].clientX) - rect.left;
+        const y = (e.clientY || e.touches[0].clientY) - rect.top;
+        const cellW = rect.width / gridSize, cellH = rect.height / gridSize;
+        return { r: Math.floor(y / cellH), c: Math.floor(x / cellW) };
+    }
+
+    function floodFill(r, c, targetColor, fillColor) {
+        if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) return;
+        if (grid[r][c] !== targetColor || grid[r][c] === fillColor) return;
+        grid[r][c] = fillColor;
+        floodFill(r - 1, c, targetColor, fillColor);
+        floodFill(r + 1, c, targetColor, fillColor);
+        floodFill(r, c - 1, targetColor, fillColor);
+        floodFill(r, c + 1, targetColor, fillColor);
+    }
+
+    function applyTool(r, c) {
+        if (r < 0 || r >= gridSize || c < 0 || c >= gridSize) return;
+        if (tool === 'paint') grid[r][c] = currentColor;
+        else if (tool === 'erase') grid[r][c] = null;
+        else if (tool === 'fill') floodFill(r, c, grid[r][c], currentColor);
+        render();
+    }
+
+    let painting = false;
+    canvas.addEventListener('mousedown', e => { painting = true; const { r, c } = getCell(e); applyTool(r, c); });
+    canvas.addEventListener('mousemove', e => { if (painting && tool !== 'fill') { const { r, c } = getCell(e); applyTool(r, c); } });
+    canvas.addEventListener('mouseup', () => painting = false);
+    canvas.addEventListener('mouseleave', () => painting = false);
+    canvas.addEventListener('touchstart', e => { e.preventDefault(); painting = true; const { r, c } = getCell(e); applyTool(r, c); }, { passive: false });
+    canvas.addEventListener('touchmove', e => { e.preventDefault(); if (painting && tool !== 'fill') { const { r, c } = getCell(e); applyTool(r, c); } }, { passive: false });
+    canvas.addEventListener('touchend', () => painting = false);
+
+    document.getElementById('paint-tool').addEventListener('click', () => { tool = 'paint'; updateTools(); });
+    document.getElementById('erase-tool').addEventListener('click', () => { tool = 'erase'; updateTools(); });
+    document.getElementById('fill-tool').addEventListener('click', () => { tool = 'fill'; updateTools(); });
+    document.getElementById('clear-btn').addEventListener('click', () => { initGrid(); render(); });
+
+    document.getElementById('grid-size').addEventListener('change', e => {
+        gridSize = parseInt(e.target.value);
+        initGrid(); render();
+    });
+    document.getElementById('show-grid').addEventListener('change', e => { showGrid = e.target.checked; render(); });
+
+    document.getElementById('export-btn').addEventListener('click', () => {
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = tempCanvas.height = 512;
+        const tCtx = tempCanvas.getContext('2d');
+        const cellW = 512 / gridSize;
+        tCtx.fillStyle = isLight() ? '#e8ecf2' : '#0a0e18';
+        tCtx.fillRect(0, 0, 512, 512);
+        for (let r = 0; r < gridSize; r++)
+            for (let c = 0; c < gridSize; c++)
+                if (grid[r][c]) { tCtx.fillStyle = grid[r][c]; tCtx.fillRect(c * cellW, r * cellW, cellW, cellW); }
+        const link = document.createElement('a');
+        link.download = 'brick-builder.png';
+        link.href = tempCanvas.toDataURL();
+        link.click();
+    });
+
+    document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
+    document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
+    helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        const el = document.getElementById('game-root');
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
+        else document.exitFullscreen();
+    });
+
+    window.addEventListener('resize', render);
+    buildPalette(); initGrid(); render();
+})();

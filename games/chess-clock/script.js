@@ -1,1 +1,133 @@
-let times=[600,600],active=-1,timer=null;function fmt(s){const m=Math.floor(s/60),sec=s%60;return m.toString().padStart(2,"0")+":"+sec.toString().padStart(2,"0");}function render(){document.getElementById("time1").textContent=fmt(times[0]);document.getElementById("time2").textContent=fmt(times[1]);document.getElementById("clock1").className="clock-side"+(active===0?" active":"")+(times[0]<30?" danger":"");document.getElementById("clock2").className="clock-side"+(active===1?" active":"")+(times[1]<30?" danger":"");}function toggle(){if(active===-1)active=0;else active=1-active;clearInterval(timer);timer=setInterval(()=>{times[active]--;if(times[active]<=0){times[active]=0;clearInterval(timer);alert("Player "+(active+1)+" time is up!");}render();},1000);render();}function reset(){clearInterval(timer);active=-1;const t=parseInt(document.getElementById("preset").value);times=[t,t];render();}document.getElementById("clock1").addEventListener("click",()=>{if(active===0)toggle();else if(active===-1)toggle();});document.getElementById("clock2").addEventListener("click",()=>{if(active===1)toggle();});document.addEventListener("keydown",e=>{if(e.code==="Space"){e.preventDefault();toggle();}});document.getElementById("preset").addEventListener("change",reset);render();
+(() => {
+    const setupPhase = document.getElementById('setup-phase');
+    const clockPhase = document.getElementById('clock-phase');
+    const clock1El = document.getElementById('clock-1');
+    const clock2El = document.getElementById('clock-2');
+    const time1El = document.getElementById('time-1');
+    const time2El = document.getElementById('time-2');
+    const moves1El = document.getElementById('moves-1');
+    const moves2El = document.getElementById('moves-2');
+    const pauseBtn = document.getElementById('pause-btn');
+    const gameoverOverlay = document.getElementById('gameover-overlay');
+    const helpOverlay = document.getElementById('help-overlay');
+
+    let timeBase = 300, increment = 0;
+    let time1, time2, moves1, moves2, activePlayer, interval, paused, gameOver;
+
+    function formatTime(ms) {
+        const totalSec = Math.max(0, Math.ceil(ms / 1000));
+        const m = Math.floor(totalSec / 60);
+        const s = totalSec % 60;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function updateDisplay() {
+        time1El.textContent = formatTime(time1);
+        time2El.textContent = formatTime(time2);
+        moves1El.textContent = moves1;
+        moves2El.textContent = moves2;
+        clock1El.className = 'clock-area' + (activePlayer === 1 && !paused ? ' active' : '') + (time1 < 30000 && activePlayer === 1 ? ' danger' : '');
+        clock2El.className = 'clock-area' + (activePlayer === 2 && !paused ? ' active' : '') + (time2 < 30000 && activePlayer === 2 ? ' danger' : '');
+    }
+
+    function startClock() {
+        const minsInput = document.getElementById('custom-mins');
+        const incInput = document.getElementById('custom-inc');
+        timeBase = parseInt(minsInput.value) * 60 || 300;
+        increment = parseInt(incInput.value) || 0;
+
+        time1 = time2 = timeBase * 1000;
+        moves1 = moves2 = 0;
+        activePlayer = 1; paused = false; gameOver = false;
+        setupPhase.classList.add('hidden');
+        clockPhase.classList.remove('hidden');
+        gameoverOverlay.classList.add('hidden');
+        pauseBtn.textContent = '⏸';
+        updateDisplay();
+        startTimer();
+    }
+
+    function startTimer() {
+        clearInterval(interval);
+        const tick = 100;
+        interval = setInterval(() => {
+            if (paused || gameOver) return;
+            if (activePlayer === 1) time1 -= tick;
+            else time2 -= tick;
+
+            if (time1 <= 0) { time1 = 0; endGame(2); }
+            if (time2 <= 0) { time2 = 0; endGame(1); }
+            updateDisplay();
+        }, tick);
+    }
+
+    function switchPlayer() {
+        if (paused || gameOver) return;
+        if (activePlayer === 1) {
+            moves1++;
+            time1 += increment * 1000;
+            activePlayer = 2;
+        } else {
+            moves2++;
+            time2 += increment * 1000;
+            activePlayer = 1;
+        }
+        updateDisplay();
+    }
+
+    function endGame(winner) {
+        gameOver = true;
+        clearInterval(interval);
+        document.getElementById('go-title').textContent = "Time's Up!";
+        document.getElementById('go-msg').textContent = `Player ${winner} wins on time!`;
+        gameoverOverlay.classList.remove('hidden');
+    }
+
+    function resetClock() {
+        clearInterval(interval); gameOver = true;
+        clockPhase.classList.add('hidden');
+        setupPhase.classList.remove('hidden');
+    }
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const mins = parseInt(btn.dataset.time) / 60;
+            const inc = parseInt(btn.dataset.inc);
+            document.getElementById('custom-mins').value = mins;
+            document.getElementById('custom-inc').value = inc;
+        });
+    });
+
+    // Clock clicks
+    clock1El.addEventListener('click', () => { if (activePlayer === 1) switchPlayer(); });
+    clock2El.addEventListener('click', () => { if (activePlayer === 2) switchPlayer(); });
+
+    // Space bar to switch
+    document.addEventListener('keydown', e => {
+        if (e.code === 'Space' && !clockPhase.classList.contains('hidden')) {
+            e.preventDefault(); switchPlayer();
+        }
+    });
+
+    pauseBtn.addEventListener('click', () => {
+        paused = !paused;
+        pauseBtn.textContent = paused ? '▶' : '⏸';
+        updateDisplay();
+    });
+
+    document.getElementById('start-btn').addEventListener('click', startClock);
+    document.getElementById('reset-btn').addEventListener('click', resetClock);
+    document.getElementById('play-again-btn').addEventListener('click', resetClock);
+
+    document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
+    document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
+    helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
+    gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        const el = document.getElementById('game-root');
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+    });
+})();

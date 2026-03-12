@@ -5,19 +5,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>15 Puzzle - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="The classic sliding tile puzzle. Arrange tiles 1-15 in order with the fewest moves.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+
         <div class="game-header">
             <h1>15 Puzzle</h1>
-            <p class="info">Moves: <span id="moves">0</span></p>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+            </div>
         </div>
-        <div class="board" id="board"></div><button id="shuffle-btn" class="action-btn primary">Shuffle</button>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-label">Moves</span>
+                <span class="stat-value" id="moves">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Time</span>
+                <span class="stat-value" id="timer">0:00</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Best</span>
+                <span class="stat-value" id="best">—</span>
+            </div>
+        </div>
+
+        <div class="board" id="board"></div>
+
+        <button id="shuffle-btn" class="action-btn primary">New Game</button>
+
+        <!-- Win Overlay -->
+        <div class="overlay hidden" id="win-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">🎉</div>
+                <h2>Puzzle Solved!</h2>
+                <p>Moves: <strong id="win-moves">0</strong></p>
+                <p>Time: <strong id="win-time">0:00</strong></p>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Click or tap a tile adjacent to the empty space to slide it.</li>
+                    <li>Arrange the tiles in order from <strong>1 to 15</strong>, left to right, top to bottom.</li>
+                    <li>The empty space should end up in the bottom-right corner.</li>
+                    <li>Try to solve it in the fewest moves and shortest time!</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>

@@ -1,30 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Match - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Test your brain speed! Does the text color match the word? A fast-paced Stroop challenge.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Color Match</h1>
-            <div class="stats"><span>Score: <span id="score">0</span></span><span>Time: <span
-                        id="time">30</span>s</span></div>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
         </div>
-        <div class="prompt">Does the <strong>text color</strong> match the <strong>word</strong>?</div>
-        <div class="color-word" id="word">RED</div>
-        <div class="buttons"><button id="yes-btn" class="action-btn yes">✓ Yes</button><button id="no-btn"
-                class="action-btn no">✗ No</button></div><button id="start-btn" class="action-btn primary">Start
-            Game</button>
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
+            <div class="stat"><span class="stat-label">Time</span><span class="stat-value" id="time">30</span></div>
+            <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+        <div class="prompt-box">
+            <p class="prompt-text">Does the <strong>text color</strong> match the <strong>word</strong>?</p>
+        </div>
+        <div class="word-display" id="word">RED</div>
+        <div class="feedback hidden" id="feedback">Correct!</div>
+        <div class="answer-btns" id="answer-btns">
+            <button class="answer-btn yes" id="yes-btn">✓ Yes</button>
+            <button class="answer-btn no" id="no-btn">✗ No</button>
+        </div>
+        <button class="action-btn primary" id="start-btn">Start Game</button>
+
+        <div class="overlay hidden" id="results-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">🧠</div>
+                <h2>Time's Up!</h2>
+                <div class="result-grid">
+                    <div class="result-item"><span class="r-label">Score</span><span class="r-val" id="r-score">0</span></div>
+                    <div class="result-item"><span class="r-label">Correct</span><span class="r-val" id="r-correct">0</span></div>
+                    <div class="result-item"><span class="r-label">Wrong</span><span class="r-val" id="r-wrong">0</span></div>
+                    <div class="result-item"><span class="r-label">Accuracy</span><span class="r-val" id="r-accuracy">0%</span></div>
+                </div>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>A color word is displayed in a <strong>random text color</strong>.</li>
+                    <li>Decide if the <strong>text color</strong> matches the <strong>word meaning</strong>.</li>
+                    <li>Click <strong>✓ Yes</strong> if they match, <strong>✗ No</strong> if they don't.</li>
+                    <li>You have <strong>30 seconds</strong>. Score as many as you can!</li>
+                    <li>Correct answers = <strong>+10</strong>, wrong = <strong>-5</strong>.</li>
+                </ul>
+                <h3>Keyboard</h3>
+                <ul>
+                    <li><strong>← or A</strong> — Yes</li>
+                    <li><strong>→ or D</strong> — No</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

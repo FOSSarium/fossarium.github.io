@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battleship - FOSSarium</title>
+    <meta name="description" content="Sink the enemy fleet in this classic naval strategy game.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Battleship</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="How to Play">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+
+        <div class="status-bar" id="status">Click the enemy grid to fire!</div>
+
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Shots</span><span class="stat-value" id="shots">0</span></div>
+            <div class="stat"><span class="stat-label">Hits</span><span class="stat-value" id="hits">0</span></div>
+            <div class="stat"><span class="stat-label">Ships Left</span><span class="stat-value" id="ships-left">5</span></div>
+        </div>
+
+        <div class="boards">
+            <div class="board-section">
+                <h3>Enemy Waters</h3>
+                <div class="grid" id="enemy-grid"></div>
+            </div>
+            <div class="board-section">
+                <h3>Your Fleet</h3>
+                <div class="grid" id="player-grid"></div>
+            </div>
+        </div>
+
+        <button class="action-btn primary" id="new-game-btn">New Game</button>
+
+        <!-- Game Over Overlay -->
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon" id="go-icon">🎉</div>
+                <h2 id="go-title">You Win!</h2>
+                <p>Shots: <strong id="go-shots">0</strong></p>
+                <p>Accuracy: <strong id="go-accuracy">0%</strong></p>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Ships are placed randomly on both grids.</li>
+                    <li>Click a cell on the <strong>Enemy Waters</strong> grid to fire.</li>
+                    <li><strong>🔥</strong> = Hit, <strong>💨</strong> = Miss.</li>
+                    <li>Sink all <strong>5 enemy ships</strong> (sizes 5, 4, 3, 3, 2) to win.</li>
+                    <li>The enemy fires back after each of your shots.</li>
+                    <li>First to sink all ships wins!</li>
+                </ul>
+                <h3>Ship Sizes</h3>
+                <ul>
+                    <li>Carrier (5) · Battleship (4) · Cruiser (3) · Submarine (3) · Destroyer (2)</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

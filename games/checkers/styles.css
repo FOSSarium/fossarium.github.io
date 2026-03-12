@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -8,14 +7,7 @@
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
     --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
     --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
 :root.light-theme {
@@ -30,88 +22,127 @@
 
 body {
     margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
+    max-width: 500px;
+    width: 100%;
+    padding: 40px 20px;
 }
 
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+.game-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
 
 h1 {
-    font-size: min(4rem, 12vw);
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 800;
     margin: 0;
     color: transparent;
     background: linear-gradient(to right, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
 }
 
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
-
-.game-container-wrapper {
-    max-width: 420px;
-    width: 100%;
-    padding: 20px;
-    text-align: center;
+.header-actions {
+    display: flex;
+    gap: 8px;
 }
 
-.game-header {
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, transform .2s;
+    font-family: inherit;
+}
+
+.icon-btn:hover {
+    background: var(--hover-bg);
+    transform: translateY(-2px);
+}
+
+.stats-bar {
+    display: flex;
+    gap: 8px;
     margin-bottom: 15px;
 }
 
-.game-header h1 {
-    font-size: 2.2rem;
-    margin: 0;
+.stat {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
 }
 
-.turn {
+.stat-label {
+    display: block;
+    font-size: .65rem;
     font-weight: 700;
-    margin-top: 5px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent-color);
+}
+
+.turn-stat .stat-value {
+    font-size: .85rem;
+}
+
+.board-wrap {
+    margin-bottom: 15px;
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(8, 1fr);
-    border: 3px solid var(--card-border);
-    border-radius: 8px;
+    gap: 0;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 10px;
     overflow: hidden;
-    margin-bottom: 15px;
+    border: 2px solid var(--card-border);
 }
 
 .sq {
@@ -119,65 +150,165 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
 .sq.dark {
-    background: #2d2d2d;
+    background: #2a1a4a;
 }
 
-.sq.light {
-    background: #e8d5b5;
+.sq.light-sq {
+    background: #c8b8e8;
 }
 
 :root.light-theme .sq.dark {
-    background: #769656;
+    background: #7b68ae;
 }
 
-:root.light-theme .sq.light {
-    background: #eeeed2;
-}
-
-.sq.selected {
-    box-shadow: inset 0 0 0 3px #ffa502;
+:root.light-theme .sq.light-sq {
+    background: #e8e0f4;
 }
 
 .sq.highlight {
-    box-shadow: inset 0 0 0 3px #2ed573;
+    background: rgba(46, 213, 115, .3) !important;
+    cursor: pointer;
+}
+
+.sq.selected {
+    background: rgba(255, 165, 0, .35) !important;
 }
 
 .piece {
-    width: 70%;
-    height: 70%;
+    width: 75%;
+    height: 75%;
     border-radius: 50%;
     cursor: pointer;
-    border: 3px solid rgba(255, 255, 255, 0.3);
+    transition: transform .15s;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .3);
+}
+
+.piece:hover {
+    transform: scale(1.08);
 }
 
 .piece.red {
-    background: #ff4757;
+    background: radial-gradient(circle at 35% 35%, #ff6b81, #e74c3c);
 }
 
-.piece.black {
-    background: #2c2c54;
+.piece.blue {
+    background: radial-gradient(circle at 35% 35%, #74b9ff, #2980b9);
 }
 
 .piece.king::after {
-    content: '♔';
-    display: block;
-    text-align: center;
-    line-height: 1;
-    font-size: 1.2rem;
-    margin-top: 2px;
+    content: '♚';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    color: rgba(255, 255, 255, .8);
 }
 
 .action-btn {
-    padding: 12px 25px;
+    width: 100%;
+    padding: 14px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     cursor: pointer;
-    background: var(--gradient-7);
+    transition: transform .2s;
+}
+
+.action-btn.primary {
+    background: var(--gradient-8);
     color: #fff;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 16, .85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: overlayIn .3s;
+}
+
+@keyframes overlayIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.overlay-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 350px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    animation: cardIn .3s;
+}
+
+@keyframes cardIn {
+    from {
+        transform: scale(.9) translateY(20px);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1
+    }
+}
+
+.overlay-card h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 15px;
+    background: linear-gradient(to right, var(--text-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.overlay-card ul {
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.overlay-card ul li {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-size: .9rem;
+}
+
+.overlay-card .action-btn {
+    margin-top: 18px;
+}
+
+.win-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+
+:root.light-theme .overlay {
+    background: rgba(248, 249, 250, .85);
 }

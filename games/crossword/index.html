@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword - FOSSarium</title>
+    <meta name="description" content="Solve the crossword puzzle! Fill in words from the clues.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Crossword</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+        <div class="board-wrap"><div class="grid" id="grid"></div></div>
+        <div class="btn-row">
+            <button class="action-btn secondary" id="check-btn">Check</button>
+            <button class="action-btn secondary" id="reveal-btn">Reveal</button>
+            <button class="action-btn primary" id="new-btn">New Puzzle</button>
+        </div>
+        <div class="clues-section">
+            <div class="clue-group">
+                <h3>Across</h3>
+                <div id="across-clues"></div>
+            </div>
+            <div class="clue-group">
+                <h3>Down</h3>
+                <div id="down-clues"></div>
+            </div>
+        </div>
+        <div class="overlay hidden" id="win-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">🎉</div>
+                <h2>Puzzle Solved!</h2>
+                <button class="action-btn primary" id="win-new-btn">New Puzzle</button>
+            </div>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Click a cell and <strong>type a letter</strong> to fill it in.</li>
+                    <li>Click a <strong>clue</strong> to highlight the corresponding word.</li>
+                    <li>Use <strong>Check</strong> to see which letters are wrong (marked red).</li>
+                    <li>Use <strong>Reveal</strong> to show all answers.</li>
+                    <li>Arrow keys navigate between cells.</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

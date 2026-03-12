@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -8,14 +7,7 @@
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
     --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
-    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
     --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
 }
 
 :root.light-theme {
@@ -30,58 +22,341 @@
 
 body {
     margin: 0;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg-color);
     color: var(--text-color);
-    line-height: 1.5;
-    overflow-x: hidden;
-    position: relative;
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
+
+.hidden {
+    display: none !important;
 }
 
 .app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
+    max-width: 480px;
+    width: 100%;
+    padding: 40px 20px;
 }
 
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
+.back-button {
+    display: inline-block;
+    color: var(--accent-color);
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+.game-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
 
 h1 {
-    font-size: min(4rem, 12vw);
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 800;
     margin: 0;
     color: transparent;
     background: linear-gradient(to right, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
 }
 
-.hidden {
-    display: none !important;
+.header-actions {
+    display: flex;
+    gap: 8px;
 }
-/* ===== End FOSSarium Shared Base Styles ===== */
 
-.game-wrapper{max-width:500px;width:100%;padding:20px;text-align:center}.game-title{font-size:2.2rem;margin:0 0 5px}.game-subtitle{color:var(--text-muted);margin:0 0 15px}.score-bar{display:flex;justify-content:space-between;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:10px 15px;margin-bottom:15px;font-weight:700}.action-btn{padding:12px 25px;border:none;border-radius:10px;font-weight:700;font-family:"Inter",sans-serif;font-size:1rem;cursor:pointer;margin:5px}.action-btn.primary{background:var(--gradient-5);color:#fff}.cookie-count{font-size:2.5rem;font-weight:900;color:var(--accent-color);margin-bottom:5px}.cps{color:var(--text-muted);margin-bottom:20px;font-weight:600}.cookie{font-size:8rem;cursor:pointer;user-select:none;transition:transform .1s;display:inline-block}.cookie:active{transform:scale(0.9)}.cookie:hover{transform:scale(1.05)}.shop{text-align:left;margin-top:20px}.shop-item{display:flex;justify-content:space-between;align-items:center;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:10px 15px;margin-bottom:6px;cursor:pointer;transition:border-color .2s}.shop-item:hover{border-color:var(--accent-color)}.shop-item.disabled{opacity:.4;pointer-events:none}.item-info{text-align:left}.item-name{font-weight:700;font-size:.9rem}.item-desc{font-size:.7rem;color:var(--text-muted)}.item-cost{font-weight:800;color:var(--accent-color);font-family:"JetBrains Mono",monospace}
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s, transform .2s;
+    font-family: inherit;
+}
+
+.icon-btn:hover {
+    background: var(--hover-bg);
+    transform: translateY(-2px);
+}
+
+.stats-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.stat {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+.stat-label {
+    display: block;
+    font-size: .65rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent-color);
+}
+
+.cookie-area {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    margin-bottom: 15px;
+}
+
+.cookie {
+    font-size: 8rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform .08s;
+    filter: drop-shadow(0 8px 25px rgba(252, 74, 26, .3));
+}
+
+.cookie:hover {
+    transform: scale(1.05);
+}
+
+.cookie:active {
+    transform: scale(.92);
+}
+
+.floating-nums {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.float-num {
+    position: absolute;
+    font-weight: 800;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    animation: floatUp .8s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1)
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-60px) scale(.7)
+    }
+}
+
+.section-title {
+    font-size: .85rem;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin: 0 0 10px;
+}
+
+.upgrades {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 15px;
+}
+
+.upgrade-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all .2s;
+    backdrop-filter: blur(10px);
+}
+
+.upgrade-card:hover:not(.locked) {
+    background: var(--hover-bg);
+    transform: translateX(4px);
+}
+
+.upgrade-card.locked {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+.upgrade-icon {
+    font-size: 1.8rem;
+    width: 40px;
+    text-align: center;
+}
+
+.upgrade-info {
+    flex: 1;
+}
+
+.upgrade-name {
+    font-weight: 700;
+    font-size: .9rem;
+    color: var(--text-color);
+}
+
+.upgrade-desc {
+    font-size: .75rem;
+    color: var(--text-muted);
+}
+
+.upgrade-cost {
+    font-weight: 800;
+    font-size: .9rem;
+    color: var(--accent-color);
+    white-space: nowrap;
+}
+
+.upgrade-owned {
+    font-size: .7rem;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.btn-row {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    cursor: pointer;
+    transition: transform .2s;
+}
+
+.action-btn.primary {
+    background: var(--gradient-5);
+    color: #fff;
+}
+
+.action-btn.secondary {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-color);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+}
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 16, .85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: overlayIn .3s;
+}
+
+@keyframes overlayIn {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+.overlay-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 380px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    animation: cardIn .3s;
+}
+
+@keyframes cardIn {
+    from {
+        transform: scale(.9) translateY(20px);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1
+    }
+}
+
+.overlay-card h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 15px;
+    background: linear-gradient(to right, var(--text-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.overlay-card ul {
+    text-align: left;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.overlay-card ul li {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-size: .9rem;
+}
+
+.overlay-card .action-btn {
+    margin-top: 18px;
+    width: 100%;
+}
+
+:root.light-theme .overlay {
+    background: rgba(248, 249, 250, .85);
+}

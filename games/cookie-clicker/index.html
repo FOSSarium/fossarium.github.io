@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Clicker - FOSSarium</title>
+    <meta name="description" content="Click the cookie, buy upgrades, and build a cookie empire!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Cookie Clicker</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Cookies</span><span class="stat-value" id="cookies">0</span></div>
+            <div class="stat"><span class="stat-label">Per Click</span><span class="stat-value" id="cpc">1</span></div>
+            <div class="stat"><span class="stat-label">Per Second</span><span class="stat-value" id="cps">0</span></div>
+        </div>
+
+        <div class="cookie-area" id="cookie-area">
+            <div class="cookie" id="cookie">🍪</div>
+            <div class="floating-nums" id="floating-nums"></div>
+        </div>
+
+        <h3 class="section-title">Upgrades</h3>
+        <div class="upgrades" id="upgrades"></div>
+
+        <div class="btn-row">
+            <button class="action-btn secondary" id="reset-btn">Reset Progress</button>
+        </div>
+
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li><strong>Click the cookie</strong> to earn cookies.</li>
+                    <li>Spend cookies on <strong>upgrades</strong> to earn more per click or per second.</li>
+                    <li>Auto-clickers generate cookies <strong>automatically</strong>.</li>
+                    <li>Your progress is <strong>saved automatically</strong>.</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Clock - FOSSarium</title>
+    <meta name="description" content="A sleek, customizable chess clock with time presets and increment options.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Chess Clock</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+        <!-- Setup Phase -->
+        <div id="setup-phase">
+            <div class="preset-section">
+                <h3>Time Presets</h3>
+                <div class="preset-row">
+                    <button class="preset-btn active" data-time="300" data-inc="0">5 min</button>
+                    <button class="preset-btn" data-time="600" data-inc="0">10 min</button>
+                    <button class="preset-btn" data-time="180" data-inc="2">3|2</button>
+                    <button class="preset-btn" data-time="300" data-inc="3">5|3</button>
+                    <button class="preset-btn" data-time="600" data-inc="5">10|5</button>
+                    <button class="preset-btn" data-time="900" data-inc="10">15|10</button>
+                </div>
+            </div>
+            <div class="custom-section">
+                <div class="custom-row">
+                    <div class="custom-field"><label>Minutes</label><input type="number" id="custom-mins" value="5" min="1" max="180"></div>
+                    <div class="custom-field"><label>Increment (s)</label><input type="number" id="custom-inc" value="0" min="0" max="60"></div>
+                </div>
+            </div>
+            <button class="action-btn primary" id="start-btn">Start Clock</button>
+        </div>
+        <!-- Clock Phase -->
+        <div id="clock-phase" class="hidden">
+            <div class="clock-area" id="clock-1">
+                <div class="player-label">Player 1 (White)</div>
+                <div class="clock-time" id="time-1">5:00</div>
+                <div class="move-count">Moves: <span id="moves-1">0</span></div>
+            </div>
+            <div class="clock-controls">
+                <button class="ctrl-btn" id="pause-btn">⏸</button>
+                <button class="ctrl-btn" id="reset-btn">↻</button>
+            </div>
+            <div class="clock-area" id="clock-2">
+                <div class="player-label">Player 2 (Black)</div>
+                <div class="clock-time" id="time-2">5:00</div>
+                <div class="move-count">Moves: <span id="moves-2">0</span></div>
+            </div>
+            <p class="tap-hint">Tap your clock after your move</p>
+        </div>
+        <!-- Game Over -->
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">⏰</div>
+                <h2 id="go-title">Time's Up!</h2>
+                <p id="go-msg">Player 1 wins on time!</p>
+                <button class="action-btn primary" id="play-again-btn">New Clock</button>
+            </div>
+        </div>
+        <!-- Help -->
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Use</h2>
+                <ul>
+                    <li>Choose a <strong>time preset</strong> or set custom minutes/increment.</li>
+                    <li>Click <strong>Start</strong> to begin. Player 1's clock starts running.</li>
+                    <li><strong>Tap/click your clock</strong> after making a move to pass the turn.</li>
+                    <li>Increment time (if set) is added after each move.</li>
+                    <li>Use <strong>⏸</strong> to pause and <strong>↻</strong> to reset.</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
