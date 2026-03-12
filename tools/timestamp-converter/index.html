@@ -1,45 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Timestamp Converter - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <meta name="description" content="Convert Unix timestamps to human-readable dates and vice versa.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-
-    <div class="theme-toggle-container">
-        <button id="theme-toggle" title="Toggle Light/Dark Theme">
-            <ion-icon name="sunny-outline"></ion-icon>
-        </button>
-    </div>
-
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Light/Dark Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
-        <div class="tool-header">
-            <h1>Timestamp Converter</h1>
-            <p class="tool-subtitle">Convert between Unix timestamps and dates.</p>
-        </div>
-        <div class="now-box">Now: <span id="now"></span></div>
-        <div class="section"><label>Unix Timestamp (seconds)</label><input type="number" id="ts"
-                placeholder="1700000000"><button onclick="tsToDate()" class="sm-btn">→ Convert to Date</button>
-            <div id="ts-result" class="result-box"></div>
-        </div>
-        <div class="section"><label>Date String</label><input type="datetime-local" id="dt"><button onclick="dateToTs()"
-                class="sm-btn">→ Convert to Timestamp</button>
-            <div id="dt-result" class="result-box"></div>
+        <div class="tool-header"><h1>Timestamp</h1><p class="tool-subtitle">Convert between Unix timestamps and human-readable dates.</p></div>
+        <div class="tool-card">
+            <div class="live-clock"><span class="clock-label">Current Unix Time</span><span class="clock-value" id="live-ts">—</span></div>
+            <div class="mode-tabs">
+                <button class="mode-btn active" data-mode="to-date">Timestamp → Date</button>
+                <button class="mode-btn" data-mode="to-ts">Date → Timestamp</button>
+            </div>
+            <div class="section" id="to-date-section">
+                <label for="ts-input">Unix Timestamp</label>
+                <div class="input-row"><input type="number" id="ts-input" placeholder="e.g. 1710201600"><button class="now-btn" id="now-btn">Now</button></div>
+                <div class="result-grid" id="date-results">
+                    <div class="result-item"><span class="r-label">Local</span><span class="r-value" id="r-local">—</span></div>
+                    <div class="result-item"><span class="r-label">UTC</span><span class="r-value" id="r-utc">—</span></div>
+                    <div class="result-item"><span class="r-label">ISO 8601</span><span class="r-value" id="r-iso">—</span></div>
+                    <div class="result-item"><span class="r-label">Relative</span><span class="r-value" id="r-relative">—</span></div>
+                </div>
+            </div>
+            <div class="section hidden" id="to-ts-section">
+                <label for="date-input">Date & Time</label>
+                <input type="datetime-local" id="date-input">
+                <div class="result-grid" id="ts-results">
+                    <div class="result-item"><span class="r-label">Seconds</span><span class="r-value mono" id="r-seconds">—</span></div>
+                    <div class="result-item"><span class="r-label">Milliseconds</span><span class="r-value mono" id="r-millis">—</span></div>
+                </div>
+            </div>
         </div>
     </div>
+    <div id="toast" class="toast hidden"><ion-icon name="checkmark-circle"></ion-icon><span id="toast-message">Copied!</span></div>
     <script src="script.js"></script>
 </body>
-
 </html>

@@ -1,4 +1,3 @@
-/* ===== FOSSarium Shared Base Styles ===== */
 :root {
     --bg-color: #050510;
     --text-color: #e6edf3;
@@ -7,15 +6,11 @@
     --card-border: rgba(255, 255, 255, 0.05);
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
+    --accent-glow: rgba(88, 166, 255, 0.3);
     --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
     --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
-    --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
-    --gradient-4: linear-gradient(135deg, #00B4DB, #0083B0);
-    --gradient-5: linear-gradient(135deg, #fc4a1a, #f7b733);
-    --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
-    --gradient-7: linear-gradient(135deg, #8E2DE2, #4A00E0);
-    --gradient-8: linear-gradient(135deg, #FF416C, #FF4B2B);
-    --gradient-9: linear-gradient(135deg, #00b09b, #96c93d);
+    --go-color: #2ed573;
+    --go-glow: rgba(46, 213, 115, 0.3)
 }
 
 :root.light-theme {
@@ -26,6 +21,9 @@
     --card-border: rgba(0, 0, 0, 0.08);
     --hover-bg: rgba(240, 244, 248, 0.9);
     --accent-color: #0056b3;
+    --accent-glow: rgba(0, 86, 179, 0.15);
+    --go-color: #116329;
+    --go-glow: rgba(17, 99, 41, 0.2)
 }
 
 body {
@@ -35,319 +33,92 @@ body {
     color: var(--text-color);
     line-height: 1.5;
     overflow-x: hidden;
-    position: relative;
-    min-height: 100vh;
+    min-height: 100vh
+}
+
+.background-blobs {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    opacity: .6;
+    pointer-events: none
+}
+
+.blob {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: move 20s infinite alternate ease-in-out
+}
+
+.blob-1 {
+    top: -10%;
+    left: -10%;
+    background: var(--gradient-1);
+    opacity: .2
+}
+
+.blob-2 {
+    bottom: -10%;
+    right: -10%;
+    background: var(--gradient-2);
+    opacity: .15;
+    animation-delay: -5s
+}
+
+@keyframes move {
+    from {
+        transform: translate(0, 0) scale(1)
+    }
+
+    to {
+        transform: translate(10%, 10%) scale(1.1)
+    }
 }
 
 .app-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 20px 40px;
+    padding: 60px 20px 40px
 }
 
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
+.tool-container-wrapper {
+    max-width: 500px
 }
 
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
+.tool-header {
+    margin-bottom: 25px;
+    text-align: center
+}
 
-h1 {
-    font-size: min(4rem, 12vw);
-    font-weight: 800;
+.tool-header h1 {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
     margin: 0;
     color: transparent;
     background: linear-gradient(to right, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
-    letter-spacing: -1.5px;
+    letter-spacing: -1.5px
 }
 
-.hidden {
-    display: none !important;
-}
-/* ===== End FOSSarium Shared Base Styles ===== */
-
-.tool-body {
-    display: flex;
-    justify-content: center;
-    background-color: var(--bg-color);
-}
-
-.tool-container-wrapper {
-    max-width: 500px;
-    width: 100%;
-    padding: 20px;
-}
-
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    font-weight: 500;
-    transition: color 0.2s;
-}
-
-.back-button:hover {
-    color: #fff;
-    text-decoration: none;
-}
-
-:root.light-theme .back-button:hover {
-    color: #000;
-}
-
-.tool-header {
-    margin-bottom: 30px;
-}
-
-.tool-title {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.tool-title h1 {
-    font-size: 2.2rem;
-    margin: 0;
-}
-
-.card-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 1.5rem;
-}
-
-.stopwatch-container {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    backdrop-filter: blur(10px);
-}
-
-.time-display {
-    font-family: 'Space Mono', monospace;
-    font-size: min(4rem, 15vw);
-    font-weight: 700;
-    color: var(--text-color);
-    margin-bottom: min(30px, 4vh);
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-}
-
-.digits {
-    display: inline-block;
-    width: 2.5ch;
-    text-align: center;
-}
-
-.milliseconds {
-    font-size: 1.8rem;
+.tool-subtitle {
     color: var(--text-muted);
-    font-weight: 400;
-    margin-left: 5px;
-    width: 3.5ch;
-    text-align: left;
+    font-size: 1.05rem;
+    margin: 10px auto 0
 }
 
-.controls {
-    display: flex;
-    gap: 15px;
-    margin-bottom: min(30px, 4vh);
-    width: 100%;
-    justify-content: center;
-}
-
-.btn {
-    border: none;
-    padding: 12px 24px;
-    border-radius: 50px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-    min-width: 120px;
-    justify-content: center;
-}
-
-.btn:active {
-    transform: scale(0.95);
-}
-
-.btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.primary-btn {
-    background: var(--gradient-6);
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
-}
-
-.primary-btn:hover {
-    box-shadow: 0 6px 20px rgba(56, 239, 125, 0.6);
-}
-
-.secondary-btn {
-    background: var(--gradient-2);
-    color: #fff;
-    box-shadow: 0 4px 15px rgba(245, 175, 25, 0.4);
-}
-
-.utility-btn {
-    background: rgba(139, 148, 158, 0.2);
-    color: var(--text-color);
-}
-
-.utility-btn:hover:not(:disabled) {
-    background: rgba(139, 148, 158, 0.3);
-}
-
-.danger-btn {
-    background: rgba(248, 81, 73, 0.1);
-    color: #ff5858;
-}
-
-.danger-btn:hover {
-    background: rgba(248, 81, 73, 0.2);
-}
-
-.hidden {
-    display: none !important;
-}
-
-.laps-container {
-    width: 100%;
-    border-top: 1px solid var(--card-border);
-    padding-top: 20px;
-}
-
-.laps-header {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 15px 10px 15px;
-    color: var(--text-muted);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.laps-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    max-height: 35vh;
-    overflow-y: auto;
-}
-
-/* Custom Scrollbar for laps */
-.laps-list::-webkit-scrollbar {
-    width: 6px;
-}
-
-.laps-list::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.laps-list::-webkit-scrollbar-thumb {
-    background: rgba(139, 148, 158, 0.3);
-    border-radius: 3px;
-}
-
-.lap-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 15px;
-    border-radius: 8px;
-    font-family: 'Space Mono', monospace;
-    font-size: 1rem;
-    color: var(--text-color);
-    animation: fadeIn 0.3s ease;
-}
-
-.lap-item:nth-child(even) {
-    background: rgba(255, 255, 255, 0.03);
-}
-
-:root.light-theme .lap-item:nth-child(even) {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.lap-number {
-    color: var(--text-muted);
-}
-
-.lap-time {
-    color: var(--accent-color);
-    font-weight: 700;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@media (max-width: 500px) {
-    .time-display {
-        font-size: 3rem;
-    }
-
-    .milliseconds {
-        font-size: 1.4rem;
-    }
-
-    .controls {
-        flex-wrap: wrap;
-    }
-
-    .btn {
-        flex: 1;
-        min-width: 45%;
-    }
-}
-
-/* Theme Toggle Button */
 .theme-toggle-container {
     position: absolute;
     top: 20px;
     right: 20px;
-    z-index: 100;
+    z-index: 100
 }
 
 #theme-toggle {
@@ -362,11 +133,198 @@ h1 {
     justify-content: center;
     font-size: 1.5rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all .3s ease;
+    backdrop-filter: blur(10px)
 }
 
 #theme-toggle:hover {
     transform: scale(1.1);
     color: var(--accent-color);
+    box-shadow: 0 0 15px var(--accent-glow)
+}
+
+.tool-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 35px 30px;
+    text-align: center;
+    backdrop-filter: blur(15px)
+}
+
+.time-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: clamp(2.8rem, 12vw, 4.5rem);
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: baseline;
+    justify-content: center
+}
+
+.digits {
+    display: inline-block;
+    min-width: 2ch;
+    text-align: center
+}
+
+.ms {
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 2px
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap
+}
+
+.play-btn {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    border: none;
+    background: var(--go-color);
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 20px var(--go-glow);
+    transition: all .2s
+}
+
+.play-btn:hover {
+    transform: scale(1.08)
+}
+
+.play-btn:active {
+    transform: scale(.95)
+}
+
+.play-btn.running {
+    background: #ff6b6b;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, .3)
+}
+
+.secondary-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 20px;
+    background: var(--hover-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 14px;
+    color: var(--text-color);
+    font-size: .9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all .15s
+}
+
+.secondary-btn:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px)
+}
+
+.secondary-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+    transform: none
+}
+
+.laps-container {
+    border-top: 1px solid var(--card-border);
+    padding-top: 16px;
+    text-align: left
+}
+
+.laps-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr;
+    padding: 6px 12px;
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .5px
+}
+
+.laps-list {
+    max-height: 250px;
+    overflow-y: auto
+}
+
+.lap-item {
+    display: grid;
+    grid-template-columns: 60px 1fr 1fr;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: .85rem;
+    animation: fadeIn .3s ease
+}
+
+.lap-item:nth-child(even) {
+    background: var(--hover-bg)
+}
+
+.lap-num {
+    color: var(--text-muted)
+}
+
+.lap-time {
+    color: var(--accent-color);
+    font-weight: 700
+}
+
+.lap-total {
+    color: var(--text-color)
+}
+
+.lap-item.best .lap-time {
+    color: var(--go-color)
+}
+
+.lap-item.worst .lap-time {
+    color: #ff6b6b
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.hidden {
+    display: none !important
+}
+
+@media(max-width:500px) {
+    .tool-card {
+        padding: 25px 18px
+    }
+
+    .controls {
+        gap: 8px
+    }
+
+    .secondary-btn {
+        padding: 10px 14px;
+        font-size: .82rem
+    }
 }

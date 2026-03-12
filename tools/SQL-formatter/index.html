@@ -5,15 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SQL Formatter - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <meta name="description" content="Prettify and format SQL queries for readability with keyword highlighting.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -24,17 +29,60 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>SQL Formatter</h1>
-            <p class="tool-subtitle">Prettify messy SQL queries.</p>
+            <p class="tool-subtitle">Prettify messy SQL queries into clean, readable code.</p>
         </div>
-        <div class="actions-bar"><button id="format-btn" class="action-btn primary"><ion-icon
-                    name="code-outline"></ion-icon> Format</button><button id="copy-btn"
-                class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy</button></div>
-        <div class="editor-layout">
-            <div class="editor-pane"><label>Input SQL</label><textarea id="input"
-                    placeholder="SELECT * FROM users WHERE id = 1 AND name = 'John'"></textarea></div>
-            <div class="editor-pane"><label>Formatted</label><textarea id="output" readonly></textarea></div>
+
+        <div class="tool-card">
+            <div class="settings-bar">
+                <div class="setting-group">
+                    <label for="indent-select">Indentation</label>
+                    <select id="indent-select">
+                        <option value="2">2 Spaces</option>
+                        <option value="4" selected>4 Spaces</option>
+                        <option value="tab">Tabs</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label for="case-select">Keywords</label>
+                    <select id="case-select">
+                        <option value="upper" selected>UPPERCASE</option>
+                        <option value="lower">lowercase</option>
+                        <option value="preserve">Preserve</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="editor-layout">
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>Input SQL</label>
+                        <button class="icon-btn" id="clear-btn" title="Clear"><ion-icon name="trash-outline"></ion-icon></button>
+                    </div>
+                    <textarea id="input" placeholder="SELECT * FROM users WHERE id = 1 AND name = 'John' ORDER BY created_at DESC LIMIT 10" spellcheck="false"></textarea>
+                </div>
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <label>Formatted SQL</label>
+                        <div class="header-actions">
+                            <button class="icon-btn" id="copy-btn" title="Copy"><ion-icon name="copy-outline"></ion-icon></button>
+                            <button class="icon-btn" id="download-btn" title="Download"><ion-icon name="download-outline"></ion-icon></button>
+                        </div>
+                    </div>
+                    <textarea id="output" readonly placeholder="Formatted SQL will appear here..."></textarea>
+                </div>
+            </div>
+
+            <button id="format-btn" class="format-btn">
+                <ion-icon name="code-outline"></ion-icon> Format SQL
+            </button>
         </div>
     </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

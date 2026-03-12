@@ -1,43 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Diff - FOSSarium</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
-        rel="stylesheet">
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Diff Checker - FOSSarium</title>
+    <meta name="description" content="Compare two texts and highlight the differences side by side.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-
-    <div class="theme-toggle-container">
-        <button id="theme-toggle" title="Toggle Light/Dark Theme">
-            <ion-icon name="sunny-outline"></ion-icon>
-        </button>
-    </div>
-
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Light/Dark Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
     <div class="app-container tool-container-wrapper">
-        <div class="tool-header">
-            <h1>Text Diff</h1>
-            <p class="tool-subtitle">Compare two text blocks and highlight differences.</p>
-        </div><button id="diff-btn" class="action-btn primary">Compare</button>
-        <div class="editor-layout">
-            <div class="editor-pane"><label>Original</label><textarea id="text-a"
-                    placeholder="Paste original text..."></textarea></div>
-            <div class="editor-pane"><label>Modified</label><textarea id="text-b"
-                    placeholder="Paste modified text..."></textarea></div>
+        <div class="tool-header"><h1>Text Diff</h1><p class="tool-subtitle">Compare two texts and highlight every difference.</p></div>
+        <div class="tool-card">
+            <div class="editor-layout">
+                <div class="editor-pane"><div class="pane-header"><label>Original</label><button class="icon-btn" id="clear-a" title="Clear"><ion-icon name="trash-outline"></ion-icon></button></div>
+                    <textarea id="text-a" rows="8" placeholder="Paste original text here..." spellcheck="false"></textarea></div>
+                <div class="editor-pane"><div class="pane-header"><label>Modified</label><button class="icon-btn" id="clear-b" title="Clear"><ion-icon name="trash-outline"></ion-icon></button></div>
+                    <textarea id="text-b" rows="8" placeholder="Paste modified text here..." spellcheck="false"></textarea></div>
+            </div>
+            <button id="compare-btn" class="action-btn"><ion-icon name="git-compare-outline"></ion-icon> Compare</button>
+            <div class="diff-stats hidden" id="diff-stats">
+                <span class="stat added"><strong id="added-count">0</strong> added</span>
+                <span class="sep">·</span>
+                <span class="stat removed"><strong id="removed-count">0</strong> removed</span>
+                <span class="sep">·</span>
+                <span class="stat"><strong id="unchanged-count">0</strong> unchanged</span>
+            </div>
+            <div class="diff-output hidden" id="diff-output"></div>
         </div>
-        <div class="diff-output" id="diff-output"></div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

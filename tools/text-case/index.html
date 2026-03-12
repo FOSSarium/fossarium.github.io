@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Case Converter - FOSSarium</title>
+    <meta name="description" content="Toggle between uppercase, lowercase, camelCase, and more text transformations.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="background-blobs"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    <div class="theme-toggle-container"><button id="theme-toggle" title="Toggle Light/Dark Theme"><ion-icon name="sunny-outline"></ion-icon></button></div>
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header"><h1>Text Case</h1><p class="tool-subtitle">Transform text between different case formats instantly.</p></div>
+        <div class="tool-card">
+            <label for="input">Enter your text</label>
+            <textarea id="input" rows="4" placeholder="Type or paste your text here..."></textarea>
+            <div class="case-grid">
+                <button class="case-btn" data-case="upper"><ion-icon name="arrow-up-outline"></ion-icon> UPPERCASE</button>
+                <button class="case-btn" data-case="lower"><ion-icon name="arrow-down-outline"></ion-icon> lowercase</button>
+                <button class="case-btn" data-case="title"><ion-icon name="text-outline"></ion-icon> Title Case</button>
+                <button class="case-btn" data-case="sentence"><ion-icon name="create-outline"></ion-icon> Sentence case</button>
+                <button class="case-btn" data-case="camel"><ion-icon name="code-outline"></ion-icon> camelCase</button>
+                <button class="case-btn" data-case="pascal"><ion-icon name="code-outline"></ion-icon> PascalCase</button>
+                <button class="case-btn" data-case="snake"><ion-icon name="remove-outline"></ion-icon> snake_case</button>
+                <button class="case-btn" data-case="kebab"><ion-icon name="remove-outline"></ion-icon> kebab-case</button>
+                <button class="case-btn" data-case="constant"><ion-icon name="alert-outline"></ion-icon> CONSTANT_CASE</button>
+                <button class="case-btn" data-case="dot"><ion-icon name="ellipsis-horizontal-outline"></ion-icon> dot.case</button>
+                <button class="case-btn" data-case="toggle"><ion-icon name="swap-vertical-outline"></ion-icon> tOGGLE cASE</button>
+                <button class="case-btn" data-case="reverse"><ion-icon name="return-down-back-outline"></ion-icon> Reverse</button>
+            </div>
+            <label>Result</label>
+            <div class="result-area">
+                <textarea id="output" rows="4" readonly placeholder="Transformed text appears here..."></textarea>
+                <button class="copy-btn" id="copy-btn" title="Copy"><ion-icon name="copy-outline"></ion-icon></button>
+            </div>
+            <div class="stats-row"><span><strong id="char-count">0</strong> chars</span><span class="sep">·</span><span><strong id="word-count">0</strong> words</span></div>
+        </div>
+    </div>
+    <div id="toast" class="toast hidden"><ion-icon name="checkmark-circle"></ion-icon><span id="toast-message">Copied!</span></div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -468,13 +468,6 @@
         "credit": "FOSSarium",
         "category": "tools"
     },
-    "temp-converter": {
-        "title": "Temp Converter",
-        "description": "Convert between Celsius, Fahrenheit, and Kelvin.",
-        "icon-name": "swap-horizontal-outline",
-        "credit": "FOSSarium",
-        "category": "tools"
-    },
     "text-case": {
         "title": "Text Case Converter",
         "description": "Toggle between uppercase, lowercase, camelCase, etc.",
