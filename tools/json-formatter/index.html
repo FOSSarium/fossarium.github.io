@@ -5,14 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JSON Formatter - FOSSarium</title>
+    <meta name="description" content="Prettify, minify, and validate your JSON data instantly with syntax highlighting.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -20,28 +28,25 @@
         </button>
     </div>
 
-    <script>
-        const savedTheme = localStorage.getItem('fossarium-theme');
-        if (savedTheme === 'light' || (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches)) {
-            document.documentElement.classList.add('light-theme');
-        }
-    </script>
     <div class="app-container tool-container-wrapper">
-
         <div class="tool-header">
             <h1>JSON Formatter</h1>
-            <p class="tool-subtitle">Beautify, minify, and validate JSON instantly.</p>
+            <p class="tool-subtitle">Beautify, minify, and validate JSON with real-time syntax highlighting.</p>
         </div>
 
         <div class="actions-bar">
-            <button id="format-btn" class="action-btn primary"><ion-icon name="code-outline"></ion-icon>
-                Beautify</button>
-            <button id="minify-btn" class="action-btn secondary"><ion-icon name="remove-outline"></ion-icon>
-                Minify</button>
-            <button id="validate-btn" class="action-btn secondary"><ion-icon name="checkmark-circle-outline"></ion-icon>
-                Validate</button>
+            <button id="format-btn" class="action-btn primary"><ion-icon name="code-outline"></ion-icon> Beautify</button>
+            <button id="minify-btn" class="action-btn secondary"><ion-icon name="remove-outline"></ion-icon> Minify</button>
+            <button id="validate-btn" class="action-btn secondary"><ion-icon name="checkmark-circle-outline"></ion-icon> Validate</button>
+            <button id="sort-btn" class="action-btn secondary"><ion-icon name="funnel-outline"></ion-icon> Sort Keys</button>
             <button id="copy-btn" class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy</button>
             <button id="clear-btn" class="action-btn danger"><ion-icon name="trash-outline"></ion-icon> Clear</button>
+        </div>
+
+        <div class="stats-bar" id="stats-bar">
+            <span class="stat"><ion-icon name="layers-outline"></ion-icon> <span id="stat-keys">0</span> keys</span>
+            <span class="stat"><ion-icon name="code-slash-outline"></ion-icon> <span id="stat-depth">0</span> depth</span>
+            <span class="stat"><ion-icon name="document-text-outline"></ion-icon> <span id="stat-size">0 B</span></span>
         </div>
 
         <div id="status-bar" class="status-bar hidden"></div>
@@ -50,15 +55,24 @@
             <div class="editor-pane">
                 <label for="json-input">Input</label>
                 <textarea id="json-input" spellcheck="false"
-                    placeholder='Paste your JSON here...\n\n{"name": "FOSSarium", "type": "FOSS"}'></textarea>
+                    placeholder='Paste your JSON here...
+
+{"name": "FOSSarium", "type": "FOSS", "tools": 80}'></textarea>
             </div>
             <div class="editor-pane">
                 <label for="json-output">Output</label>
-                <textarea id="json-output" spellcheck="false" readonly
-                    placeholder="Formatted output will appear here..."></textarea>
+                <div class="output-wrapper">
+                    <pre id="json-output" class="output-pre"><code id="json-output-code"></code></pre>
+                </div>
             </div>
         </div>
     </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

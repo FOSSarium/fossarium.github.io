@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Path Tester - FOSSarium</title>
+    <meta name="description" content="Query and test JSON paths for data extraction with real-time matching.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>JSON Path Tester</h1>
+            <p class="tool-subtitle">Query JSON data using dot-notation paths with real-time results and a full path tree.</p>
+        </div>
+
+        <div class="query-bar">
+            <div class="query-input-wrapper">
+                <ion-icon name="search-outline"></ion-icon>
+                <input type="text" id="path-input" placeholder="Type a path (e.g. user.name, items[0].id, items.*.title)" autofocus>
+            </div>
+            <button id="copy-result-btn" class="action-btn secondary" title="Copy result">
+                <ion-icon name="copy-outline"></ion-icon> Copy
+            </button>
+        </div>
+
+        <div class="main-layout">
+            <div class="panel json-panel">
+                <div class="panel-header">
+                    <label>JSON Input</label>
+                    <div class="panel-actions">
+                        <button id="sample-btn" class="mini-btn" title="Load sample">
+                            <ion-icon name="flask-outline"></ion-icon>
+                        </button>
+                        <button id="clear-btn" class="mini-btn" title="Clear">
+                            <ion-icon name="trash-outline"></ion-icon>
+                        </button>
+                    </div>
+                </div>
+                <textarea id="json-input" spellcheck="false"
+                    placeholder='Paste JSON here...
+
+{
+  "user": {
+    "name": "Alice",
+    "age": 30,
+    "tags": ["dev", "oss"]
+  }
+}'></textarea>
+            </div>
+
+            <div class="panel result-panel">
+                <div class="panel-header">
+                    <label>Result</label>
+                    <span class="match-count" id="match-count">0 matches</span>
+                </div>
+                <pre id="result-output" class="result-output"><code id="result-code">Enter a path to query...</code></pre>
+            </div>
+        </div>
+
+        <div class="paths-section">
+            <div class="paths-header">
+                <h2>All Paths</h2>
+                <input type="text" id="filter-input" placeholder="Filter paths..." class="filter-input">
+            </div>
+            <div class="paths-grid" id="paths-grid">
+                <!-- Paths rendered here -->
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

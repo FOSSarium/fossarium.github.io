@@ -4,16 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Markdown Previewer - FOSSarium</title>
+    <title>Markdown Preview - FOSSarium</title>
+    <meta name="description" content="Instantly render Markdown text into beautiful HTML.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -23,30 +31,59 @@
 
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
-            <h1>Markdown Previewer</h1>
-            <p class="tool-subtitle">Write Markdown, see live HTML preview.</p>
+            <h1>Markdown Preview</h1>
+            <p class="tool-subtitle">Paste or type Markdown and see the rendered HTML instantly.</p>
         </div>
+
+        <div class="actions-bar">
+            <button id="copy-html-btn" class="action-btn secondary"><ion-icon name="code-working-outline"></ion-icon> Copy HTML</button>
+            <button id="clear-btn" class="action-btn secondary"><ion-icon name="trash-outline"></ion-icon> Clear</button>
+        </div>
+
         <div class="editor-layout">
-            <div class="editor-pane"><label>Markdown</label><textarea id="input" placeholder="# Hello World">## Hello FOSSarium
+            <div class="editor-pane">
+                <label><ion-icon name="create-outline"></ion-icon> Markdown</label>
+                <textarea id="input" spellcheck="false" placeholder="# Hello World
 
-This is **bold** and *italic* text.
+Type or paste your Markdown here...">## Hello FOSSarium 👋
 
-- Item 1
-- Item 2
-- Item 3
+This is **bold** and *italic* text with `inline code`.
 
-> A blockquote example
+### Features
+- Real-time rendering
+- Full GFM support
+- Copy generated HTML
 
-`inline code` and a [link](https://example.com)
+> "Simplicity is the ultimate sophistication."
 
+### Code Block
+
+```python
+def greet():
+    print("Hello from FOSSarium!")
 ```
-code block
-```</textarea></div>
-            <div class="editor-pane preview-pane"><label>Preview</label>
-                <div id="output" class="preview"></div>
+
+| Name | Role |
+|------|------|
+| Alice | Developer |
+| Bob | Designer |
+
+---
+
+[Visit FOSSarium](https://fossarium.github.io) • Made with ❤️</textarea>
+            </div>
+            <div class="editor-pane preview-pane">
+                <label><ion-icon name="eye-outline"></ion-icon> Preview</label>
+                <div id="output" class="markdown-body"></div>
             </div>
         </div>
     </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

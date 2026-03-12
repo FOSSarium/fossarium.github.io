@@ -5,16 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Metronome - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Keep perfect time with an adjustable metronome and tap tempo.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -25,14 +31,61 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Metronome</h1>
-            <p class="tool-subtitle">Keep perfect tempo with an audio click.</p>
+            <p class="tool-subtitle">Keep perfect tempo with an adjustable click, visual pulse, and tap tempo.</p>
         </div>
-        <div class="bpm-display"><span id="bpm-val">120</span> BPM</div><input type="range" id="bpm-slider" min="30"
-            max="300" value="120" class="bpm-slider">
-        <div class="controls"><button id="start-btn" class="action-btn primary">Start</button><button id="tap-btn"
-                class="action-btn secondary">Tap Tempo</button></div>
-        <div class="indicator" id="indicator"></div>
+
+        <div class="metro-card">
+            <div class="bpm-ring" id="bpm-ring">
+                <div class="bpm-display">
+                    <span class="bpm-number" id="bpm-val">120</span>
+                    <span class="bpm-label">BPM</span>
+                </div>
+            </div>
+
+            <div class="tempo-name" id="tempo-name">Allegro</div>
+
+            <div class="slider-section">
+                <span class="slider-label">30</span>
+                <input type="range" id="bpm-slider" min="30" max="300" value="120" class="bpm-slider">
+                <span class="slider-label">300</span>
+            </div>
+
+            <div class="bpm-fine-controls">
+                <button class="fine-btn" id="bpm-down-10">-10</button>
+                <button class="fine-btn" id="bpm-down-1">-1</button>
+                <button class="fine-btn" id="bpm-up-1">+1</button>
+                <button class="fine-btn" id="bpm-up-10">+10</button>
+            </div>
+
+            <div class="beats-section">
+                <label>Beats per measure</label>
+                <div class="beats-selector">
+                    <button class="beat-btn" data-beats="2">2</button>
+                    <button class="beat-btn" data-beats="3">3</button>
+                    <button class="beat-btn active" data-beats="4">4</button>
+                    <button class="beat-btn" data-beats="6">6</button>
+                    <button class="beat-btn" data-beats="8">8</button>
+                </div>
+            </div>
+
+            <div class="beat-indicators" id="beat-indicators">
+                <div class="beat-dot"></div>
+                <div class="beat-dot"></div>
+                <div class="beat-dot"></div>
+                <div class="beat-dot"></div>
+            </div>
+
+            <div class="main-controls">
+                <button id="start-btn" class="play-btn">
+                    <ion-icon name="play-outline" id="play-icon"></ion-icon>
+                </button>
+                <button id="tap-btn" class="tap-btn">
+                    <ion-icon name="hand-left-outline"></ion-icon> Tap
+                </button>
+            </div>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 

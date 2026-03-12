@@ -5,15 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Markdown Editor - FOSSarium</title>
+    <meta name="description" content="Write and preview Markdown with a real-time live editor and formatting toolbar.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Marked.js for parsing markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
-    <!-- Ionicons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
@@ -21,60 +18,97 @@
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
 
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
             <ion-icon name="sunny-outline"></ion-icon>
         </button>
     </div>
 
-    class="tool-body">
     <div class="app-container tool-container-wrapper">
-
-
         <div class="tool-header">
-            <div class="tool-title">
-                <div class="card-icon gradient-4"><ion-icon name="document-text-outline"></ion-icon></div>
-                <h1>Markdown Editor</h1>
-            </div>
-            <p>Real-time markdown previewer.</p>
+            <h1>Markdown Editor</h1>
+            <p class="tool-subtitle">Write Markdown with a live preview, formatting toolbar, and word count.</p>
+        </div>
+
+        <div class="toolbar">
+            <button class="tb-btn" data-action="bold" title="Bold"><ion-icon name="text-outline"></ion-icon> <strong>B</strong></button>
+            <button class="tb-btn" data-action="italic" title="Italic"><em>I</em></button>
+            <button class="tb-btn" data-action="heading" title="Heading"><ion-icon name="text-outline"></ion-icon> H</button>
+            <button class="tb-btn" data-action="link" title="Link"><ion-icon name="link-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="image" title="Image"><ion-icon name="image-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="code" title="Code"><ion-icon name="code-slash-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="codeblock" title="Code Block"><ion-icon name="code-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="ul" title="Bullet List"><ion-icon name="list-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="ol" title="Numbered List"><ion-icon name="reorder-four-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="quote" title="Blockquote"><ion-icon name="chatbox-outline"></ion-icon></button>
+            <button class="tb-btn" data-action="hr" title="Horizontal Rule"><ion-icon name="remove-outline"></ion-icon></button>
+            <div class="toolbar-spacer"></div>
+            <button class="tb-btn" id="copy-md-btn" title="Copy Markdown"><ion-icon name="copy-outline"></ion-icon></button>
+            <button class="tb-btn" id="copy-html-btn" title="Copy HTML"><ion-icon name="code-working-outline"></ion-icon></button>
+            <button class="tb-btn" id="clear-btn" title="Clear"><ion-icon name="trash-outline"></ion-icon></button>
+        </div>
+
+        <div class="stats-bar">
+            <span class="stat"><span id="stat-words">0</span> words</span>
+            <span class="stat"><span id="stat-chars">0</span> chars</span>
+            <span class="stat"><span id="stat-lines">0</span> lines</span>
         </div>
 
         <div class="editor-layout">
             <div class="editor-pane">
                 <div class="pane-header">
-                    <ion-icon name="code-working-outline"></ion-icon> Markdown Editor
+                    <ion-icon name="create-outline"></ion-icon> Editor
                 </div>
-                <textarea id="editor" placeholder="Type your markdown here..."># Welcome to Markdown
-This is a real-time markdown editor!
+                <textarea id="editor" spellcheck="false" placeholder="Start writing Markdown here...">## Welcome to Markdown Editor
 
-## Features
-- **Bold text** and *italic text*
-- [Links!](https://github.com)
-- Inline `code` and code blocks:
+This is a **real-time** markdown editor with a *live preview*!
+
+### Features
+- 📝 Formatting toolbar with shortcuts
+- 👁️ Live side-by-side preview
+- 📊 Word, character, and line count
+- 💾 Auto-saves your work locally
+- 🎨 Full dark/light theme support
+
+### Code Example
 
 ```javascript
-function hello() {
-    console.log("Hello World!");
+function greet(name) {
+    return `Hello, ${name}!`;
 }
+
+console.log(greet("FOSSarium"));
 ```
 
-> "Markdown is awesome!"
+> "The best way to predict the future is to create it."
 
-### Lists
-1. First item
-2. Second item
-   - Sub item
+---
 
-![Placeholder](https://via.placeholder.com/150 "Placeholder Image")
-</textarea>
+| Feature | Status |
+|---------|--------|
+| Live Preview | ✅ |
+| Toolbar | ✅ |
+| Persistence | ✅ |
+
+[Visit FOSSarium](https://fossarium.github.io)</textarea>
             </div>
             <div class="preview-pane">
                 <div class="pane-header">
-                    <ion-icon name="eye-outline"></ion-icon> Live Preview
+                    <ion-icon name="eye-outline"></ion-icon> Preview
                 </div>
                 <div id="preview" class="markdown-body"></div>
             </div>
         </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
     </div>
 
     <script src="script.js"></script>
