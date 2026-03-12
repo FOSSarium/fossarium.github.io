@@ -37,46 +37,25 @@ body {
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
+    display: flex;
+    justify-content: center;
 }
 
 .app-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px 40px;
+    max-width: 500px;
+    width: 100%;
+    padding: 40px 20px;
 }
-
-.card-icon {
-    width: 65px;
-    height: 65px;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.2rem;
-    color: white;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    margin-bottom: 5px;
-}
-
-.gradient-1 { background: var(--gradient-1); }
-.gradient-2 { background: var(--gradient-2); }
-.gradient-3 { background: var(--gradient-3); }
-.gradient-4 { background: var(--gradient-4); }
-.gradient-5 { background: var(--gradient-5); }
-.gradient-6 { background: var(--gradient-6); }
-.gradient-7 { background: var(--gradient-7); }
-.gradient-8 { background: var(--gradient-8); }
-.gradient-9 { background: var(--gradient-9); }
 
 h1 {
-    font-size: min(4rem, 12vw);
+    font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 800;
     margin: 0;
     color: transparent;
     background: linear-gradient(to right, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
-    letter-spacing: -1.5px;
+    letter-spacing: -1px;
 }
 
 .hidden {
@@ -84,70 +63,212 @@ h1 {
 }
 /* ===== End FOSSarium Shared Base Styles ===== */
 
-.game-container-wrapper {
-    max-width: 400px;
-    width: 100%;
-    padding: 20px;
-    text-align: center;
-}
-
-.game-header {
-    margin-bottom: 15px;
-}
-
-.game-header h1 {
-    font-size: 2.2rem;
-    margin: 0;
-}
-
-.info {
-    font-weight: 700;
+/* Back Button */
+.back-button {
+    display: inline-block;
     color: var(--accent-color);
-    margin-top: 5px;
+    text-decoration: none;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+.back-button:hover { opacity: 0.7; }
+
+/* Header */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.header-actions {
+    display: flex;
+    gap: 8px;
+}
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+    font-family: inherit;
+}
+.icon-btn:hover {
+    background: var(--hover-bg);
+    transform: translateY(-2px);
 }
 
+/* Stats Bar */
+.stats-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.stat {
+    flex: 1;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 10px 12px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+.stat-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+.stat-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--accent-color);
+}
+
+/* Board */
 .board {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
     margin-bottom: 20px;
+    aspect-ratio: 1;
 }
-
 .tile {
     aspect-ratio: 1;
     background: var(--card-bg);
     border: 2px solid var(--card-border);
-    border-radius: 10px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
     font-weight: 800;
     color: var(--text-color);
     cursor: pointer;
-    transition: transform 0.15s, background 0.15s;
     user-select: none;
+    transition: transform 0.15s ease, border-color 0.15s, background 0.15s;
+    backdrop-filter: blur(5px);
 }
-
 .tile:hover:not(.empty) {
     border-color: var(--accent-color);
-    transform: scale(1.05);
+    transform: scale(1.06);
+    background: var(--hover-bg);
 }
-
+.tile:active:not(.empty) {
+    transform: scale(0.95);
+}
 .tile.empty {
     background: transparent;
     border-color: transparent;
     cursor: default;
+    backdrop-filter: none;
+}
+.tile.correct {
+    color: #2ed573;
+    border-color: rgba(46, 213, 115, 0.25);
 }
 
+/* Action Button */
 .action-btn {
-    padding: 12px 25px;
+    width: 100%;
+    padding: 14px 25px;
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.action-btn.primary {
     background: var(--gradient-3);
     color: #fff;
+}
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(127, 0, 255, 0.35);
+}
+
+/* Overlay */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(5, 5, 16, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: overlayIn 0.3s ease;
+}
+@keyframes overlayIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+.overlay-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 350px;
+    width: 90%;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    animation: cardIn 0.3s ease;
+}
+@keyframes cardIn {
+    from { transform: scale(0.9) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+.overlay-card h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 15px;
+    background: linear-gradient(to right, var(--text-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+.overlay-card p {
+    color: var(--text-muted);
+    margin: 8px 0;
+    font-size: 0.95rem;
+}
+.overlay-card p strong {
+    color: var(--accent-color);
+}
+.overlay-card ul {
+    text-align: left;
+    padding-left: 20px;
+    margin: 15px 0;
+}
+.overlay-card ul li {
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.win-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+}
+.overlay-card .action-btn {
+    margin-top: 18px;
+}
+
+:root.light-theme .overlay {
+    background: rgba(248, 249, 250, 0.85);
 }

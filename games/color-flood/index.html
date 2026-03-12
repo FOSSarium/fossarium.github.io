@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Flood - FOSSarium</title>
+    <meta name="description" content="Flood the board with a single color in as few moves as possible!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Color Flood</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Moves</span><span class="stat-value" id="moves">0</span></div>
+            <div class="stat"><span class="stat-label">Limit</span><span class="stat-value" id="limit">25</span></div>
+            <div class="stat"><span class="stat-label">Filled</span><span class="stat-value" id="filled">0%</span></div>
+        </div>
+        <div class="board-wrap"><div class="board" id="board"></div></div>
+        <div class="color-btns" id="color-btns"></div>
+        <div class="size-row">
+            <label>Board: <select id="board-size">
+                <option value="10">10×10</option>
+                <option value="14" selected>14×14</option>
+                <option value="18">18×18</option>
+            </select></label>
+            <button class="action-btn primary sm" id="new-btn">New Game</button>
+        </div>
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon" id="go-icon">🎉</div>
+                <h2 id="go-title">You Win!</h2>
+                <p id="go-msg">Completed in <strong id="go-moves">0</strong> moves!</p>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Starting from the <strong>top-left</strong> corner, flood-fill with a chosen color.</li>
+                    <li>Click a <strong>color button</strong> to change the flood region.</li>
+                    <li>Adjacent cells of the same color merge into your region.</li>
+                    <li>Fill the <strong>entire board</strong> within the move limit to win!</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

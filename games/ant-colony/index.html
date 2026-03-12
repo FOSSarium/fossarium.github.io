@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ant Colony Sim - FOSSarium</title>
+    <meta name="description" content="Watch ants forage for food and build pheromone trails in this colony simulation.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Ant Colony</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="How to Play">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Ants</span><span class="stat-value" id="ant-count">50</span></div>
+            <div class="stat"><span class="stat-label">Food</span><span class="stat-value" id="food-collected">0</span></div>
+            <div class="stat"><span class="stat-label">Sources</span><span class="stat-value" id="food-sources">3</span></div>
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="controls-row">
+            <div class="control-group">
+                <label>Ants: <span id="ant-slider-val">50</span></label>
+                <input type="range" id="ant-slider" min="10" max="200" value="50">
+            </div>
+            <div class="control-group">
+                <label>Speed: <span id="speed-slider-val">1.0</span>x</label>
+                <input type="range" id="speed-slider" min="1" max="5" value="1" step="0.5">
+            </div>
+        </div>
+
+        <div class="btn-row">
+            <button class="action-btn secondary" id="pause-btn">⏸ Pause</button>
+            <button class="action-btn primary" id="reset-btn">↻ Reset</button>
+        </div>
+
+        <!-- Help Modal -->
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How It Works</h2>
+                <ul>
+                    <li><strong>Left-click</strong> on the canvas to place <strong>food sources</strong> (green).</li>
+                    <li><strong>Right-click</strong> to place <strong>walls/obstacles</strong> (draw by dragging).</li>
+                    <li>Ants leave the nest (brown circle) and search for food.</li>
+                    <li>When an ant finds food, it carries it back and leaves a <strong>pheromone trail</strong>.</li>
+                    <li>Other ants follow strong pheromone trails, creating efficient paths.</li>
+                    <li>Adjust <strong>ant count</strong> and <strong>speed</strong> with the sliders.</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

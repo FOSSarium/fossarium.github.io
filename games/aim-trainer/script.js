@@ -1,1 +1,126 @@
-let hits=0,times=[],startTime=0,best=Infinity;const target=document.getElementById("target"),arena=document.getElementById("arena");function moveTarget(){const w=arena.clientWidth-50,h=arena.clientHeight-50;target.style.left=Math.random()*w+"px";target.style.top=Math.random()*h+"px";startTime=Date.now();}target.addEventListener("click",e=>{e.stopPropagation();const rt=Date.now()-startTime;times.push(rt);hits++;if(rt<best)best=rt;const avg=Math.round(times.reduce((a,b)=>a+b,0)/times.length);document.getElementById("hits").textContent=hits;document.getElementById("avg").textContent=avg;document.getElementById("best").textContent=best;if(hits>=30){alert("Done! Average: "+avg+"ms, Best: "+best+"ms");hits=0;times=[];best=Infinity;document.getElementById("hits").textContent=0;document.getElementById("avg").textContent=0;document.getElementById("best").textContent="∞";}moveTarget();});moveTarget();
+(() => {
+    const arena = document.getElementById('arena');
+    const target = document.getElementById('target');
+    const startPrompt = document.getElementById('start-prompt');
+    const progressFill = document.getElementById('progress');
+    const hitsEl = document.getElementById('hits');
+    const accuracyEl = document.getElementById('accuracy');
+    const avgRtEl = document.getElementById('avg-rt');
+    const bestRtEl = document.getElementById('best-rt');
+    const resultsOverlay = document.getElementById('results-overlay');
+    const helpOverlay = document.getElementById('help-overlay');
+
+    const TOTAL = 30;
+    let targetSize = 50;
+    let hits = 0, misses = 0, times = [], bestTime = Infinity;
+    let startTime = 0, round = 0, active = false;
+
+    function moveTarget() {
+        const w = arena.clientWidth - targetSize;
+        const h = arena.clientHeight - targetSize;
+        target.style.width = target.style.height = targetSize + 'px';
+        target.style.left = Math.max(0, Math.random() * w) + 'px';
+        target.style.top = Math.max(0, Math.random() * h) + 'px';
+        target.style.display = 'block';
+        startTime = Date.now();
+    }
+
+    function updateStats() {
+        hitsEl.textContent = hits;
+        const total = hits + misses;
+        accuracyEl.textContent = total > 0 ? Math.round((hits / total) * 100) + '%' : '—';
+        if (times.length > 0) {
+            const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length);
+            avgRtEl.textContent = avg + 'ms';
+        }
+        bestRtEl.textContent = bestTime < Infinity ? bestTime + 'ms' : '—';
+        progressFill.style.width = (round / TOTAL * 100) + '%';
+    }
+
+    function endRound() {
+        active = false;
+        target.style.display = 'none';
+        const avg = times.length > 0 ? Math.round(times.reduce((a, b) => a + b, 0) / times.length) : 0;
+        document.getElementById('r-hits').textContent = hits;
+        document.getElementById('r-misses').textContent = misses;
+        const total = hits + misses;
+        document.getElementById('r-accuracy').textContent = total > 0 ? Math.round((hits / total) * 100) + '%' : '0%';
+        document.getElementById('r-avg').textContent = avg + 'ms';
+        document.getElementById('r-best').textContent = bestTime < Infinity ? bestTime + 'ms' : '—';
+        resultsOverlay.classList.remove('hidden');
+    }
+
+    function startGame() {
+        hits = 0; misses = 0; times = []; bestTime = Infinity; round = 0;
+        active = true;
+        startPrompt.style.display = 'none';
+        resultsOverlay.classList.add('hidden');
+        updateStats();
+        moveTarget();
+    }
+
+    // Target click
+    target.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!active) return;
+        const rt = Date.now() - startTime;
+        times.push(rt);
+        hits++;
+        if (rt < bestTime) bestTime = rt;
+        round++;
+        updateStats();
+        if (round >= TOTAL) { endRound(); return; }
+        moveTarget();
+    });
+
+    // Miss click
+    arena.addEventListener('click', (e) => {
+        if (!active) {
+            startGame();
+            return;
+        }
+        if (e.target === target) return;
+        misses++;
+        updateStats();
+    });
+
+    // Difficulty
+    document.querySelectorAll('.diff-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            targetSize = parseInt(btn.dataset.size);
+            if (active) {
+                target.style.width = target.style.height = targetSize + 'px';
+            }
+        });
+    });
+
+    // Reset
+    document.getElementById('reset-btn').addEventListener('click', () => {
+        active = false;
+        target.style.display = 'none';
+        hits = 0; misses = 0; times = []; bestTime = Infinity; round = 0;
+        hitsEl.textContent = '0'; accuracyEl.textContent = '—';
+        avgRtEl.textContent = '—'; bestRtEl.textContent = '—';
+        progressFill.style.width = '0%';
+        startPrompt.style.display = 'flex';
+        resultsOverlay.classList.add('hidden');
+    });
+
+    // Play Again
+    document.getElementById('play-again-btn').addEventListener('click', startGame);
+
+    // Help
+    document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
+    document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
+    helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
+    resultsOverlay.addEventListener('click', e => { if (e.target === resultsOverlay) resultsOverlay.classList.add('hidden'); });
+
+    // Fullscreen
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        const el = document.getElementById('game-root');
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
+        else document.exitFullscreen();
+    });
+})();

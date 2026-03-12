@@ -1,27 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect 4 - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Drop discs to connect four in a row. Play against the AI!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Connect 4</h1>
-            <div class="turn-indicator">Turn: <span id="turn" class="p1">Player 1</span></div>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
         </div>
-        <div class="board" id="board"></div>
-        <div id="status" class="status-bar hidden"></div><button id="reset-btn" class="action-btn primary">New
-            Game</button>
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Turn</span><span class="stat-value" id="turn">🔴 You</span></div>
+            <div class="stat"><span class="stat-label">Wins</span><span class="stat-value" id="wins">0</span></div>
+            <div class="stat"><span class="stat-label">Losses</span><span class="stat-value" id="losses">0</span></div>
+        </div>
+        <div class="board-wrap"><div class="board" id="board"></div></div>
+        <button class="action-btn primary" id="new-btn">New Game</button>
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon" id="go-icon">🎉</div>
+                <h2 id="go-title">You Win!</h2>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Click a column to <strong>drop your disc</strong> (🔴 Red).</li>
+                    <li>Connect <strong>4 in a row</strong> — horizontally, vertically, or diagonally — to win.</li>
+                    <li>The <strong>AI</strong> plays as 🟡 Yellow.</li>
+                    <li>First to four in a row wins!</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

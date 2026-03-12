@@ -1,25 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkers - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Classic Checkers against the computer. Jump and crown your way to victory.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Checkers</h1>
-            <p class="turn">Turn: <span id="turn" style="color:#ff4757">Red</span></p>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
         </div>
-        <div class="board" id="board"></div><button id="reset-btn" class="action-btn primary">New Game</button>
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">You</span><span class="stat-value" id="p-count">12</span></div>
+            <div class="stat turn-stat"><span class="stat-label">Turn</span><span class="stat-value" id="turn">Your turn</span></div>
+            <div class="stat"><span class="stat-label">CPU</span><span class="stat-value" id="c-count">12</span></div>
+        </div>
+        <div class="board-wrap"><div class="board" id="board"></div></div>
+        <button class="action-btn primary" id="new-btn">New Game</button>
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon" id="go-icon">🎉</div>
+                <h2 id="go-title">You Win!</h2>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>You play as <strong>Red</strong>; the CPU plays as <strong>Blue</strong>.</li>
+                    <li>Click a piece, then click a <strong>highlighted</strong> square to move.</li>
+                    <li>Pieces move diagonally. <strong>Jumps are mandatory</strong>.</li>
+                    <li>Reach the far row to become a <strong>King</strong> (can move both directions).</li>
+                    <li>Capture all enemy pieces or block them to win!</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

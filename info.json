@@ -601,13 +601,6 @@
         "credit": "FOSSarium",
         "category": "games"
     },
-    "blackjack": {
-        "title": "Blackjack",
-        "description": "Try your luck and aim for 21.",
-        "icon-name": "card-outline",
-        "credit": "FOSSarium",
-        "category": "games"
-    },
     "breakout": {
         "title": "Breakout",
         "description": "Smash bricks with a ball and paddle.",

@@ -1,24 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asteroids - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Classic space shooter. Destroy asteroids and survive through waves!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
-            <h1>Asteroids</h1><span class="score">Score: <span id="score">0</span></span>
-        </div><canvas id="canvas" width="500" height="500"></canvas>
-        <p class="hint">Arrows to rotate/thrust, Space to shoot</p>
+            <h1>Asteroids</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="How to Play">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
+            <div class="stat"><span class="stat-label">Wave</span><span class="stat-value" id="wave">1</span></div>
+            <div class="stat"><span class="stat-label">Lives</span><span class="stat-value" id="lives">❤❤❤</span></div>
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div class="touch-controls" id="touch-controls">
+            <div class="touch-left">
+                <button class="touch-btn" id="t-left">◀</button>
+                <button class="touch-btn" id="t-right">▶</button>
+            </div>
+            <div class="touch-right">
+                <button class="touch-btn thrust" id="t-thrust">▲</button>
+                <button class="touch-btn fire" id="t-fire">●</button>
+            </div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">💥</div>
+                <h2>Game Over</h2>
+                <p>Score: <strong id="final-score">0</strong></p>
+                <p>Wave: <strong id="final-wave">1</strong></p>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li>Destroy all asteroids to advance to the next wave.</li>
+                    <li>Large asteroids split into smaller ones when hit.</li>
+                    <li>You have <strong>3 lives</strong>. Colliding with an asteroid costs a life.</li>
+                    <li>Your ship wraps around the screen edges.</li>
+                </ul>
+                <h3>Controls</h3>
+                <ul>
+                    <li><strong>← →</strong> — Rotate ship</li>
+                    <li><strong>↑</strong> — Thrust</li>
+                    <li><strong>Space</strong> — Shoot</li>
+                    <li><strong>Touch buttons</strong> — Mobile controls</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

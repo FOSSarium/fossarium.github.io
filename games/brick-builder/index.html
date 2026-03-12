@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brick Builder - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="A creative building game with colorful bricks. Place, paint, and export your creations.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
-    <div class="app-container game-container-wrapper"><a href="../../index.html" class="back-button">&larr; Back to
-            FOSSarium</a>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Brick Builder</h1>
-            <p class="sub">Click to place colorful blocks.</p>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
         </div>
-        <div class="palette" id="palette"></div>
-        <div class="canvas-wrap"><canvas id="canvas" width="400" height="400"></canvas></div><button id="clear-btn"
-            class="action-btn secondary">Clear</button>
+        <div class="toolbar">
+            <div class="palette" id="palette"></div>
+            <div class="tool-btns">
+                <button class="tool-btn active" id="paint-tool" title="Paint">🎨</button>
+                <button class="tool-btn" id="erase-tool" title="Erase">🧹</button>
+                <button class="tool-btn" id="fill-tool" title="Fill">🪣</button>
+            </div>
+        </div>
+        <div class="grid-controls">
+            <label>Size: <select id="grid-size"><option value="12">12×12</option><option value="16" selected>16×16</option><option value="20">20×20</option><option value="24">24×24</option></select></label>
+            <label>Grid <input type="checkbox" id="show-grid" checked></label>
+        </div>
+        <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
+        <div class="btn-row">
+            <button class="action-btn secondary" id="clear-btn">Clear</button>
+            <button class="action-btn primary" id="export-btn">Export PNG</button>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Use</h2>
+                <ul>
+                    <li>Select a <strong>color</strong> from the palette.</li>
+                    <li>Use <strong>🎨 Paint</strong> to place bricks, <strong>🧹 Erase</strong> to remove, or <strong>🪣 Fill</strong> to flood-fill.</li>
+                    <li>Click and <strong>drag</strong> to paint multiple bricks.</li>
+                    <li>Choose a grid size and toggle grid lines.</li>
+                    <li><strong>Export</strong> saves your creation as a PNG image.</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
-
 </html>

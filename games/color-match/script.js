@@ -1,32 +1,121 @@
-const colors = [{ name: 'RED', hex: '#ff4757' }, { name: 'BLUE', hex: '#1e90ff' }, { name: 'GREEN', hex: '#2ed573' }, { name: 'YELLOW', hex: '#ffa502' }, { name: 'PURPLE', hex: '#a55eea' }, { name: 'ORANGE', hex: '#ff6348' }];
-const wordEl = document.getElementById('word'), scoreEl = document.getElementById('score'), timeEl = document.getElementById('time'), startBtn = document.getElementById('start-btn');
-let score = 0, timeLeft = 30, timer = null, currentMatch = false;
+(() => {
+    const wordEl = document.getElementById('word');
+    const scoreEl = document.getElementById('score');
+    const timeEl = document.getElementById('time');
+    const bestEl = document.getElementById('best');
+    const progressEl = document.getElementById('progress');
+    const feedbackEl = document.getElementById('feedback');
+    const startBtn = document.getElementById('start-btn');
+    const answerBtns = document.getElementById('answer-btns');
+    const resultsOverlay = document.getElementById('results-overlay');
+    const helpOverlay = document.getElementById('help-overlay');
 
-function nextRound() {
-    const wordColor = colors[Math.floor(Math.random() * colors.length)];
-    const displayColor = Math.random() > 0.5 ? wordColor : colors[Math.floor(Math.random() * colors.length)];
-    currentMatch = wordColor.name === displayColor.name;
-    wordEl.textContent = wordColor.name;
-    wordEl.style.color = displayColor.hex;
-}
+    const COLOR_DATA = [
+        { name: 'RED', hex: '#ff4757' },
+        { name: 'BLUE', hex: '#1e90ff' },
+        { name: 'GREEN', hex: '#2ed573' },
+        { name: 'YELLOW', hex: '#ffd32a' },
+        { name: 'PURPLE', hex: '#a55eea' },
+        { name: 'ORANGE', hex: '#ffa502' },
+        { name: 'PINK', hex: '#ff6b81' },
+        { name: 'CYAN', hex: '#00d2d3' }
+    ];
 
-function answer(isYes) {
-    if (!timer) return;
-    if (isYes === currentMatch) score++;
-    else score = Math.max(0, score - 1);
-    scoreEl.textContent = score;
-    nextRound();
-}
+    const DURATION = 30;
+    let score, correct, wrong, timeLeft, interval, running, currentMatch, best;
 
-document.getElementById('yes-btn').addEventListener('click', () => answer(true));
-document.getElementById('no-btn').addEventListener('click', () => answer(false));
+    best = parseInt(localStorage.getItem('fossarium-colormatch-best') || '0');
+    bestEl.textContent = best;
 
-startBtn.addEventListener('click', () => {
-    score = 0; timeLeft = 30; scoreEl.textContent = 0; timeEl.textContent = 30;
-    startBtn.style.display = 'none';
-    nextRound();
-    timer = setInterval(() => {
-        timeLeft--; timeEl.textContent = timeLeft;
-        if (timeLeft <= 0) { clearInterval(timer); timer = null; startBtn.style.display = ''; startBtn.textContent = `Score: ${score}! Play Again`; }
-    }, 1000);
-});
+    function randomColor() { return COLOR_DATA[Math.floor(Math.random() * COLOR_DATA.length)]; }
+
+    function nextWord() {
+        const word = randomColor();
+        const textColor = randomColor();
+        currentMatch = (word.name === textColor.name);
+        wordEl.textContent = word.name;
+        wordEl.style.color = textColor.hex;
+        feedbackEl.classList.add('hidden');
+    }
+
+    function showFeedback(isCorrect) {
+        feedbackEl.textContent = isCorrect ? '✓ Correct!' : '✗ Wrong!';
+        feedbackEl.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+    }
+
+    function answer(playerSaysYes) {
+        if (!running) return;
+        const isCorrect = (playerSaysYes === currentMatch);
+        if (isCorrect) { score += 10; correct++; }
+        else { score = Math.max(0, score - 5); wrong++; }
+        scoreEl.textContent = score;
+        showFeedback(isCorrect);
+        nextWord();
+    }
+
+    function startGame() {
+        score = 0; correct = 0; wrong = 0; timeLeft = DURATION; running = true;
+        scoreEl.textContent = 0; timeEl.textContent = DURATION;
+        progressEl.style.width = '100%';
+        startBtn.classList.add('hidden');
+        answerBtns.style.pointerEvents = 'auto';
+        resultsOverlay.classList.add('hidden');
+        nextWord();
+
+        clearInterval(interval);
+        interval = setInterval(() => {
+            timeLeft--;
+            timeEl.textContent = timeLeft;
+            progressEl.style.width = (timeLeft / DURATION * 100) + '%';
+            if (timeLeft <= 0) endGame();
+        }, 1000);
+    }
+
+    function endGame() {
+        running = false;
+        clearInterval(interval);
+        answerBtns.style.pointerEvents = 'none';
+
+        if (score > best) {
+            best = score;
+            localStorage.setItem('fossarium-colormatch-best', best);
+            bestEl.textContent = best;
+        }
+
+        document.getElementById('r-score').textContent = score;
+        document.getElementById('r-correct').textContent = correct;
+        document.getElementById('r-wrong').textContent = wrong;
+        const total = correct + wrong;
+        document.getElementById('r-accuracy').textContent = total > 0 ? Math.round((correct / total) * 100) + '%' : '0%';
+        resultsOverlay.classList.remove('hidden');
+    }
+
+    // Event listeners
+    document.getElementById('yes-btn').addEventListener('click', () => answer(true));
+    document.getElementById('no-btn').addEventListener('click', () => answer(false));
+    startBtn.addEventListener('click', startGame);
+    document.getElementById('play-again-btn').addEventListener('click', startGame);
+
+    // Keyboard
+    document.addEventListener('keydown', e => {
+        if (!running) return;
+        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') answer(true);
+        if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') answer(false);
+    });
+
+    // Help
+    document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
+    document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
+    helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
+    resultsOverlay.addEventListener('click', e => { if (e.target === resultsOverlay) resultsOverlay.classList.add('hidden'); });
+
+    // Fullscreen
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        const el = document.getElementById('game-root');
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+    });
+
+    // Initial state
+    answerBtns.style.pointerEvents = 'none';
+    wordEl.style.color = COLOR_DATA[0].hex;
+})();

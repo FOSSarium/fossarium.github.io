@@ -1,1 +1,148 @@
-let dice=[1,1,1,1,1],held=[false,false,false,false,false],rolls=3,round=1,totalScore=0;const used={};const categories=[{name:"Ones",fn:d=>d.filter(x=>x===1).reduce((a,b)=>a+b,0)},{name:"Twos",fn:d=>d.filter(x=>x===2).reduce((a,b)=>a+b,0)},{name:"Threes",fn:d=>d.filter(x=>x===3).reduce((a,b)=>a+b,0)},{name:"Fours",fn:d=>d.filter(x=>x===4).reduce((a,b)=>a+b,0)},{name:"Fives",fn:d=>d.filter(x=>x===5).reduce((a,b)=>a+b,0)},{name:"Sixes",fn:d=>d.filter(x=>x===6).reduce((a,b)=>a+b,0)},{name:"3 of a Kind",fn:d=>{const c={};d.forEach(x=>c[x]=(c[x]||0)+1);return Object.values(c).some(v=>v>=3)?d.reduce((a,b)=>a+b,0):0;}},{name:"4 of a Kind",fn:d=>{const c={};d.forEach(x=>c[x]=(c[x]||0)+1);return Object.values(c).some(v=>v>=4)?d.reduce((a,b)=>a+b,0):0;}},{name:"Full House",fn:d=>{const c={};d.forEach(x=>c[x]=(c[x]||0)+1);const v=Object.values(c).sort();return v.length===2&&v[0]===2&&v[1]===3?25:0;}},{name:"Sm Straight",fn:d=>{const s=[...new Set(d)].sort();const str=s.join("");return str.includes("1234")||str.includes("2345")||str.includes("3456")?30:0;}},{name:"Lg Straight",fn:d=>{const s=[...new Set(d)].sort().join("");return s==="12345"||s==="23456"?40:0;}},{name:"Yahtzee",fn:d=>d.every(x=>x===d[0])?50:0},{name:"Chance",fn:d=>d.reduce((a,b)=>a+b,0)}];function rollDice(){if(rolls<=0)return;for(let i=0;i<5;i++){if(!held[i])dice[i]=Math.floor(Math.random()*6)+1;}rolls--;render();}function render(){document.getElementById("round").textContent=round;document.getElementById("score").textContent=totalScore;document.getElementById("rolls").textContent=rolls;const diceEl=document.getElementById("dice");diceEl.innerHTML=dice.map((d,i)=>`<div class="die${held[i]?" held":""}" onclick="toggleHold(${i})">${d}</div>`).join("");const catsEl=document.getElementById("cats");catsEl.innerHTML=categories.map((c,i)=>`<div class="cat-item${used[i]?" used":""}" onclick="score(${i})"><span>${c.name}</span><span>${used[i]!==undefined?used[i]:c.fn(dice)}</span></div>`).join("");}window.toggleHold=function(i){held[i]=!held[i];render();};window.score=function(i){if(used[i]!==undefined||rolls===3)return;used[i]=categories[i].fn(dice);totalScore+=used[i];round++;rolls=3;held=[false,false,false,false,false];if(round>13)alert("Game over! Final score: "+totalScore);else rollDice();};rollDice();
+(() => {
+    const diceEl = document.getElementById('dice');
+    const diceMsgEl = document.getElementById('dice-msg');
+    const rollBtn = document.getElementById('roll-btn');
+    const holdBtn = document.getElementById('hold-btn');
+    const p1Card = document.getElementById('p1-card');
+    const p2Card = document.getElementById('p2-card');
+    const gameoverOverlay = document.getElementById('gameover-overlay');
+    const helpOverlay = document.getElementById('help-overlay');
+
+    const DICE = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+    const WIN_SCORE = 100;
+    let scores, current, activePlayer, gameOver;
+
+    function newGame() {
+        scores = [0, 0]; current = 0; activePlayer = 0; gameOver = false;
+        gameoverOverlay.classList.add('hidden');
+        rollBtn.disabled = false; holdBtn.disabled = false;
+        diceMsgEl.textContent = ''; diceMsgEl.className = 'dice-msg';
+        diceEl.textContent = '⚀';
+        updateUI();
+    }
+
+    function updateUI() {
+        document.getElementById('p1-total').textContent = scores[0];
+        document.getElementById('p2-total').textContent = scores[1];
+        document.getElementById('p1-current').textContent = activePlayer === 0 ? current : 0;
+        document.getElementById('p2-current').textContent = activePlayer === 1 ? current : 0;
+        p1Card.classList.toggle('active', activePlayer === 0);
+        p2Card.classList.toggle('active', activePlayer === 1);
+    }
+
+    function roll() {
+        if (gameOver || activePlayer !== 0) return;
+        const value = Math.floor(Math.random() * 6) + 1;
+        diceEl.textContent = DICE[value - 1];
+        diceEl.classList.remove('rolling');
+        void diceEl.offsetWidth;
+        diceEl.classList.add('rolling');
+
+        if (value === 1) {
+            current = 0;
+            diceMsgEl.textContent = 'Rolled a 1! Turn lost!';
+            diceMsgEl.className = 'dice-msg bad';
+            updateUI();
+            setTimeout(switchPlayer, 800);
+        } else {
+            current += value;
+            diceMsgEl.textContent = `+${value}`;
+            diceMsgEl.className = 'dice-msg';
+            updateUI();
+        }
+    }
+
+    function hold() {
+        if (gameOver || activePlayer !== 0) return;
+        scores[0] += current;
+        current = 0;
+        diceMsgEl.textContent = '';
+        if (scores[0] >= WIN_SCORE) {
+            gameOver = true; updateUI();
+            document.getElementById('go-icon').textContent = '🎉';
+            document.getElementById('go-title').textContent = 'You Win!';
+            document.getElementById('go-msg').textContent = `Final Score: ${scores[0]}`;
+            gameoverOverlay.classList.remove('hidden');
+            return;
+        }
+        updateUI();
+        switchPlayer();
+    }
+
+    function switchPlayer() {
+        activePlayer = activePlayer === 0 ? 1 : 0;
+        current = 0;
+        updateUI();
+        if (activePlayer === 1) {
+            rollBtn.disabled = true; holdBtn.disabled = true;
+            setTimeout(cpuTurn, 600);
+        } else {
+            rollBtn.disabled = false; holdBtn.disabled = false;
+        }
+    }
+
+    function cpuTurn() {
+        if (gameOver) return;
+        const value = Math.floor(Math.random() * 6) + 1;
+        diceEl.textContent = DICE[value - 1];
+        diceEl.classList.remove('rolling');
+        void diceEl.offsetWidth;
+        diceEl.classList.add('rolling');
+
+        if (value === 1) {
+            current = 0;
+            diceMsgEl.textContent = 'CPU rolled 1! Turn lost!';
+            diceMsgEl.className = 'dice-msg bad';
+            updateUI();
+            setTimeout(switchPlayer, 800);
+        } else {
+            current += value;
+            diceMsgEl.textContent = `CPU +${value}`;
+            diceMsgEl.className = 'dice-msg';
+            updateUI();
+
+            // CPU strategy: hold at 20+ or if would win
+            if (scores[1] + current >= WIN_SCORE) {
+                setTimeout(() => {
+                    scores[1] += current; current = 0;
+                    diceMsgEl.textContent = '';
+                    gameOver = true; updateUI();
+                    document.getElementById('go-icon').textContent = '💀';
+                    document.getElementById('go-title').textContent = 'CPU Wins!';
+                    document.getElementById('go-msg').textContent = `CPU Score: ${scores[1]}`;
+                    gameoverOverlay.classList.remove('hidden');
+                }, 600);
+            } else if (current >= 20) {
+                setTimeout(() => {
+                    scores[1] += current; current = 0;
+                    diceMsgEl.textContent = 'CPU holds';
+                    diceMsgEl.className = 'dice-msg';
+                    updateUI();
+                    setTimeout(switchPlayer, 600);
+                }, 600);
+            } else {
+                setTimeout(cpuTurn, 700);
+            }
+        }
+    }
+
+    rollBtn.addEventListener('click', roll);
+    holdBtn.addEventListener('click', hold);
+    document.addEventListener('keydown', e => {
+        if (e.code === 'Space') { e.preventDefault(); roll(); }
+        if (e.key === 'h' || e.key === 'H') hold();
+    });
+
+    document.getElementById('new-btn').addEventListener('click', newGame);
+    document.getElementById('play-again-btn').addEventListener('click', newGame);
+    document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
+    document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
+    helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
+    gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
+    document.getElementById('fullscreen-btn').addEventListener('click', () => {
+        const el = document.getElementById('game-root');
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+    });
+
+    newGame();
+})();
