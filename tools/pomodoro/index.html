@@ -5,16 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Stay productive with customizable work/break intervals and session tracking.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -25,20 +31,86 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Pomodoro</h1>
-            <p class="tool-subtitle">Productivity timer with work/break splits.</p>
+            <p class="tool-subtitle">Stay focused with work/break cycles and session tracking.</p>
         </div>
-        <div class="timer-display" id="timer">25:00</div>
-        <div class="timer-label" id="label">Work Session</div>
-        <div class="controls"><button id="start-btn" class="action-btn primary">Start</button><button id="reset-btn"
-                class="action-btn secondary">Reset</button></div>
-        <div class="sessions">Sessions: <span id="session-count">0</span></div>
+
+        <div class="pomo-card">
+            <div class="mode-tabs">
+                <button class="mode-btn active" data-mode="work">Focus</button>
+                <button class="mode-btn" data-mode="short">Short Break</button>
+                <button class="mode-btn" data-mode="long">Long Break</button>
+            </div>
+
+            <div class="timer-ring" id="timer-ring">
+                <svg viewBox="0 0 200 200">
+                    <circle class="ring-bg" cx="100" cy="100" r="90" />
+                    <circle class="ring-progress" id="ring-progress" cx="100" cy="100" r="90" />
+                </svg>
+                <div class="timer-content">
+                    <div class="timer-display" id="timer">25:00</div>
+                    <div class="timer-label" id="label">Focus Session</div>
+                </div>
+            </div>
+
+            <div class="session-dots" id="session-dots">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <div class="main-controls">
+                <button id="start-btn" class="play-btn">
+                    <ion-icon name="play-outline" id="play-icon"></ion-icon>
+                </button>
+                <button id="reset-btn" class="secondary-btn">
+                    <ion-icon name="refresh-outline"></ion-icon> Reset
+                </button>
+            </div>
+
+            <div class="settings-section">
+                <button class="settings-toggle" id="settings-toggle">
+                    <ion-icon name="settings-outline"></ion-icon> Settings
+                </button>
+                <div class="settings-panel hidden" id="settings-panel">
+                    <div class="setting-row">
+                        <label>Focus (min)</label>
+                        <input type="number" id="work-min" value="25" min="1" max="90">
+                    </div>
+                    <div class="setting-row">
+                        <label>Short Break (min)</label>
+                        <input type="number" id="short-min" value="5" min="1" max="30">
+                    </div>
+                    <div class="setting-row">
+                        <label>Long Break (min)</label>
+                        <input type="number" id="long-min" value="15" min="1" max="60">
+                    </div>
+                    <div class="setting-row">
+                        <label>Sessions until long break</label>
+                        <input type="number" id="sessions-until" value="4" min="2" max="10">
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-num" id="session-count">0</div>
+                    <div class="stat-label">Sessions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="total-focus">0m</div>
+                    <div class="stat-label">Total Focus</div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div id="modal-overlay" class="modal-overlay hidden">
         <div class="modal-card">
             <ion-icon name="notifications-outline" class="modal-icon"></ion-icon>
             <h2 id="modal-title">Session Finished!</h2>
             <p id="modal-message">Take a well-deserved break.</p>
-            <button id="modal-ok" class="action-btn primary modal-btn" style="width: 100%">Awesome!</button>
+            <button id="modal-ok" class="primary-btn modal-btn">Continue</button>
         </div>
     </div>
 

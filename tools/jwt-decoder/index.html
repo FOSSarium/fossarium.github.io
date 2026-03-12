@@ -5,18 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JWT Decoder - FOSSarium</title>
+    <meta name="description" content="Decode and inspect JSON Web Tokens securely in your browser.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -25,25 +29,86 @@
     </div>
 
     <div class="app-container tool-container-wrapper">
-
         <div class="tool-header">
             <h1>JWT Decoder</h1>
-            <p class="tool-subtitle">Decode JSON Web Tokens locally and securely.</p>
+            <p class="tool-subtitle">Decode, inspect, and analyze JSON Web Tokens securely — all processing happens locally in your browser.</p>
         </div>
-        <div class="input-group"><label>Paste JWT</label><textarea id="jwt-input"
-                placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea></div>
-        <div class="decoded-sections">
-            <div class="section">
-                <h3>Header</h3>
-                <pre id="header-output">{}</pre>
-            </div>
-            <div class="section">
-                <h3>Payload</h3>
-                <pre id="payload-output">{}</pre>
+
+        <div class="jwt-input-section">
+            <label for="jwt-input">Encoded Token</label>
+            <div class="jwt-input-wrapper">
+                <textarea id="jwt-input" spellcheck="false"
+                    placeholder="Paste your JWT here...&#10;&#10;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"></textarea>
+                <div class="jwt-actions">
+                    <button id="sample-btn" class="mini-btn" title="Load sample token">
+                        <ion-icon name="flask-outline"></ion-icon>
+                    </button>
+                    <button id="copy-btn" class="mini-btn" title="Copy token">
+                        <ion-icon name="copy-outline"></ion-icon>
+                    </button>
+                    <button id="clear-btn" class="mini-btn" title="Clear">
+                        <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                </div>
             </div>
         </div>
+
+        <div id="token-info" class="token-info hidden">
+            <div class="info-chip" id="chip-alg">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                <span id="alg-value">—</span>
+            </div>
+            <div class="info-chip" id="chip-type">
+                <ion-icon name="document-text-outline"></ion-icon>
+                <span id="type-value">—</span>
+            </div>
+            <div class="info-chip" id="chip-exp">
+                <ion-icon name="time-outline"></ion-icon>
+                <span id="exp-value">—</span>
+            </div>
+        </div>
+
         <div id="status" class="status-bar hidden"></div>
+
+        <div class="decoded-grid">
+            <div class="decoded-section header-section">
+                <div class="section-header">
+                    <h3><ion-icon name="key-outline"></ion-icon> Header</h3>
+                    <button class="mini-btn copy-section-btn" data-target="header-output" title="Copy header">
+                        <ion-icon name="copy-outline"></ion-icon>
+                    </button>
+                </div>
+                <pre id="header-output" class="section-output"><code>{}</code></pre>
+            </div>
+            <div class="decoded-section payload-section">
+                <div class="section-header">
+                    <h3><ion-icon name="reader-outline"></ion-icon> Payload</h3>
+                    <button class="mini-btn copy-section-btn" data-target="payload-output" title="Copy payload">
+                        <ion-icon name="copy-outline"></ion-icon>
+                    </button>
+                </div>
+                <pre id="payload-output" class="section-output"><code>{}</code></pre>
+            </div>
+        </div>
+
+        <div class="signature-section" id="signature-section">
+            <div class="section-header">
+                <h3><ion-icon name="finger-print-outline"></ion-icon> Signature</h3>
+            </div>
+            <div class="signature-value" id="signature-output">—</div>
+        </div>
+
+        <div class="claims-section hidden" id="claims-section">
+            <h3>Registered Claims</h3>
+            <div class="claims-grid" id="claims-grid"></div>
+        </div>
     </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
     <script src="script.js"></script>
 </body>
 

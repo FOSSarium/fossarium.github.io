@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notepad - FOSSarium</title>
+    <meta name="description" content="A simple, beautiful notepad that auto-saves your notes locally.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Notepad</h1>
+            <p class="tool-subtitle">Quick notes that auto-save to your browser. Simple, private, always ready.</p>
+        </div>
+
+        <div class="toolbar">
+            <div class="tabs" id="tabs">
+                <!-- rendered by JS -->
+            </div>
+            <button class="tb-btn" id="add-tab-btn" title="New Note"><ion-icon name="add-outline"></ion-icon></button>
+            <div class="toolbar-spacer"></div>
+            <button class="tb-btn" id="download-btn" title="Download"><ion-icon name="download-outline"></ion-icon></button>
+            <button class="tb-btn" id="copy-btn" title="Copy All"><ion-icon name="copy-outline"></ion-icon></button>
+            <button class="tb-btn" id="clear-btn" title="Clear Current"><ion-icon name="trash-outline"></ion-icon></button>
+        </div>
+
+        <div class="stats-bar">
+            <span class="stat"><span id="stat-words">0</span> words</span>
+            <span class="stat"><span id="stat-chars">0</span> chars</span>
+            <span class="stat"><span id="stat-lines">0</span> lines</span>
+            <span class="stat save-indicator" id="save-indicator">
+                <ion-icon name="checkmark-circle-outline"></ion-icon> Saved
+            </span>
+        </div>
+
+        <textarea id="editor" spellcheck="true" placeholder="Start typing your notes here...
+
+✨ Your notes are automatically saved to your browser.
+🔒 Everything stays private — no servers involved.
+📑 Use tabs to organize multiple notes."></textarea>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

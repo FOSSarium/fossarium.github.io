@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Generator - FOSSarium</title>
+    <meta name="description" content="Generate secure, random passwords with customizable options.">
     <link
-        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <!-- Ionicons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
@@ -17,70 +17,87 @@
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
 
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
             <ion-icon name="sunny-outline"></ion-icon>
         </button>
     </div>
 
-    class="tool-body">
     <div class="app-container tool-container-wrapper">
-
-
         <div class="tool-header">
-            <div class="tool-title">
-                <div class="card-icon gradient-3"><ion-icon name="key-outline"></ion-icon></div>
-                <h1>Password Generator</h1>
-            </div>
-            <p>Generate secure, random passwords instantly.</p>
+            <h1>Password Generator</h1>
+            <p class="tool-subtitle">Generate secure, random passwords instantly. Everything runs locally.</p>
         </div>
 
-        <div class="generator-container">
+        <div class="gen-card">
             <div class="password-display">
-                <span id="password">P4$5W0rD!</span>
-                <button id="copy-btn" class="icon-btn" title="Copy to clipboard">
-                    <ion-icon name="copy-outline"></ion-icon>
-                </button>
+                <span id="password" class="password-text">Click Generate</span>
+                <div class="password-actions">
+                    <button class="icon-btn" id="copy-btn" title="Copy"><ion-icon name="copy-outline"></ion-icon></button>
+                    <button class="icon-btn" id="refresh-btn" title="Regenerate"><ion-icon name="refresh-outline"></ion-icon></button>
+                </div>
             </div>
 
             <div class="strength-meter">
                 <div class="strength-bar" id="strength-bar"></div>
             </div>
-            <p class="strength-text" id="strength-text">Medium</p>
+            <div class="strength-info">
+                <span class="strength-text" id="strength-text">—</span>
+                <span class="entropy-text" id="entropy-text">0 bits</span>
+            </div>
 
             <div class="settings">
-                <div class="setting-group">
+                <div class="setting-row">
                     <label for="length">Password Length</label>
-                    <span id="length-val">16</span>
+                    <div class="length-control">
+                        <input type="range" id="length" min="4" max="80" value="20" class="slider">
+                        <span class="length-val" id="length-val">20</span>
+                    </div>
                 </div>
-                <input type="range" id="length" min="8" max="64" value="16" class="slider">
 
                 <div class="checkbox-group">
-                    <label class="container">Uppercase Letters (A-Z)
+                    <label class="check-container">
                         <input type="checkbox" id="uppercase" checked>
                         <span class="checkmark"></span>
+                        Uppercase Letters <span class="char-hint">A-Z</span>
                     </label>
-                    <label class="container">Lowercase Letters (a-z)
+                    <label class="check-container">
                         <input type="checkbox" id="lowercase" checked>
                         <span class="checkmark"></span>
+                        Lowercase Letters <span class="char-hint">a-z</span>
                     </label>
-                    <label class="container">Numbers (0-9)
+                    <label class="check-container">
                         <input type="checkbox" id="numbers" checked>
                         <span class="checkmark"></span>
+                        Numbers <span class="char-hint">0-9</span>
                     </label>
-                    <label class="container">Symbols (!@#$%^&*)
+                    <label class="check-container">
                         <input type="checkbox" id="symbols" checked>
                         <span class="checkmark"></span>
+                        Symbols <span class="char-hint">!@#$%^&*</span>
                     </label>
                 </div>
 
-                <button id="generate-btn" class="primary-btn generate-btn">
+                <button id="generate-btn" class="generate-btn">
                     <ion-icon name="flash-outline"></ion-icon> Generate Password
                 </button>
             </div>
+
+            <div class="history-section" id="history-section">
+                <h4><ion-icon name="time-outline"></ion-icon> Recent Passwords</h4>
+                <div class="history-list" id="history-list"></div>
+            </div>
         </div>
-        <!-- Toast Notification -->
-        <div id="toast" class="toast">Copied to clipboard!</div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
     </div>
 
     <script src="script.js"></script>

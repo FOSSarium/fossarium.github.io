@@ -1,162 +1,155 @@
-const passwordElem = document.getElementById('password');
-const copyBtn = document.getElementById('copy-btn');
+// ===== DOM =====
+const passwordEl = document.getElementById('password');
 const lengthSlider = document.getElementById('length');
 const lengthVal = document.getElementById('length-val');
-const uppercaseEl = document.getElementById('uppercase');
-const lowercaseEl = document.getElementById('lowercase');
-const numbersEl = document.getElementById('numbers');
-const symbolsEl = document.getElementById('symbols');
-const generateBtn = document.getElementById('generate-btn');
 const strengthBar = document.getElementById('strength-bar');
 const strengthText = document.getElementById('strength-text');
+const entropyText = document.getElementById('entropy-text');
+const historyList = document.getElementById('history-list');
 const toast = document.getElementById('toast');
+const toastMessage = document.getElementById('toast-message');
 
-const UPPERCASE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-const LOWERCASE_CHARS = 'abcdefghijklmnopqrstuvwxyz';
-const NUMBER_CHARS = '0123456789';
-const SYMBOL_CHARS = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+const CHARSETS = {
+    uppercase: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    lowercase: 'abcdefghijklmnopqrstuvwxyz',
+    numbers: '0123456789',
+    symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
+};
 
-function generatePassword() {
-    let chars = '';
-    if (uppercaseEl.checked) chars += UPPERCASE_CHARS;
-    if (lowercaseEl.checked) chars += LOWERCASE_CHARS;
-    if (numbersEl.checked) chars += NUMBER_CHARS;
-    if (symbolsEl.checked) chars += SYMBOL_CHARS;
+let history = [];
+const MAX_HISTORY = 5;
 
-    if (chars === '') {
-        passwordElem.textContent = 'Select at least one!';
-        passwordElem.style.color = '#ff5858';
+// ===== Generate Password =====
+function generate() {
+    let charset = '';
+    const options = ['uppercase', 'lowercase', 'numbers', 'symbols'];
+    const active = options.filter(o => document.getElementById(o).checked);
+
+    if (active.length === 0) {
+        passwordEl.textContent = 'Select at least one option';
         strengthBar.style.width = '0%';
-        strengthText.textContent = '';
+        strengthText.textContent = '—';
+        entropyText.textContent = '0 bits';
         return;
     }
 
+    active.forEach(o => charset += CHARSETS[o]);
+    const length = parseInt(lengthSlider.value);
+
+    // Crypto-secure random
+    const array = new Uint32Array(length);
+    crypto.getRandomValues(array);
     let password = '';
-    const length = lengthSlider.value;
-
-    // Ensure at least one from each checked category
-    if (uppercaseEl.checked) password += getRandomChar(UPPERCASE_CHARS);
-    if (lowercaseEl.checked) password += getRandomChar(LOWERCASE_CHARS);
-    if (numbersEl.checked) password += getRandomChar(NUMBER_CHARS);
-    if (symbolsEl.checked) password += getRandomChar(SYMBOL_CHARS);
-
-    while (password.length < length) {
-        password += getRandomChar(chars);
+    for (let i = 0; i < length; i++) {
+        password += charset[array[i] % charset.length];
     }
 
-    // Shuffle
-    password = password.split('').sort(() => Math.random() - 0.5).join('');
+    // Ensure at least one char from each selected set
+    active.forEach((o, i) => {
+        const chars = CHARSETS[o];
+        const randIdx = crypto.getRandomValues(new Uint32Array(1))[0] % chars.length;
+        const pos = crypto.getRandomValues(new Uint32Array(1))[0] % length;
+        password = password.substring(0, pos) + chars[randIdx] + password.substring(pos + 1);
+    });
 
-    passwordElem.textContent = password;
-    passwordElem.style.color = 'var(--accent-color)';
-    updateStrength(password);
+    passwordEl.textContent = password;
+    updateStrength(password, charset.length);
+    addToHistory(password);
 }
 
-function getRandomChar(str) {
-    return str[Math.floor(Math.random() * str.length)];
-}
+// ===== Strength =====
+function updateStrength(password, charsetSize) {
+    const entropy = Math.log2(charsetSize) * password.length;
+    entropyText.textContent = Math.round(entropy) + ' bits';
 
-function updateStrength(password) {
-    let strength = 0;
-    if (password.length >= 12) strength += 1;
-    if (password.length >= 16) strength += 1;
-    if (uppercaseEl.checked) strength += 1;
-    if (lowercaseEl.checked) strength += 1;
-    if (numbersEl.checked) strength += 1;
-    if (symbolsEl.checked) strength += 1;
+    let pct, color, label;
+    if (entropy < 28) { pct = 15; color = '#ff4757'; label = 'Very Weak'; }
+    else if (entropy < 36) { pct = 30; color = '#ff6b81'; label = 'Weak'; }
+    else if (entropy < 60) { pct = 50; color = '#ffa502'; label = 'Fair'; }
+    else if (entropy < 80) { pct = 70; color = '#2ed573'; label = 'Strong'; }
+    else if (entropy < 120) { pct = 85; color = '#1fa2ff'; label = 'Very Strong'; }
+    else { pct = 100; color = '#7c3aed'; label = 'Excellent'; }
 
-    let width = '0%';
-    let color = '';
-    let text = '';
-
-    if (strength <= 2) {
-        width = '25%'; color = '#ff5858'; text = 'Weak';
-    } else if (strength <= 4) {
-        width = '50%'; color = '#f5af19'; text = 'Fair';
-    } else if (strength <= 5) {
-        width = '75%'; color = '#38ef7d'; text = 'Good';
-    } else {
-        width = '100%'; color = '#11998e'; text = 'Strong';
-    }
-
-    strengthBar.style.width = width;
-    strengthBar.style.backgroundColor = color;
-    strengthText.textContent = text;
+    strengthBar.style.width = pct + '%';
+    strengthBar.style.background = color;
+    strengthText.textContent = label;
     strengthText.style.color = color;
 }
 
-lengthSlider.addEventListener('input', () => {
-    lengthVal.textContent = lengthSlider.value;
-    generatePassword();
-});
-
-generateBtn.addEventListener('click', generatePassword);
-
-// Generate initial password
-generatePassword();
-
-// Checkbox change triggers generation
-const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-checkboxes.forEach(cb => {
-    cb.addEventListener('change', generatePassword);
-});
-
-copyBtn.addEventListener('click', async () => {
-    if (!passwordElem.textContent || passwordElem.textContent === 'Select at least one!') return;
-
-    try {
-        await navigator.clipboard.writeText(passwordElem.textContent);
-        showToast();
-    } catch (err) {
-        // Fallback for older browsers
-        const textarea = document.createElement('textarea');
-        textarea.value = passwordElem.textContent;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        textarea.remove();
-        showToast();
-    }
-});
-
-function showToast() {
-    toast.classList.add('show');
-    setTimeout(() => {
-        toast.classList.remove('show');
-    }, 2000);
+// ===== History =====
+function addToHistory(password) {
+    history.unshift(password);
+    if (history.length > MAX_HISTORY) history.pop();
+    renderHistory();
 }
 
-
-function initTheme() {
-    const themeToggleBtn = document.getElementById('theme-toggle');
-    if (!themeToggleBtn) return;
-
-    const icon = themeToggleBtn.querySelector('ion-icon');
-
-    const savedTheme = localStorage.getItem('fossarium-theme');
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
-    } else if (savedTheme === 'dark') {
-        document.documentElement.classList.remove('light-theme');
-        if (icon) icon.setAttribute('name', 'sunny-outline');
-    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
-        document.documentElement.classList.add('light-theme');
-        if (icon) icon.setAttribute('name', 'moon-outline');
+function renderHistory() {
+    if (history.length === 0) {
+        document.getElementById('history-section').style.display = 'none';
+        return;
     }
+    document.getElementById('history-section').style.display = 'block';
+    historyList.innerHTML = history.map((pw, i) => `
+        <div class="history-item">
+            <span>${escapeHtml(pw.length > 40 ? pw.substring(0, 40) + '…' : pw)}</span>
+            <button class="history-copy-btn" data-index="${i}" title="Copy"><ion-icon name="copy-outline"></ion-icon></button>
+        </div>
+    `).join('');
 
-    themeToggleBtn.addEventListener('click', () => {
-        document.documentElement.classList.toggle('light-theme');
-        const isLight = document.documentElement.classList.contains('light-theme');
-
-        if (isLight) {
-            localStorage.setItem('fossarium-theme', 'light');
-            if (icon) icon.setAttribute('name', 'moon-outline');
-        } else {
-            localStorage.setItem('fossarium-theme', 'dark');
-            if (icon) icon.setAttribute('name', 'sunny-outline');
-        }
+    historyList.querySelectorAll('.history-copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(history[parseInt(btn.dataset.index)]).then(() => showToast('Copied!'));
+        });
     });
 }
 
+function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// ===== Events =====
+lengthSlider.addEventListener('input', () => {
+    lengthVal.textContent = lengthSlider.value;
+});
+
+document.getElementById('generate-btn').addEventListener('click', generate);
+document.getElementById('refresh-btn').addEventListener('click', generate);
+
+document.getElementById('copy-btn').addEventListener('click', () => {
+    const pw = passwordEl.textContent;
+    if (!pw || pw === 'Click Generate' || pw.startsWith('Select')) return;
+    navigator.clipboard.writeText(pw).then(() => showToast('Password copied!'));
+});
+
+// ===== Toast =====
+function showToast(message) {
+    toastMessage.textContent = message;
+    toast.classList.remove('hidden');
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+        setTimeout(() => toast.classList.add('hidden'), 300);
+    }, 2000);
+}
+
+// ===== Theme Toggle =====
+function initTheme() {
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const icon = themeToggleBtn.querySelector('ion-icon');
+    function updateIcon(theme) { icon.setAttribute('name', theme === 'light' ? 'moon-outline' : 'sunny-outline'); }
+    const savedTheme = localStorage.getItem('fossarium-theme');
+    if (savedTheme) updateIcon(savedTheme);
+    else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) updateIcon('light');
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        updateIcon(isLight ? 'light' : 'dark');
+    });
+}
+
+// ===== Init =====
 initTheme();
+generate();

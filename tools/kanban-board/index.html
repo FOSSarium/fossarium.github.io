@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kanban Board - FOSSarium</title>
+    <meta name="description" content="Organize your tasks with a modern, drag-and-drop Kanban board.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Kanban Board</h1>
+            <p class="tool-subtitle">Organize your workflow with drag-and-drop task management. Everything is saved locally.</p>
+        </div>
+
+        <div class="board-actions">
+            <button id="clear-all-btn" class="action-btn danger">
+                <ion-icon name="trash-outline"></ion-icon> Clear All
+            </button>
+        </div>
+
+        <div class="board" id="board">
+            <!-- Columns rendered by JS -->
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Done!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

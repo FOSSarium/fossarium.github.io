@@ -5,16 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Strength - FOSSarium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Analyze password strength with entropy, crack time estimates, and detailed feedback.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-
-    <!-- Ionicons for beautiful icons -->
     <script type="module" src="/assets/icons/ionicons.esm.js"></script>
     <script nomodule src="/assets/icons/ionicons.js"></script>
 </head>
 
-<body class="game-body">
+<body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
 
     <div class="theme-toggle-container">
         <button id="theme-toggle" title="Toggle Light/Dark Theme">
@@ -25,14 +31,49 @@
     <div class="app-container tool-container-wrapper">
         <div class="tool-header">
             <h1>Password Strength</h1>
-            <p class="tool-subtitle">Check password entropy and estimated crack time.</p>
-        </div><input type="text" id="pw-input" class="pw-input" placeholder="Enter a password..." autocomplete="off">
-        <div class="strength-bar">
-            <div class="strength-fill" id="strength-fill"></div>
+            <p class="tool-subtitle">Analyze your password's entropy, crack time, and get detailed feedback.</p>
         </div>
-        <div class="strength-label" id="strength-label">Type a password above</div>
-        <div class="details" id="details"></div>
+
+        <div class="strength-card">
+            <div class="input-wrapper">
+                <input type="text" id="pw-input" autocomplete="off" spellcheck="false" placeholder="Type a password to analyze...">
+                <button class="icon-btn" id="toggle-vis" title="Toggle visibility">
+                    <ion-icon name="eye-outline" id="vis-icon"></ion-icon>
+                </button>
+            </div>
+
+            <div class="strength-bar-container">
+                <div class="strength-bar">
+                    <div class="strength-fill" id="strength-fill"></div>
+                </div>
+                <div class="strength-label" id="strength-label">Type a password above</div>
+            </div>
+
+            <div class="metrics-grid" id="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Entropy</div>
+                    <div class="metric-value" id="metric-entropy">—</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Crack Time</div>
+                    <div class="metric-value" id="metric-crack">—</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Length</div>
+                    <div class="metric-value" id="metric-length">—</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Charset Size</div>
+                    <div class="metric-value" id="metric-charset">—</div>
+                </div>
+            </div>
+
+            <div class="checklist" id="checklist">
+                <!-- rendered by JS -->
+            </div>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 

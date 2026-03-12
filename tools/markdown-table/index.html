@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Table Maker - FOSSarium</title>
+    <meta name="description" content="Build beautiful Markdown tables visually with an interactive grid editor.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Markdown Table</h1>
+            <p class="tool-subtitle">Build Markdown tables visually — just edit the cells and copy the output.</p>
+        </div>
+
+        <div class="controls-bar">
+            <div class="size-controls">
+                <label>Rows <input type="number" id="rows-input" value="4" min="1" max="20"></label>
+                <label>Cols <input type="number" id="cols-input" value="3" min="1" max="10"></label>
+                <button id="resize-btn" class="action-btn primary"><ion-icon name="resize-outline"></ion-icon> Apply</button>
+            </div>
+            <div class="action-controls">
+                <button id="add-row-btn" class="action-btn secondary"><ion-icon name="add-outline"></ion-icon> Row</button>
+                <button id="add-col-btn" class="action-btn secondary"><ion-icon name="add-outline"></ion-icon> Col</button>
+                <button id="clear-btn" class="action-btn secondary"><ion-icon name="trash-outline"></ion-icon> Clear</button>
+            </div>
+        </div>
+
+        <div class="table-section">
+            <h3><ion-icon name="grid-outline"></ion-icon> Table Editor</h3>
+            <div class="table-wrapper" id="table-wrapper">
+                <!-- Table rendered by JS -->
+            </div>
+        </div>
+
+        <div class="output-section">
+            <div class="output-header">
+                <h3><ion-icon name="code-slash-outline"></ion-icon> Markdown Output</h3>
+                <button id="copy-btn" class="action-btn secondary"><ion-icon name="copy-outline"></ion-icon> Copy</button>
+            </div>
+            <pre id="md-output" class="md-output"><code></code></pre>
+        </div>
+
+        <div class="preview-section">
+            <h3><ion-icon name="eye-outline"></ion-icon> Preview</h3>
+            <div id="preview" class="table-preview"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

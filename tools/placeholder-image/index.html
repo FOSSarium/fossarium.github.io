@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Placeholder Image - FOSSarium</title>
+    <meta name="description" content="Generate customizable placeholder images with custom dimensions, colors, and text.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=JetBrains+Mono:wght@400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="/assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="/assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" title="Toggle Light/Dark Theme">
+            <ion-icon name="sunny-outline"></ion-icon>
+        </button>
+    </div>
+
+    <div class="app-container tool-container-wrapper">
+        <div class="tool-header">
+            <h1>Placeholder Image</h1>
+            <p class="tool-subtitle">Generate customizable placeholder images with your own dimensions, colors, and text.</p>
+        </div>
+
+        <div class="gen-layout">
+            <div class="controls-panel">
+                <div class="input-group">
+                    <label>Dimensions</label>
+                    <div class="dim-row">
+                        <input type="number" id="width" value="800" min="10" max="4000" placeholder="Width">
+                        <span class="dim-x">×</span>
+                        <input type="number" id="height" value="400" min="10" max="4000" placeholder="Height">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Background Color</label>
+                    <div class="color-row">
+                        <input type="color" id="bg-color" value="#1a1a2e" class="color-picker">
+                        <input type="text" id="bg-hex" value="#1a1a2e" class="hex-input" maxlength="7">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Text Color</label>
+                    <div class="color-row">
+                        <input type="color" id="text-color" value="#58a6ff" class="color-picker">
+                        <input type="text" id="text-hex" value="#58a6ff" class="hex-input" maxlength="7">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Custom Text <span class="hint">(optional)</span></label>
+                    <input type="text" id="custom-text" placeholder="800 × 400" class="text-input">
+                </div>
+
+                <div class="input-group">
+                    <label>Format</label>
+                    <div class="format-selector">
+                        <button class="fmt-btn active" data-format="png">PNG</button>
+                        <button class="fmt-btn" data-format="jpeg">JPEG</button>
+                        <button class="fmt-btn" data-format="webp">WebP</button>
+                    </div>
+                </div>
+
+                <div class="preset-section">
+                    <label>Presets</label>
+                    <div class="preset-grid">
+                        <button class="preset-btn" data-w="1920" data-h="1080">1920×1080</button>
+                        <button class="preset-btn" data-w="1280" data-h="720">1280×720</button>
+                        <button class="preset-btn" data-w="800" data-h="600">800×600</button>
+                        <button class="preset-btn" data-w="400" data-h="400">400×400</button>
+                        <button class="preset-btn" data-w="150" data-h="150">150×150</button>
+                        <button class="preset-btn" data-w="300" data-h="250">300×250</button>
+                    </div>
+                </div>
+
+                <button id="generate-btn" class="generate-btn">
+                    <ion-icon name="image-outline"></ion-icon> Generate
+                </button>
+            </div>
+
+            <div class="preview-panel">
+                <div class="preview-header">
+                    <h3><ion-icon name="eye-outline"></ion-icon> Preview</h3>
+                    <div class="preview-actions">
+                        <button class="icon-btn" id="download-btn" title="Download"><ion-icon name="download-outline"></ion-icon></button>
+                        <button class="icon-btn" id="copy-url-btn" title="Copy data URL"><ion-icon name="link-outline"></ion-icon></button>
+                    </div>
+                </div>
+                <div class="preview-area" id="preview-area">
+                    <canvas id="canvas"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden">
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <span id="toast-message">Copied!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
