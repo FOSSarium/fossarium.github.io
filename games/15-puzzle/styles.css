@@ -61,6 +61,7 @@ h1 {
 .hidden {
     display: none !important;
 }
+
 /* ===== End FOSSarium Shared Base Styles ===== */
 
 /* Back Button */
@@ -73,7 +74,10 @@ h1 {
     font-size: 0.9rem;
     transition: opacity 0.2s;
 }
-.back-button:hover { opacity: 0.7; }
+
+.back-button:hover {
+    opacity: 0.7;
+}
 
 /* Header */
 .game-header {
@@ -82,10 +86,12 @@ h1 {
     align-items: center;
     margin-bottom: 20px;
 }
+
 .header-actions {
     display: flex;
     gap: 8px;
 }
+
 .icon-btn {
     width: 40px;
     height: 40px;
@@ -102,6 +108,7 @@ h1 {
     transition: background 0.2s, transform 0.2s;
     font-family: inherit;
 }
+
 .icon-btn:hover {
     background: var(--hover-bg);
     transform: translateY(-2px);
@@ -113,6 +120,7 @@ h1 {
     gap: 10px;
     margin-bottom: 20px;
 }
+
 .stat {
     flex: 1;
     background: var(--card-bg);
@@ -122,6 +130,7 @@ h1 {
     text-align: center;
     backdrop-filter: blur(10px);
 }
+
 .stat-label {
     display: block;
     font-size: 0.7rem;
@@ -131,6 +140,7 @@ h1 {
     letter-spacing: 0.5px;
     margin-bottom: 2px;
 }
+
 .stat-value {
     display: block;
     font-size: 1.3rem;
@@ -146,6 +156,7 @@ h1 {
     margin-bottom: 20px;
     aspect-ratio: 1;
 }
+
 .tile {
     aspect-ratio: 1;
     background: var(--card-bg);
@@ -162,20 +173,24 @@ h1 {
     transition: transform 0.15s ease, border-color 0.15s, background 0.15s;
     backdrop-filter: blur(5px);
 }
+
 .tile:hover:not(.empty) {
     border-color: var(--accent-color);
     transform: scale(1.06);
     background: var(--hover-bg);
 }
+
 .tile:active:not(.empty) {
     transform: scale(0.95);
 }
+
 .tile.empty {
     background: transparent;
     border-color: transparent;
     cursor: default;
     backdrop-filter: none;
 }
+
 .tile.correct {
     color: #2ed573;
     border-color: rgba(46, 213, 115, 0.25);
@@ -193,10 +208,12 @@ h1 {
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 }
+
 .action-btn.primary {
     background: var(--gradient-3);
     color: #fff;
 }
+
 .action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(127, 0, 255, 0.35);
@@ -214,10 +231,17 @@ h1 {
     z-index: 100;
     animation: overlayIn 0.3s ease;
 }
+
 @keyframes overlayIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
+
 .overlay-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -229,10 +253,19 @@ h1 {
     backdrop-filter: blur(20px);
     animation: cardIn 0.3s ease;
 }
+
 @keyframes cardIn {
-    from { transform: scale(0.9) translateY(20px); opacity: 0; }
-    to { transform: scale(1) translateY(0); opacity: 1; }
+    from {
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
 }
+
 .overlay-card h2 {
     font-size: 1.5rem;
     font-weight: 800;
@@ -242,29 +275,35 @@ h1 {
     background-clip: text;
     color: transparent;
 }
+
 .overlay-card p {
     color: var(--text-muted);
     margin: 8px 0;
     font-size: 0.95rem;
 }
+
 .overlay-card p strong {
     color: var(--accent-color);
 }
+
 .overlay-card ul {
     text-align: left;
     padding-left: 20px;
     margin: 15px 0;
 }
+
 .overlay-card ul li {
     color: var(--text-muted);
     margin-bottom: 8px;
     font-size: 0.9rem;
     line-height: 1.5;
 }
+
 .win-icon {
     font-size: 3rem;
     margin-bottom: 10px;
 }
+
 .overlay-card .action-btn {
     margin-top: 18px;
 }

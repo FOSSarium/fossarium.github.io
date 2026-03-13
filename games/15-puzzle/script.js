@@ -130,6 +130,27 @@
         }
     });
 
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        updateThemeIcon();
+    });
+
     // Keyboard support
     document.addEventListener('keydown', (e) => {
         if (solved) return;
