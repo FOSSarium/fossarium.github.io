@@ -141,7 +141,7 @@
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
     document.getElementById('fullscreen-btn').addEventListener('click', () => {
         const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => { }); else document.exitFullscreen();
     });
 
     newGame();
