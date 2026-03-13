@@ -200,7 +200,7 @@
 
         // Draw ants
         ants.forEach(a => {
-            ctx.fillStyle = a.hasFood ? '#2ed573' : (isLight() ? '#3182ce' : '#58a6ff');
+            ctx.fillStyle = a.hasFood ? '#2ed573' : '#ff4757';
             ctx.fillRect(a.x - 1.5, a.y - 1.5, 3, 3);
         });
 
