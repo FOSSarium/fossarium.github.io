@@ -289,7 +289,7 @@
     "json-formatter": {
         "title": "JSON Formatter",
         "description": "Prettify and validate your JSON data.",
-        "icon-name": "braces-outline",
+        "icon-name": "code-slash-outline",
         "credit": "FOSSarium",
         "category": "tools"
     },
