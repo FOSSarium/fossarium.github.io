@@ -8,19 +8,24 @@
     <meta name="description" content="Join the numbers and get to the 2048 tile! Swipe or use arrow keys to play.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
 </head>
 
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
 
         <div class="game-header">
-            <div class="game-title">
-                <h1>2048</h1>
-                <p class="subtitle">Join the numbers and get to <strong>2048!</strong></p>
-            </div>
+            <h1>2048</h1>
             <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
                 <button class="icon-btn" id="fullscreen-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
             </div>
@@ -37,17 +42,15 @@
             </div>
         </div>
 
-        <div class="game-controls">
-            <button id="restart-btn" class="action-btn primary">New Game</button>
-        </div>
-
-        <div class="game-board-container" id="board-container">
+        <div class="board-container" id="board-container">
             <div class="game-message hidden" id="game-message">
                 <p id="message-text">Game Over!</p>
                 <button class="action-btn primary" id="retry-btn">Try Again</button>
             </div>
-            <div class="game-board" id="grid"></div>
+            <div class="grid" id="grid"></div>
         </div>
+
+        <button id="restart-btn" class="action-btn primary">New Game</button>
 
         <!-- Help Modal -->
         <div class="overlay hidden" id="help-overlay">
