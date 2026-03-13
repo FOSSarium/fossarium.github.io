@@ -121,12 +121,29 @@
     winOverlay.addEventListener('click', (e) => { if (e.target === winOverlay) winOverlay.classList.add('hidden'); });
 
     // Fullscreen
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
         if (!document.fullscreenElement) {
-            el.requestFullscreen().catch(() => {});
-        } else {
+            gameRoot.requestFullscreen().catch(err => {
+                console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        }
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
             document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+        } else {
+            fsBtn.classList.remove('hidden');
         }
     });
 
@@ -150,6 +167,60 @@
         localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
         updateThemeIcon();
     });
+
+    // Swipe controls
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    boardEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    boardEl.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        handleSwipe(touchEndX, touchEndY);
+    }, { passive: true });
+
+    function handleSwipe(endX, endY) {
+        if (solved) return;
+        
+        const dx = endX - touchStartX;
+        const dy = endY - touchStartY;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+
+        if (Math.max(absDx, absDy) < 30) return; // Ignore small movements
+
+        let targetIdx = -1;
+        const row = Math.floor(emptyIndex / 4);
+        const col = emptyIndex % 4;
+
+        if (absDx > absDy) {
+            // Horizontal swipe
+            if (dx > 0) {
+                // Swipe Right -> Move tile from left to right (if col > 0)
+                if (col > 0) targetIdx = emptyIndex - 1;
+            } else {
+                // Swipe Left -> Move tile from right to left (if col < 3)
+                if (col < 3) targetIdx = emptyIndex + 1;
+            }
+        } else {
+            // Vertical swipe
+            if (dy > 0) {
+                // Swipe Down -> Move tile from above to below (if row > 0)
+                if (row > 0) targetIdx = emptyIndex - 4;
+            } else {
+                // Swipe Up -> Move tile from below to above (if row < 3)
+                if (row < 3) targetIdx = emptyIndex + 4;
+            }
+        }
+
+        if (targetIdx >= 0) {
+            clickTile(targetIdx);
+        }
+    }
 
     // Keyboard support
     document.addEventListener('keydown', (e) => {

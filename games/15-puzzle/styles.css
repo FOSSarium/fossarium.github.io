@@ -34,21 +34,52 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.5;
-    overflow-x: hidden;
+    overflow: hidden; /* Prevent scrolling */
     position: relative;
-    min-height: 100vh;
+    height: 100vh;
+    height: 100dvh;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .app-container {
     max-width: 500px;
     width: 100%;
-    padding: 40px 20px;
+    height: 100dvh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Fullscreen handling */
+#game-root:fullscreen {
+    background-color: var(--bg-color);
+    width: 100vw;
+    height: 100vh;
+    max-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+#game-root:fullscreen .game-header,
+#game-root:fullscreen .stats-bar,
+#game-root:fullscreen .board,
+#game-root:fullscreen .action-btn {
+    width: 100%;
+    max-width: 500px;
+}
+
+#game-root:fullscreen .board {
+    max-width: min(500px, 80vh);
 }
 
 h1 {
-    font-size: clamp(1.8rem, 5vw, 2.4rem);
+    font-size: clamp(1.2rem, 4vw, 2.2rem);
     font-weight: 800;
     margin: 0;
     color: transparent;
@@ -64,27 +95,13 @@ h1 {
 
 /* ===== End FOSSarium Shared Base Styles ===== */
 
-/* Back Button */
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    text-decoration: none;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: opacity 0.2s;
-}
-
-.back-button:hover {
-    opacity: 0.7;
-}
-
 /* Header */
 .game-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .header-actions {
@@ -93,13 +110,13 @@ h1 {
 }
 
 .icon-btn {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 10px;
     border: 1px solid var(--card-border);
     background: var(--card-bg);
     color: var(--text-color);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     cursor: pointer;
     display: flex;
@@ -117,8 +134,9 @@ h1 {
 /* Stats Bar */
 .stats-bar {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-shrink: 0;
 }
 
 .stat {
@@ -126,24 +144,24 @@ h1 {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 10px 12px;
+    padding: 6px;
     text-align: center;
     backdrop-filter: blur(10px);
 }
 
 .stat-label {
     display: block;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
 }
 
 .stat-value {
     display: block;
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 800;
     color: var(--accent-color);
 }
@@ -153,35 +171,39 @@ h1 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
-    margin-bottom: 20px;
+    margin: 10px auto;
+    width: 100%;
+    max-width: min(450px, 85vw, 52dvh); /* Very conservative height constraint */
     aspect-ratio: 1;
+    flex-shrink: 1; /* Allow board to shrink if height is tight */
 }
 
 .tile {
     aspect-ratio: 1;
     background: var(--card-bg);
     border: 2px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    font-size: clamp(0.9rem, 4vmin, 1.4rem); /* Smaller font to avoid overflow */
     font-weight: 800;
     color: var(--text-color);
     cursor: pointer;
     user-select: none;
-    transition: transform 0.15s ease, border-color 0.15s, background 0.15s;
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.15s, background 0.15s;
     backdrop-filter: blur(5px);
+    touch-action: none;
 }
 
 .tile:hover:not(.empty) {
     border-color: var(--accent-color);
-    transform: scale(1.06);
+    transform: scale(1.03);
     background: var(--hover-bg);
 }
 
 .tile:active:not(.empty) {
-    transform: scale(0.95);
+    transform: scale(0.96);
 }
 
 .tile.empty {
@@ -199,14 +221,16 @@ h1 {
 /* Action Button */
 .action-btn {
     width: 100%;
-    padding: 14px 25px;
+    padding: 10px 20px;
     border: none;
     border-radius: 12px;
     font-weight: 700;
     font-family: 'Inter', sans-serif;
-    font-size: 1rem;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 5px;
+    flex-shrink: 0;
 }
 
 .action-btn.primary {
@@ -216,7 +240,16 @@ h1 {
 
 .action-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(127, 0, 255, 0.35);
+    box-shadow: 0 6px 15px rgba(127, 0, 255, 0.3);
+}
+
+/* Exit Fullscreen button */
+#exit-fs-btn {
+    display: none;
+}
+
+#game-root:fullscreen #exit-fs-btn {
+    display: flex;
 }
 
 /* Overlay */
@@ -228,7 +261,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 1000;
     animation: overlayIn 0.3s ease;
 }
 
@@ -246,8 +279,8 @@ h1 {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 20px;
-    padding: 30px;
-    max-width: 350px;
+    padding: 20px;
+    max-width: 340px;
     width: 90%;
     text-align: center;
     backdrop-filter: blur(20px);
@@ -267,9 +300,9 @@ h1 {
 }
 
 .overlay-card h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 800;
-    margin: 0 0 15px;
+    margin: 0 0 10px;
     background: linear-gradient(to right, var(--text-color), var(--accent-color));
     -webkit-background-clip: text;
     background-clip: text;
@@ -278,8 +311,8 @@ h1 {
 
 .overlay-card p {
     color: var(--text-muted);
-    margin: 8px 0;
-    font-size: 0.95rem;
+    margin: 5px 0;
+    font-size: 0.85rem;
 }
 
 .overlay-card p strong {
@@ -289,25 +322,36 @@ h1 {
 .overlay-card ul {
     text-align: left;
     padding-left: 20px;
-    margin: 15px 0;
+    margin: 10px 0;
 }
 
 .overlay-card ul li {
     color: var(--text-muted);
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    line-height: 1.4;
 }
 
 .win-icon {
-    font-size: 3rem;
-    margin-bottom: 10px;
+    font-size: 2.2rem;
+    margin-bottom: 5px;
 }
 
 .overlay-card .action-btn {
-    margin-top: 18px;
+    margin-top: 12px;
 }
 
 :root.light-theme .overlay {
     background: rgba(248, 249, 250, 0.85);
+}
+
+@media (orientation: landscape) {
+    .app-container {
+        padding: 10px 20px;
+    }
+    
+    .board {
+        margin: 5px auto;
+        max-width: min(450px, 90vw, 55dvh);
+    }
 }

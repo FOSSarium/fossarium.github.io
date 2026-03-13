@@ -16,13 +16,15 @@
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
 
         <div class="game-header">
             <h1>15 Puzzle</h1>
             <div class="header-actions">
                 <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
                     <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
                 </button>
                 <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
                 <button class="icon-btn" id="fullscreen-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
