@@ -60,7 +60,7 @@
     }
 
     // Target click
-    target.addEventListener('click', (e) => {
+    target.addEventListener('mousedown', (e) => {
         e.stopPropagation();
         if (!active) return;
         const rt = Date.now() - startTime;
@@ -74,7 +74,7 @@
     });
 
     // Miss click
-    arena.addEventListener('click', (e) => {
+    arena.addEventListener('mousedown', (e) => {
         if (!active) {
             startGame();
             return;
@@ -97,7 +97,7 @@
     });
 
     // Reset
-    document.getElementById('reset-btn').addEventListener('click', () => {
+    function resetGame() {
         active = false;
         target.style.display = 'none';
         hits = 0; misses = 0; times = []; bestTime = Infinity; round = 0;
@@ -106,7 +106,8 @@
         progressFill.style.width = '0%';
         startPrompt.style.display = 'flex';
         resultsOverlay.classList.add('hidden');
-    });
+    }
+    document.getElementById('reset-btn').addEventListener('click', resetGame);
 
     // Play Again
     document.getElementById('play-again-btn').addEventListener('click', startGame);
@@ -118,9 +119,51 @@
     resultsOverlay.addEventListener('click', e => { if (e.target === resultsOverlay) resultsOverlay.classList.add('hidden'); });
 
     // Fullscreen
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
-        else document.exitFullscreen();
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => {
+                console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        }
     });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+        } else {
+            fsBtn.classList.remove('hidden');
+        }
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        updateThemeIcon();
+    });
+
 })();

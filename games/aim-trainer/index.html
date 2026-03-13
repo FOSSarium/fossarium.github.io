@@ -7,16 +7,25 @@
     <meta name="description" content="Improve your mouse accuracy and reaction time with this aim training game.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
 </head>
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        
         <div class="game-header">
             <h1>Aim Trainer</h1>
             <div class="header-actions">
-                <button class="icon-btn" id="help-btn" title="How to Play">?</button>
-                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen" aria-label="Fullscreen">⛶</button>
             </div>
         </div>
 
@@ -33,14 +42,15 @@
             <button class="diff-btn" data-size="26">Hard</button>
         </div>
 
-        <div class="arena" id="arena">
-            <div class="target" id="target"></div>
-            <div class="start-prompt" id="start-prompt">Click to Start</div>
+        <div class="arena-container">
+            <div class="arena" id="arena">
+                <div class="target" id="target"></div>
+                <div class="start-prompt" id="start-prompt">Click to Start</div>
+            </div>
+            <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
         </div>
 
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-
-        <button class="action-btn primary" id="reset-btn">Reset</button>
+        <button class="action-btn primary" id="reset-btn">Reset Game</button>
 
         <!-- Results Overlay -->
         <div class="overlay hidden" id="results-overlay">
@@ -68,11 +78,6 @@
                     <li>Missing a target (clicking the arena) counts as a miss.</li>
                     <li>Your <strong>reaction time</strong> and <strong>accuracy</strong> are tracked.</li>
                     <li>Choose a difficulty to change target size.</li>
-                </ul>
-                <h3>Controls</h3>
-                <ul>
-                    <li><strong>Click/Tap</strong> — Shoot at target</li>
-                    <li><strong>Easy/Med/Hard</strong> — Target size</li>
                 </ul>
                 <button class="action-btn primary" id="close-help-btn">Got It</button>
             </div>
