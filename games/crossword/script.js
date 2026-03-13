@@ -28,7 +28,7 @@
                 { word: 'JAVA', r: 0, c: 0, dir: 'across', clue: 'Language that runs on a virtual machine' },
                 { word: 'JSON', r: 0, c: 0, dir: 'down', clue: 'Lightweight data interchange format' },
                 { word: 'HTML', r: 2, c: 1, dir: 'across', clue: 'Markup language for web pages' },
-                { word: 'CSS',  r: 0, c: 2, dir: 'down', clue: 'Cascading Style Sheets' },
+                { word: 'CSS', r: 0, c: 2, dir: 'down', clue: 'Cascading Style Sheets' },
                 { word: 'SQL', r: 4, c: 0, dir: 'across', clue: 'Database query language' },
                 { word: 'REACT', r: 4, c: 4, dir: 'down', clue: 'Facebook-created UI library' },
                 { word: 'BASH', r: 6, c: 0, dir: 'across', clue: 'Unix shell and command language' },
@@ -277,7 +277,7 @@
     winOverlay.addEventListener('click', e => { if (e.target === winOverlay) winOverlay.classList.add('hidden'); });
     document.getElementById('fullscreen-btn').addEventListener('click', () => {
         const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+        if (!document.fullscreenElement) el.requestFullscreen().catch(() => { }); else document.exitFullscreen();
     });
 
     newGame();

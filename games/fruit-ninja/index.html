@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruit Ninja - FOSSarium</title>
+    <meta name="description" content="Swipe to slice flying fruits and avoid bombs!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
+        <div class="game-header">
+            <h1>Fruit Ninja</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+            </div>
+        </div>
+        <div class="stats-bar">
+            <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
+            <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+            <div class="stat"><span class="stat-label">Lives</span><span class="stat-value" id="lives">❤❤❤</span></div>
+        </div>
+        <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
+        <div class="msg" id="msg">Click or Swipe to Start</div>
+        <div class="overlay hidden" id="gameover-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">💀</div>
+                <h2>Game Over</h2>
+                <p>Score: <strong id="final-score">0</strong></p>
+                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+            </div>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li><strong>Swipe or click</strong> on fruits to slice them.</li>
+                    <li>Avoid <strong>bombs</strong> 💣 — hitting one costs a life!</li>
+                    <li>Missing a fruit also costs a life.</li>
+                    <li>You have <strong>3 lives</strong>. Score as high as you can!</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
