@@ -13,13 +13,13 @@
 }
 
 :root.light-theme {
-    --bg-color: #f4f7ff;
-    --text-color: #1e293b;
-    --text-muted: #64748b;
-    --card-bg: rgba(255, 255, 255, 0.6);
-    --card-border: rgba(99, 102, 241, 0.1);
-    --hover-bg: rgba(238, 242, 255, 0.8);
-    --accent-color: #4f46e5;
+    --bg-color: #f0f4f9;
+    --text-color: #2d3748;
+    --text-muted: #718096;
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(66, 153, 225, 0.15);
+    --hover-bg: rgba(235, 242, 250, 0.9);
+    --accent-color: #3182ce;
 }
 
 body {
@@ -36,8 +36,8 @@ body {
     justify-content: center;
     align-items: center;
     background-image: 
-        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(66, 153, 225, 0.06) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(129, 230, 217, 0.06) 0px, transparent 50%);
 }
 
 .app-container {
@@ -63,8 +63,8 @@ body {
     padding: 0;
     overflow: hidden;
     background-image: 
-        radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.08) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(66, 153, 225, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(129, 230, 217, 0.08) 0px, transparent 50%);
 }
 
 #game-root:fullscreen .app-container {
@@ -101,10 +101,10 @@ body {
     top: 20px;
     right: 20px;
     z-index: 1001;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #1e293b;
+    color: #2d3748;
 }
 
 #exit-fs-btn { display: none; }
@@ -211,8 +211,8 @@ h1 {
 }
 
 :root.light-theme .board-container {
-    background: rgba(79, 70, 229, 0.08);
-    border-color: rgba(79, 70, 229, 0.15);
+    background: rgba(66, 153, 225, 0.1);
+    border-color: rgba(66, 153, 225, 0.2);
 }
 
 .grid {
@@ -236,7 +236,7 @@ h1 {
     transition: all 0.12s ease-in-out;
 }
 
-:root.light-theme .grid-cell { background: rgba(79, 70, 229, 0.05); }
+:root.light-theme .grid-cell { background: rgba(66, 153, 225, 0.08); }
 
 /* Tile Colors - Tinted, No Greys */
 .tile-2 { background: #2d3a52; color: #a8c4e6; }
@@ -251,18 +251,18 @@ h1 {
 .tile-1024 { background: #edc53f; color: #5a4520; box-shadow: 0 0 30px rgba(237, 197, 63, 0.7); font-size: clamp(0.8rem, 3.5vmin, 1.4rem); }
 .tile-2048 { background: linear-gradient(135deg, #edc22e, #f0b000); color: #5a4520; box-shadow: 0 0 40px rgba(237, 194, 46, 0.8); font-size: clamp(0.8rem, 3.5vmin, 1.4rem); }
 
-/* Light Theme Tile Colors - More Vibrant */
-:root.light-theme .tile-2 { background: #eef2ff; color: #4f46e5; border: 1px solid rgba(79, 70, 229, 0.1); }
-:root.light-theme .tile-4 { background: #e0e7ff; color: #4338ca; border: 1px solid rgba(79, 70, 229, 0.1); }
-:root.light-theme .tile-8 { background: #ffedd5; color: #ea580c; }
-:root.light-theme .tile-16 { background: #ffdbbb; color: #d946ef; }
-:root.light-theme .tile-32 { background: #fecaca; color: #dc2626; }
-:root.light-theme .tile-64 { background: #fca5a5; color: #991b1b; }
-:root.light-theme .tile-128 { color: #fff; background: #fbbf24; }
-:root.light-theme .tile-256 { color: #fff; background: #f59e0b; }
-:root.light-theme .tile-512 { color: #fff; background: #d97706; }
-:root.light-theme .tile-1024 { color: #fff; background: #b45309; }
-:root.light-theme .tile-2048 { color: #fff; background: linear-gradient(135deg, #8b5cf6, #d946ef); }
+/* Light Theme Tile Colors - Smoother / More Harmonious */
+:root.light-theme .tile-2 { background: #ebf4ff; color: #2b6cb0; border: 1px solid rgba(66, 153, 225, 0.1); }
+:root.light-theme .tile-4 { background: #e1effe; color: #1e429f; border: 1px solid rgba(66, 153, 225, 0.1); }
+:root.light-theme .tile-8 { background: #feebc8; color: #c05621; }
+:root.light-theme .tile-16 { background: #fbd38d; color: #9c4221; }
+:root.light-theme .tile-32 { background: #feb2b2; color: #9b2c2c; }
+:root.light-theme .tile-64 { background: #fc8181; color: #fff; }
+:root.light-theme .tile-128 { background: #f6e05e; color: #fff; box-shadow: 0 4px 10px rgba(246, 224, 94, 0.4); }
+:root.light-theme .tile-256 { background: #ecc94b; color: #fff; box-shadow: 0 4px 12px rgba(236, 201, 75, 0.4); }
+:root.light-theme .tile-512 { background: #d69e2e; color: #fff; }
+:root.light-theme .tile-1024 { background: #b7791f; color: #fff; }
+:root.light-theme .tile-2048 { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
 
 .grid-cell.pop { animation: popIn 0.15s ease; }
 @keyframes popIn {
@@ -286,7 +286,7 @@ h1 {
     animation: overlayIn 0.3s ease;
 }
 .game-message.hidden { opacity: 0; pointer-events: none; }
-:root.light-theme .game-message { background: rgba(248, 250, 255, 0.9); }
+:root.light-theme .game-message { background: rgba(247, 250, 252, 0.9); }
 .game-message p { font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 800; color: var(--text-color); margin-bottom: 15px; }
 
 /* Action Button */
@@ -310,14 +310,14 @@ h1 {
 }
 
 :root.light-theme .action-btn.primary {
-    background: linear-gradient(135deg, #4f46e5, #818cf8);
+    background: linear-gradient(135deg, #4299e1, #667eea);
     color: #fff;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+    box-shadow: 0 4px 12px rgba(66, 153, 225, 0.2);
 }
 
 .action-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
+    box-shadow: 0 6px 15px rgba(66, 153, 225, 0.3);
 }
 
 /* Overlay */
@@ -351,8 +351,8 @@ h1 {
 }
 
 :root.light-theme .overlay-card {
-    background: rgba(255, 255, 255, 0.9);
-    border-color: rgba(79, 70, 229, 0.2);
+    background: rgba(255, 255, 255, 0.92);
+    border-color: rgba(66, 153, 225, 0.2);
 }
 
 @keyframes cardIn {
