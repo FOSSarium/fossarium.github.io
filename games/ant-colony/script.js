@@ -96,7 +96,7 @@
     function tick() {
         if (paused) { requestAnimationFrame(tick); return; }
 
-        const bgColor = isLight() ? '#e8ecf2' : '#0a0e18';
+        const bgColor = isLight() ? '#f0f4f9' : '#050510';
         ctx.fillStyle = bgColor;
         ctx.globalAlpha = 0.15;
         ctx.fillRect(0, 0, W, H);
@@ -110,8 +110,8 @@
                 const val = pheromoneGrid[r * cols + c];
                 if (val > 0.02) {
                     ctx.fillStyle = isLight()
-                        ? `rgba(100, 60, 200, ${val * 0.4})`
-                        : `rgba(138, 100, 255, ${val * 0.5})`;
+                        ? `rgba(49, 130, 206, ${val * 0.4})`
+                        : `rgba(88, 166, 255, ${val * 0.5})`;
                     ctx.fillRect(c * GRID_RES, r * GRID_RES, GRID_RES, GRID_RES);
                 }
             }
@@ -138,7 +138,7 @@
         });
 
         // Draw obstacles
-        ctx.fillStyle = isLight() ? 'rgba(80,60,120,.3)' : 'rgba(100,80,160,.3)';
+        ctx.fillStyle = isLight() ? 'rgba(49, 130, 206, .25)' : 'rgba(88, 166, 255, .25)';
         obstacles.forEach(o => { ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI * 2); ctx.fill(); });
 
         // Update ants
@@ -200,7 +200,7 @@
 
         // Draw ants
         ants.forEach(a => {
-            ctx.fillStyle = a.hasFood ? '#2ed573' : (isLight() ? '#c0392b' : '#ff6b81');
+            ctx.fillStyle = a.hasFood ? '#2ed573' : (isLight() ? '#3182ce' : '#58a6ff');
             ctx.fillRect(a.x - 1.5, a.y - 1.5, 3, 3);
         });
 
@@ -270,10 +270,53 @@
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
 
     // Fullscreen
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
-        else document.exitFullscreen();
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => {
+                console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        }
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+            resize(); // Force resize on FS entry
+        } else {
+            fsBtn.classList.remove('hidden');
+            resize(); // Force resize on FS exit
+        }
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        updateThemeIcon();
     });
 
     initSim();
