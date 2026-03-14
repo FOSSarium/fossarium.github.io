@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Battleship - FOSSarium</title>
     <meta name="description" content="Sink the enemy fleet in this classic naval strategy game.">
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,6 +17,12 @@
         <div class="game-header">
             <h1>Battleship</h1>
             <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="help-btn" title="How to Play">?</button>
                 <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
             </div>
