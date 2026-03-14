@@ -6,7 +6,21 @@
     const livesEl = document.getElementById('lives');
     const gameoverOverlay = document.getElementById('gameover-overlay');
     const helpOverlay = document.getElementById('help-overlay');
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const gameRoot = document.getElementById('game-root');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
     const isLight = () => document.documentElement.classList.contains('light-theme');
+
+    function updateThemeIcon() {
+        if (isLight()) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
 
     let W, H;
     function resize() {
@@ -208,11 +222,45 @@
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
 
     // Fullscreen
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
-        else document.exitFullscreen();
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => console.warn(`Fullscreen request failed: ${err.message}`));
+        } else {
+            document.exitFullscreen();
+        }
     });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fullscreenBtn.classList.add('hidden');
+            exitFsBtn.classList.remove('hidden');
+        } else {
+            fullscreenBtn.classList.remove('hidden');
+            exitFsBtn.classList.add('hidden');
+        }
+    });
+
+    // Theme Toggle
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        updateThemeIcon();
+    });
+
+    // Initial setup
+    updateThemeIcon();
+    // If already in fullscreen on load, adjust button visibility
+    if (document.fullscreenElement) {
+        fullscreenBtn.classList.add('hidden');
+        exitFsBtn.classList.remove('hidden');
+    }
 
     initGame();
     requestAnimationFrame(update);
