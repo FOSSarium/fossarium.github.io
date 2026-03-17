@@ -7,6 +7,9 @@
     <title>Brick Builder - FOSSarium</title>
     <meta name="description"
         content="A creative building game with colorful bricks. Place, paint, and export your creations.">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,10 +17,15 @@
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Brick Builder</h1>
             <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="help-btn" title="Help">?</button>
                 <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
             </div>
@@ -50,7 +58,7 @@
                 <ul>
                     <li>Select a <strong>color</strong> from the palette.</li>
                     <li>Use <strong>🎨 Paint</strong> to place bricks, <strong>🧹 Erase</strong> to remove, or
-                        <strong>🪣 Fill</strong> to flood-fill.</li>
+                        <strong>🧺 Fill</strong> to flood-fill.</li>
                     <li>Click and <strong>drag</strong> to paint multiple bricks.</li>
                     <li>Choose a grid size and toggle grid lines.</li>
                     <li><strong>Export</strong> saves your creation as a PNG image.</li>

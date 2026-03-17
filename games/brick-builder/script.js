@@ -5,7 +5,7 @@
     const helpOverlay = document.getElementById('help-overlay');
     const isLight = () => document.documentElement.classList.contains('light-theme');
 
-    const COLORS = ['#ff4757','#ff6b81','#ffa502','#ffdd59','#2ed573','#1e90ff','#a55eea','#e056fd','#00d2d3','#ff9f43','#5f27cd','#01a3a4','#f8b500','#ee5a24','#2c3e50','#ecf0f1'];
+    const COLORS = ['#ff4757', '#ff6b81', '#ffa502', '#ffdd59', '#2ed573', '#1e90ff', '#a55eea', '#e056fd', '#00d2d3', '#ff9f43', '#5f27cd', '#01a3a4', '#f8b500', '#ee5a24', '#2c3e50', '#ecf0f1'];
     let gridSize = 16, currentColor = COLORS[0], tool = 'paint', showGrid = true;
     let grid = [];
     let W, H;
@@ -76,8 +76,10 @@
 
     function getCell(e) {
         const rect = canvas.getBoundingClientRect();
-        const x = (e.clientX || e.touches[0].clientX) - rect.left;
-        const y = (e.clientY || e.touches[0].clientY) - rect.top;
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
         const cellW = rect.width / gridSize, cellH = rect.height / gridSize;
         return { r: Math.floor(y / cellH), c: Math.floor(x / cellW) };
     }
@@ -139,10 +141,57 @@
     document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
-        else document.exitFullscreen();
+
+    // Fullscreen logic
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => {
+                console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+            });
+        }
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+            exitFsBtn.style.display = 'flex';
+        } else {
+            fsBtn.classList.remove('hidden');
+            exitFsBtn.style.display = 'none';
+        }
+        render(); // Re-render on fullscreen change to ensure correct canvas sizing
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLightMode = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLightMode ? 'light' : 'dark');
+        updateThemeIcon();
+        render(); // Re-render canvas for theme colors
     });
 
     window.addEventListener('resize', render);
