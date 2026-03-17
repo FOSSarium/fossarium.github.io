@@ -160,7 +160,7 @@
                         const gradientClass = "gradient-" + ((index % 9) + 1);
                         const creditHtml = credit ? `<div class="card-credit">Credit: ${escapeHtml(credit)}</div>` : '';
 
-                        html += `                    <a target="_blank" rel="noopener noreferrer" href="${path}" class="item-card" data-title="${escapeHtml(title)}">
+                        html += `                    <a rel="noopener noreferrer" href="${path}" class="item-card" data-title="${escapeHtml(title)}">
                         ${creditHtml}
                         <div class="card-icon ${gradientClass}"><ion-icon name="${icon}"></ion-icon></div>
                         <div class="card-content">
