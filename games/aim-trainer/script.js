@@ -140,8 +140,10 @@
     document.addEventListener('fullscreenchange', () => {
         if (document.fullscreenElement) {
             fsBtn.classList.add('hidden');
+            exitFsBtn.style.display = 'flex';
         } else {
             fsBtn.classList.remove('hidden');
+            exitFsBtn.style.display = 'none';
         }
     });
 
@@ -164,6 +166,18 @@
         const isLight = document.documentElement.classList.contains('light-theme');
         localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
         updateThemeIcon();
+    });
+
+    window.addEventListener('resize', () => {
+        if (active) {
+            // Re-check bounds if resized during round
+            const w = arena.clientWidth - targetSize;
+            const h = arena.clientHeight - targetSize;
+            const curL = parseInt(target.style.left);
+            const curT = parseInt(target.style.top);
+            if (curL > w) target.style.left = Math.max(0, w) + 'px';
+            if (curT > h) target.style.top = Math.max(0, h) + 'px';
+        }
     });
 
 })();
