@@ -156,7 +156,7 @@
                 selected = null; highlights = [];
                 playerTurn = false;
                 render(); checkEnd();
-                if (!gameOver) setTimeout(cpuTurn, 400);
+                if (!gameOver) setTimeout(cpuTurn, 600);
             }
             return;
         }
@@ -182,7 +182,7 @@
         const moreJumps = applyMove(m);
         if (moreJumps) {
             render();
-            setTimeout(cpuTurn, 400);
+            setTimeout(cpuTurn, 600);
         } else {
             playerTurn = true;
             selected = null; highlights = [];
@@ -196,9 +196,53 @@
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+    
+    // Fullscreen
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => console.warn(err));
+        }
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+            exitFsBtn.style.display = 'flex';
+        } else {
+            fsBtn.classList.remove('hidden');
+            exitFsBtn.style.display = 'none';
+        }
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLightMode = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLightMode ? 'light' : 'dark');
+        updateThemeIcon();
     });
 
     newGame();

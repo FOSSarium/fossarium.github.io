@@ -67,7 +67,7 @@
     }
 
     function render() {
-        const bg = isLight() ? '#e8ecf2' : '#0a0e18';
+        const bg = isLight() ? '#f8f9fa' : '#0a0e18';
         ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
         // Grid bubbles
@@ -84,7 +84,7 @@
         // Aim line
         const shooterX = W / 2, shooterY = H - R * 2;
         ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.15)' : 'rgba(255,255,255,0.15)';
-        ctx.lineWidth = 1; ctx.setLineDash([5, 5]);
+        ctx.lineWidth = 2; ctx.setLineDash([5, 5]);
         ctx.beginPath(); ctx.moveTo(shooterX, shooterY);
         ctx.lineTo(shooterX + Math.cos(aimAngle) * 120, shooterY + Math.sin(aimAngle) * 120);
         ctx.stroke(); ctx.setLineDash([]);
@@ -95,8 +95,8 @@
         // Shooter
         drawBubble(shooterX, shooterY, shooter.color, R);
         drawBubble(shooterX + R * 2.5, shooterY, shooter.next, R * 0.65);
-        ctx.fillStyle = var_muted(); ctx.font = `${R * 0.5}px Inter`; ctx.textAlign = 'left';
-        ctx.fillText('next', shooterX + R * 2.5 - R * 0.6, shooterY + R * 1.3);
+        ctx.fillStyle = var_muted(); ctx.font = `700 ${R * 0.5}px Inter`; ctx.textAlign = 'left';
+        ctx.fillText('NEXT', shooterX + R * 2.5 - R * 0.6, shooterY + R * 1.3);
     }
 
     function var_muted() { return isLight() ? '#6c757d' : '#8b949e'; }
@@ -145,7 +145,6 @@
 
     function removeFloating() {
         const connected = new Set();
-        // BFS from top row
         const stack = [];
         for (let c = 0; c < COLS; c++) {
             if (grid[0] && grid[0][c]) stack.push({ r: 0, c });
@@ -176,8 +175,8 @@
         const shooterX = W / 2, shooterY = H - R * 2;
         moving = {
             x: shooterX, y: shooterY,
-            vx: Math.cos(aimAngle) * 10,
-            vy: Math.sin(aimAngle) * 10,
+            vx: Math.cos(aimAngle) * 12,
+            vy: Math.sin(aimAngle) * 12,
             color: shooter.color
         };
         shooter.color = shooter.next;
@@ -187,13 +186,10 @@
     function update() {
         if (!moving) return;
         moving.x += moving.vx; moving.y += moving.vy;
-        // Wall bounce
         if (moving.x - R < 0) { moving.x = R; moving.vx = Math.abs(moving.vx); }
         if (moving.x + R > W) { moving.x = W - R; moving.vx = -Math.abs(moving.vx); }
-        // Top ceiling
         if (moving.y - R < 0) { placeBubble(); return; }
 
-        // Check collision with grid
         for (let r = 0; r < ROWS; r++) {
             const cols = r % 2 === 0 ? COLS : COLS - 1;
             for (let c = 0; c < cols; c++) {
@@ -211,7 +207,6 @@
         if (!grid[pos.r]) grid[pos.r] = [];
         grid[pos.r][pos.c] = { color: moving.color };
 
-        // Find cluster
         const cluster = findCluster(pos.r, pos.c, moving.color);
         if (cluster.length >= 3) {
             cluster.forEach(({ r, c }) => grid[r][c] = null);
@@ -223,7 +218,6 @@
         moving = null;
         updateUI();
 
-        // Check game over / win
         if (countBubbles() === 0) {
             gameOver = true;
             document.getElementById('go-icon').textContent = '🎉';
@@ -244,7 +238,6 @@
         requestAnimationFrame(loop);
     }
 
-    // Aim
     function updateAim(clientX, clientY) {
         const rect = canvas.getBoundingClientRect();
         const x = (clientX - rect.left) / rect.width * W;
@@ -273,9 +266,55 @@
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+
+    // Fullscreen
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => console.warn(err));
+        }
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+            exitFsBtn.style.display = 'flex';
+        } else {
+            fsBtn.classList.remove('hidden');
+            exitFsBtn.style.display = 'none';
+        }
+        resize(); render();
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLightMode = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLightMode ? 'light' : 'dark');
+        updateThemeIcon();
+        render();
     });
 
     window.addEventListener('resize', () => { resize(); render(); });

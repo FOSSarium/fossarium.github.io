@@ -567,10 +567,10 @@
         "category": "games"
     },
     "2048": {
-        "title": "2048",
+        "title": "Make 2048",
         "description": "Join the numbers and get to the 2048 tile!",
         "icon-name": "grid-outline",
-        "credit": "Gabriele Cirulli",
+        "credit": "FOSSarium",
         "category": "games"
     },
     "aim-trainer": {
@@ -633,13 +633,6 @@
         "title": "Chess Clock",
         "description": "Professional timer for competitive chess matches.",
         "icon-name": "timer-outline",
-        "credit": "FOSSarium",
-        "category": "games"
-    },
-    "chinese-checkers": {
-        "title": "Chinese Checkers",
-        "description": "Traditional board game for multiple players.",
-        "icon-name": "grid-outline",
         "credit": "FOSSarium",
         "category": "games"
     },

@@ -3,9 +3,9 @@
     --bg-color: #050510;
     --text-color: #e6edf3;
     --text-muted: #8b949e;
-    --card-bg: rgba(22, 27, 34, 0.4);
-    --card-border: rgba(255, 255, 255, 0.05);
-    --hover-bg: rgba(33, 38, 45, 0.7);
+    --card-bg: rgba(15, 20, 40, 0.4);
+    --card-border: rgba(88, 166, 255, 0.1);
+    --hover-bg: rgba(30, 40, 80, 0.7);
     --accent-color: #58a6ff;
     --gradient-1: linear-gradient(135deg, #1fa2ff, #12d8fa, #a6ffcb);
     --gradient-3: linear-gradient(135deg, #7F00FF, #E100FF);
@@ -16,8 +16,8 @@
     --text-color: #1a1a2e;
     --text-muted: #6c757d;
     --card-bg: rgba(255, 255, 255, 0.8);
-    --card-border: rgba(0, 0, 0, 0.08);
-    --hover-bg: rgba(240, 244, 248, 0.9);
+    --card-border: rgba(88, 166, 255, 0.15);
+    --hover-bg: rgba(230, 240, 255, 0.9);
     --accent-color: #0056b3;
 }
 
@@ -42,13 +42,65 @@ body {
     padding: 40px 20px;
 }
 
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    text-decoration: none;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: .9rem;
+/* Fullscreen handling */
+#game-root:fullscreen {
+    background-color: var(--bg-color);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+#game-root:fullscreen .app-container {
+    max-width: none;
+    width: 100vw;
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Hide UI elements in FS */
+#game-root:fullscreen h1,
+#game-root:fullscreen #theme-toggle,
+#game-root:fullscreen #help-btn,
+#game-root:fullscreen #fullscreen-btn,
+#game-root:fullscreen .stats-bar,
+#game-root:fullscreen #new-btn {
+    display: none !important;
+}
+
+#game-root:fullscreen .canvas-wrap {
+    width: min(90vw, 90vh * 0.77); /* Maintain aspect ratio roughly */
+    height: min(90vw * 1.3, 90vh);
+    max-width: none;
+    margin: 0;
+}
+
+#game-root:fullscreen #exit-fs-btn {
+    display: flex;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: rgba(88, 166, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(88, 166, 255, 0.2);
+    color: var(--text-color);
+}
+
+:root.light-theme #game-root:fullscreen #exit-fs-btn {
+    background: rgba(88, 166, 255, 0.1);
+    border-color: rgba(88, 166, 255, 0.2);
+}
+
+#exit-fs-btn {
+    display: none;
 }
 
 .game-header {
@@ -94,6 +146,7 @@ h1 {
 .icon-btn:hover {
     background: var(--hover-bg);
     transform: translateY(-2px);
+    border-color: var(--accent-color);
 }
 
 .stats-bar {
@@ -167,6 +220,7 @@ canvas {
 
 .action-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(88, 166, 255, 0.2);
 }
 
 .overlay {

@@ -10,12 +10,6 @@
     let W, H, cellR;
     const RED = 1, BLUE = 2;
 
-    // Simplified 2-player star board: uses a hex grid approach
-    // Board positions defined as {row, col} in a diamond/star grid
-    // We'll use a simplified approach with a list of valid positions
-
-    // Build the star board layout
-    // The board is 17 rows tall, with varying widths
     const rowConfig = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1];
     let positions = [];
     let posMap = {};
@@ -72,23 +66,15 @@
     }
 
     function getPos(r, c) {
-        const x = W / 2 + (c - 6) * cellR * 2;
+        const x = W / 2 + (c - 6) * cellR * 2.1;
         const y = 20 + r * (H - 40) / 16;
         return { x, y };
     }
 
     function getNeighborKeys(r, c) {
         const n = [];
-        // 6 hex directions adapted for our grid
-        const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0], [-1, -1], [1, 1]];
-        // Adjust neighbors based on row parity
+        const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0], [-1, -1], [1, 1], [-1, 1], [1, -1]];
         for (const [dr, dc] of dirs) {
-            const key = `${r + dr},${c + dc}`;
-            if (posMap[key]) n.push({ r: r + dr, c: c + dc, key });
-        }
-        // Additional neighbors for hex alignment
-        const extra = [[-1, 1], [1, -1]];
-        for (const [dr, dc] of extra) {
             const key = `${r + dr},${c + dc}`;
             if (posMap[key]) n.push({ r: r + dr, c: c + dc, key });
         }
@@ -99,19 +85,17 @@
         const moves = [];
         const neighbors = getNeighborKeys(r, c);
 
-        // Simple moves
         for (const n of neighbors) {
             if (board[n.key] === 0) moves.push({ ...n, jump: false });
         }
 
-        // Hops (recursive)
         const visited = new Set([`${r},${c}`]);
         const stack = [{ r, c }];
         while (stack.length) {
             const cur = stack.pop();
             const nbrs = getNeighborKeys(cur.r, cur.c);
             for (const n of nbrs) {
-                if (board[n.key] !== 0) { // occupied, check hop
+                if (board[n.key] !== 0) {
                     const hopR = n.r + (n.r - cur.r);
                     const hopC = n.c + (n.c - cur.c);
                     const hopKey = `${hopR},${hopC}`;
@@ -135,11 +119,10 @@
     }
 
     function render() {
-        const bg = isLight() ? '#e8ecf2' : '#0a0e18';
+        const bg = isLight() ? '#f8f9fa' : '#0a0e18';
         ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
-        // Draw connections
-        ctx.strokeStyle = isLight() ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.04)';
+        ctx.strokeStyle = isLight() ? 'rgba(88, 166, 255, 0.1)' : 'rgba(88, 166, 255, 0.05)';
         ctx.lineWidth = 1;
         for (const p of positions) {
             const pos = getPos(p.r, p.c);
@@ -150,20 +133,17 @@
             }
         }
 
-        // Draw positions
         for (const p of positions) {
             const pos = getPos(p.r, p.c);
             const isHighlight = highlights.some(h => h.key === p.key);
             const isSelected = selected && selected.key === p.key;
 
-            // Slot
             ctx.beginPath(); ctx.arc(pos.x, pos.y, cellR * 0.55, 0, Math.PI * 2);
-            if (isHighlight) ctx.fillStyle = 'rgba(46,213,115,.35)';
-            else if (isSelected) ctx.fillStyle = 'rgba(255,165,0,.35)';
-            else ctx.fillStyle = isLight() ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.05)';
+            if (isHighlight) ctx.fillStyle = 'rgba(46,213,115,.45)';
+            else if (isSelected) ctx.fillStyle = 'rgba(255,165,0,.45)';
+            else ctx.fillStyle = isLight() ? 'rgba(88, 166, 255, 0.08)' : 'rgba(88, 166, 255, 0.06)';
             ctx.fill();
 
-            // Marble
             const val = board[p.key];
             if (val === RED) {
                 ctx.beginPath(); ctx.arc(pos.x, pos.y, cellR * 0.5, 0, Math.PI * 2);
@@ -185,16 +165,14 @@
         const mx = (e.clientX - rect.left) / rect.width * W;
         const my = (e.clientY - rect.top) / rect.height * H;
 
-        // Find closest position
         let closest = null, minD = Infinity;
         for (const p of positions) {
             const pos = getPos(p.r, p.c);
             const d = Math.hypot(mx - pos.x, my - pos.y);
-            if (d < cellR && d < minD) { minD = d; closest = p; }
+            if (d < cellR * 1.2 && d < minD) { minD = d; closest = p; }
         }
         if (!closest) return;
 
-        // Click on highlight = make move
         const move = highlights.find(h => h.key === closest.key);
         if (move && selected) {
             board[move.key] = board[selected.key];
@@ -219,7 +197,6 @@
             return;
         }
 
-        // Click on own piece
         if (board[closest.key] === currentPlayer) {
             selected = closest;
             highlights = getMoves(closest.r, closest.c);
@@ -245,9 +222,55 @@
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+    
+    // Fullscreen
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(err => console.warn(err));
+        }
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+        if (document.fullscreenElement) {
+            fsBtn.classList.add('hidden');
+            exitFsBtn.style.display = 'flex';
+        } else {
+            fsBtn.classList.remove('hidden');
+            exitFsBtn.style.display = 'none';
+        }
+        resize(); render();
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLightMode = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLightMode ? 'light' : 'dark');
+        updateThemeIcon();
+        render();
     });
 
     newGame();
