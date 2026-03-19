@@ -225,23 +225,6 @@
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
 
-    // Fullscreen
-    const fsBtn = document.getElementById('fullscreen-btn');
-    const exitFsBtn = document.getElementById('exit-fs-btn');
-    const gameRoot = document.getElementById('game-root');
-
-    fsBtn.addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-            gameRoot.requestFullscreen().catch(() => {});
-        }
-    });
-
-    exitFsBtn.addEventListener('click', () => {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-    });
-
     // Theme Toggle
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = themeToggleBtn.querySelector('ion-icon');
