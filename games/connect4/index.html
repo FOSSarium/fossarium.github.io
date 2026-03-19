@@ -4,32 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connect 4 - FOSSarium</title>
-    <meta name="description" content="Drop discs to connect four in a row. Play against the AI!">
+    <meta name="description" content="Drop discs to connect four in a row. Play against AI or a friend!">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Connect 4</h1>
             <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
             </div>
         </div>
+        <div class="mode-selector">
+            <button class="mode-btn active" id="ai-mode-btn">🤖 vs AI</button>
+            <button class="mode-btn" id="pvp-mode-btn">👥 2 Player</button>
+        </div>
         <div class="stats-bar">
-            <div class="stat"><span class="stat-label">Turn</span><span class="stat-value" id="turn">🔴 You</span></div>
-            <div class="stat"><span class="stat-label">Wins</span><span class="stat-value" id="wins">0</span></div>
-            <div class="stat"><span class="stat-label">Losses</span><span class="stat-value" id="losses">0</span></div>
+            <div class="stat"><span class="stat-label">Turn</span><span class="stat-value" id="turn">🔴 P1</span></div>
+            <div class="stat p1s"><span class="stat-label">🔴 P1 Wins</span><span class="stat-value" id="p1-wins">0</span></div>
+            <div class="stat p2s"><span class="stat-label">🟡 P2 Wins</span><span class="stat-value" id="p2-wins">0</span></div>
         </div>
         <div class="board-wrap"><div class="board" id="board"></div></div>
         <button class="action-btn primary" id="new-btn">New Game</button>
         <div class="overlay hidden" id="gameover-overlay">
             <div class="overlay-card">
                 <div class="win-icon" id="go-icon">🎉</div>
-                <h2 id="go-title">You Win!</h2>
+                <h2 id="go-title">Player 1 Wins!</h2>
                 <button class="action-btn primary" id="play-again-btn">Play Again</button>
             </div>
         </div>
@@ -37,10 +49,10 @@
             <div class="overlay-card">
                 <h2>How to Play</h2>
                 <ul>
-                    <li>Click a column to <strong>drop your disc</strong> (🔴 Red).</li>
+                    <li>Click a column to <strong>drop your disc</strong>.</li>
                     <li>Connect <strong>4 in a row</strong> — horizontally, vertically, or diagonally — to win.</li>
-                    <li>The <strong>AI</strong> plays as 🟡 Yellow.</li>
-                    <li>First to four in a row wins!</li>
+                    <li><strong>vs AI</strong>: Play against the computer (🔴 You, 🟡 AI).</li>
+                    <li><strong>2 Player</strong>: Take turns with a friend on the same device.</li>
                 </ul>
                 <button class="action-btn primary" id="close-help-btn">Got It</button>
             </div>

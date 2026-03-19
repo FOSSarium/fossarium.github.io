@@ -3,7 +3,6 @@
 body{margin:0;font-family:'Inter',-apple-system,sans-serif;background:var(--bg-color);color:var(--text-color);min-height:100vh;display:flex;justify-content:center;overflow-x:hidden;}
 .hidden{display:none!important;}
 .app-container{max-width:480px;width:100%;padding:40px 20px;}
-.back-button{display:inline-block;color:var(--accent-color);text-decoration:none;margin-bottom:20px;font-weight:600;font-size:.9rem;}
 .game-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;}
 h1{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:800;margin:0;color:transparent;background:linear-gradient(to right,var(--text-color),var(--accent-color));-webkit-background-clip:text;background-clip:text;letter-spacing:-1px;}
 .header-actions{display:flex;gap:8px;}
@@ -13,6 +12,12 @@ h1{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:800;margin:0;color:transparent
 .stat{flex:1;background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:8px;text-align:center;backdrop-filter:blur(10px);}
 .stat-label{display:block;font-size:.65rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;}
 .stat-value{display:block;font-size:1rem;font-weight:800;color:var(--accent-color);}
+.p1s .stat-value{color:#e74c3c;}.p2s .stat-value{color:#f0a500;}
+
+.mode-selector{display:flex;gap:8px;margin-bottom:12px;}
+.mode-btn{flex:1;padding:12px;border:none;border-radius:10px;font-weight:700;font-family:'Inter',sans-serif;font-size:.9rem;cursor:pointer;transition:all .2s;background:var(--card-bg);color:var(--text-color);border:1px solid var(--card-border);}
+.mode-btn:hover{background:var(--hover-bg);}
+.mode-btn.active{background:var(--gradient-4);color:#fff;border-color:transparent;}
 
 .board-wrap{margin-bottom:15px;}
 .board{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;background:rgba(30,40,70,.6);padding:8px;border-radius:14px;border:2px solid var(--card-border);}
@@ -40,3 +45,14 @@ h1{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:800;margin:0;color:transparent
 .overlay-card .action-btn{margin-top:18px;}
 .win-icon{font-size:3rem;margin-bottom:10px;}
 :root.light-theme .overlay{background:rgba(248,249,250,.85);}
+
+/* Fullscreen handling */
+#game-root:fullscreen{background-color:var(--bg-color);}
+#game-root:fullscreen .app-container{max-width:560px;width:100%;padding:40px 20px;}
+#game-root:fullscreen .game-header h1{display:none!important;}
+#game-root:fullscreen #theme-toggle,#game-root:fullscreen #help-btn,#game-root:fullscreen #fullscreen-btn{display:none!important;}
+#game-root:fullscreen #exit-fs-btn{display:flex!important;position:fixed;top:20px;right:20px;z-index:1001;background:rgba(88,166,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(88,166,255,0.2);color:var(--text-color);}
+:root.light-theme #game-root:fullscreen #exit-fs-btn{background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.2);}
+#exit-fs-btn{display:none;}
+#game-root:fullscreen .mode-selector{display:none!important;}
+#game-root:fullscreen .board-wrap .board{width:min(70vw,70vh);height:min(70vw,70vh);margin:0 auto;}

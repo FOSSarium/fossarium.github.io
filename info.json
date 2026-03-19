@@ -706,13 +706,6 @@
         "credit": "FOSSarium",
         "category": "games"
     },
-    "four-in-a-row": {
-        "title": "4 In A Row",
-        "description": "Strategic board game for two players.",
-        "icon-name": "grid-outline",
-        "credit": "FOSSarium",
-        "category": "games"
-    },
     "fruit-ninja": {
         "title": "Fruit Slasher",
         "description": "Slice fruit and avoid the bombs!",

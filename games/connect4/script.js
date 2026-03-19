@@ -2,22 +2,43 @@
     const ROWS = 6, COLS = 7;
     const boardEl = document.getElementById('board');
     const turnEl = document.getElementById('turn');
-    const winsEl = document.getElementById('wins');
-    const lossesEl = document.getElementById('losses');
+    const p1WinsEl = document.getElementById('p1-wins');
+    const p2WinsEl = document.getElementById('p2-wins');
     const gameoverOverlay = document.getElementById('gameover-overlay');
     const helpOverlay = document.getElementById('help-overlay');
 
-    let grid, playerTurn, gameOver, winCells;
-    let wins = parseInt(localStorage.getItem('fossarium-c4-wins') || '0');
-    let losses = parseInt(localStorage.getItem('fossarium-c4-losses') || '0');
-    winsEl.textContent = wins; lossesEl.textContent = losses;
+    let grid, currentPlayer, gameOver, winCells, aiMode;
+    let p1Wins, p2Wins;
+
+    // Load scores based on mode
+    function loadScores() {
+        const key = aiMode ? 'c4-ai' : 'c4-pvp';
+        p1Wins = parseInt(localStorage.getItem(`fossarium-${key}-p1`) || '0');
+        p2Wins = parseInt(localStorage.getItem(`fossarium-${key}-p2`) || '0');
+        p1WinsEl.textContent = p1Wins;
+        p2WinsEl.textContent = p2Wins;
+    }
+
+    function saveScores() {
+        const key = aiMode ? 'c4-ai' : 'c4-pvp';
+        localStorage.setItem(`fossarium-${key}-p1`, p1Wins);
+        localStorage.setItem(`fossarium-${key}-p2`, p2Wins);
+    }
 
     function newGame() {
         grid = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
-        playerTurn = true; gameOver = false; winCells = [];
+        currentPlayer = 1; gameOver = false; winCells = [];
         gameoverOverlay.classList.add('hidden');
-        turnEl.textContent = '🔴 You';
+        updateTurnDisplay();
         render();
+    }
+
+    function updateTurnDisplay() {
+        if (aiMode) {
+            turnEl.textContent = currentPlayer === 1 ? '🔴 You' : '🟡 AI';
+        } else {
+            turnEl.textContent = currentPlayer === 1 ? '🔴 P1' : '🟡 P2';
+        }
     }
 
     function render() {
@@ -29,17 +50,60 @@
                 if (grid[r][c] === 1) cell.classList.add('p1');
                 else if (grid[r][c] === 2) cell.classList.add('p2');
                 if (winCells.some(w => w[0] === r && w[1] === c)) cell.classList.add('win');
-                cell.addEventListener('click', () => playerDrop(c));
+                cell.addEventListener('click', () => handleMove(c));
                 boardEl.appendChild(cell);
             }
         }
     }
 
-    function drop(col, player) {
-        for (let r = ROWS - 1; r >= 0; r--) {
-            if (grid[r][col] === 0) { grid[r][col] = player; return r; }
+    function handleMove(col) {
+        if (gameOver) return;
+        if (aiMode && currentPlayer === 2) return; // AI's turn
+
+        const row = dropDisc(col, currentPlayer);
+        if (row < 0) return; // Column full
+
+        const win = checkWin(currentPlayer);
+        if (win) {
+            winCells = win; gameOver = true;
+            if (currentPlayer === 1) { p1Wins++; saveScores(); p1WinsEl.textContent = p1Wins; }
+            else { p2Wins++; saveScores(); p2WinsEl.textContent = p2Wins; }
+            render();
+            setTimeout(() => {
+                document.getElementById('go-icon').textContent = '🎉';
+                document.getElementById('go-title').textContent = aiMode ? 'You Win!' : `Player ${currentPlayer} Wins!`;
+                gameoverOverlay.classList.remove('hidden');
+            }, 300);
+            return;
         }
-        return -1; // Column full
+
+        if (grid[0].every(c => c !== 0)) {
+            gameOver = true; render();
+            setTimeout(() => {
+                document.getElementById('go-icon').textContent = '🤝';
+                document.getElementById('go-title').textContent = 'Draw!';
+                gameoverOverlay.classList.remove('hidden');
+            }, 300);
+            return;
+        }
+
+        currentPlayer = currentPlayer === 1 ? 2 : 1;
+        updateTurnDisplay();
+        render();
+
+        if (aiMode && currentPlayer === 2) {
+            setTimeout(aiMove, 500);
+        }
+    }
+
+    function dropDisc(col, player) {
+        for (let r = ROWS - 1; r >= 0; r--) {
+            if (grid[r][col] === 0) {
+                grid[r][col] = player;
+                return r;
+            }
+        }
+        return -1;
     }
 
     function checkWin(player) {
@@ -59,45 +123,6 @@
             }
         }
         return null;
-    }
-
-    function isFull() {
-        return grid[0].every(c => c !== 0);
-    }
-
-    function playerDrop(col) {
-        if (gameOver || !playerTurn) return;
-        const row = drop(col, 1);
-        if (row < 0) return;
-
-        const win = checkWin(1);
-        if (win) {
-            winCells = win; gameOver = true;
-            wins++; localStorage.setItem('fossarium-c4-wins', wins);
-            winsEl.textContent = wins;
-            render();
-            setTimeout(() => {
-                document.getElementById('go-icon').textContent = '🎉';
-                document.getElementById('go-title').textContent = 'You Win!';
-                gameoverOverlay.classList.remove('hidden');
-            }, 300);
-            return;
-        }
-
-        if (isFull()) {
-            gameOver = true; render();
-            setTimeout(() => {
-                document.getElementById('go-icon').textContent = '🤝';
-                document.getElementById('go-title').textContent = 'Draw!';
-                gameoverOverlay.classList.remove('hidden');
-            }, 300);
-            return;
-        }
-
-        playerTurn = false;
-        turnEl.textContent = '🟡 AI';
-        render();
-        setTimeout(aiMove, 400);
     }
 
     function aiMove() {
@@ -135,12 +160,11 @@
         }
 
         if (bestCol >= 0) {
-            drop(bestCol, 2);
+            dropDisc(bestCol, 2);
             const win = checkWin(2);
             if (win) {
                 winCells = win; gameOver = true;
-                losses++; localStorage.setItem('fossarium-c4-losses', losses);
-                lossesEl.textContent = losses;
+                p2Wins++; saveScores(); p2WinsEl.textContent = p2Wins;
                 render();
                 setTimeout(() => {
                     document.getElementById('go-icon').textContent = '💀';
@@ -149,7 +173,7 @@
                 }, 300);
                 return;
             }
-            if (isFull()) {
+            if (grid[0].every(c => c !== 0)) {
                 gameOver = true; render();
                 setTimeout(() => {
                     document.getElementById('go-icon').textContent = '🤝';
@@ -160,8 +184,8 @@
             }
         }
 
-        playerTurn = true;
-        turnEl.textContent = '🔴 You';
+        currentPlayer = 1;
+        updateTurnDisplay();
         render();
     }
 
@@ -172,16 +196,75 @@
         return -1;
     }
 
+    // Mode switching
+    const aiModeBtn = document.getElementById('ai-mode-btn');
+    const pvpModeBtn = document.getElementById('pvp-mode-btn');
+
+    aiModeBtn.addEventListener('click', () => {
+        aiMode = true;
+        aiModeBtn.classList.add('active');
+        pvpModeBtn.classList.remove('active');
+        loadScores();
+        newGame();
+    });
+
+    pvpModeBtn.addEventListener('click', () => {
+        aiMode = false;
+        pvpModeBtn.classList.add('active');
+        aiModeBtn.classList.remove('active');
+        loadScores();
+        newGame();
+    });
+
     document.getElementById('new-btn').addEventListener('click', newGame);
     document.getElementById('play-again-btn').addEventListener('click', newGame);
+
+    // Help
     document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+
+    // Fullscreen
+    const fsBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    fsBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            gameRoot.requestFullscreen().catch(() => {});
+        }
     });
 
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) {
+            document.exitFullscreen();
+        }
+    });
+
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLightMode = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLightMode ? 'light' : 'dark');
+        updateThemeIcon();
+    });
+
+    // Initialize
+    aiMode = true; // Default to AI mode
+    loadScores();
     newGame();
 })();
