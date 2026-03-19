@@ -30,17 +30,41 @@ h1 { font-size: clamp(1.8rem,5vw,2.4rem); font-weight: 800; margin: 0; color: tr
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 0;
+    justify-content: flex-start;
+    padding: 10px;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
 }
 
 #game-root:fullscreen .back-button,
-#game-root:fullscreen .game-header,
-#game-root:fullscreen .stats-bar,
-#game-root:fullscreen .msg {
+#game-root:fullscreen .game-header {
     display: none !important;
+}
+
+#game-root:fullscreen .stats-bar {
+    display: flex !important;
+    width: min(90vw, 90vh * (480 / 400));
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#game-root:fullscreen .stat {
+    padding: 10px 14px;
+}
+
+#game-root:fullscreen .stat-label {
+    font-size: 0.75rem;
+}
+
+#game-root:fullscreen .stat-value {
+    font-size: 1.3rem;
+}
+
+#game-root:fullscreen .msg {
+    display: block !important;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
 #game-root:fullscreen .canvas-wrap {
@@ -54,8 +78,8 @@ h1 { font-size: clamp(1.8rem,5vw,2.4rem); font-weight: 800; margin: 0; color: tr
 #game-root:fullscreen #exit-fs-btn {
     display: flex;
     position: fixed;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     z-index: 1001;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
