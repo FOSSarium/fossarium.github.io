@@ -62,6 +62,7 @@
 
             const card = document.createElement('div');
             card.className = 'upgrade-card' + (canAfford ? '' : ' locked');
+            card.dataset.id = u.id;
             card.innerHTML = `
                 <div class="upgrade-icon">${u.icon}</div>
                 <div class="upgrade-info">
@@ -73,10 +74,39 @@
                     <div class="upgrade-owned">Owned: ${count}</div>
                 </div>
             `;
-            if (canAfford) {
-                card.addEventListener('click', () => buyUpgrade(u));
-            }
             upgradesEl.appendChild(card);
+        });
+    }
+
+    // Use event delegation for upgrade clicks
+    upgradesEl.addEventListener('click', (e) => {
+        const card = e.target.closest('.upgrade-card');
+        if (!card || card.classList.contains('locked')) return;
+        const id = card.dataset.id;
+        const u = UPGRADES.find(x => x.id === id);
+        if (u) buyUpgrade(u);
+    });
+
+    function updateUpgradeStates() {
+        const cards = upgradesEl.querySelectorAll('.upgrade-card');
+        cards.forEach(card => {
+            const id = card.dataset.id;
+            const u = UPGRADES.find(x => x.id === id);
+            if (!u) return;
+            const cost = getCost(u);
+            const canAfford = cookies >= cost;
+            const count = owned[u.id] || 0;
+            
+            // Update cost and owned display
+            card.querySelector('.upgrade-cost').textContent = '🍪 ' + formatNum(cost);
+            card.querySelector('.upgrade-owned').textContent = 'Owned: ' + count;
+            
+            // Update locked state without replacing element
+            if (canAfford) {
+                card.classList.remove('locked');
+            } else {
+                card.classList.add('locked');
+            }
         });
     }
 
@@ -111,7 +141,7 @@
 
     cookieEl.addEventListener('click', clickCookie);
 
-    // Auto CPS - only update UI every 100ms, don't re-render upgrades
+    // Auto CPS - only update UI every 100ms
     setInterval(() => {
         if (cps > 0) {
             cookies += cps / 10;
@@ -119,11 +149,11 @@
         }
     }, 100);
 
-    // Update upgrade buttons state less frequently
+    // Update upgrade buttons state periodically
     setInterval(() => {
         updateUI();
-        renderUpgrades();
-    }, 300);
+        updateUpgradeStates();
+    }, 200);
 
     // Auto save
     setInterval(saveGame, 5000);
