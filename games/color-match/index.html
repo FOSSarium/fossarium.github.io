@@ -5,17 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Match - FOSSarium</title>
     <meta name="description" content="Test your brain speed! Does the text color match the word? A fast-paced Stroop challenge.">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Color Match</h1>
             <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="exit-fs-btn" title="Exit Fullscreen" aria-label="Exit Fullscreen">
+                    <ion-icon name="close-outline"></ion-icon>
+                </button>
                 <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
             </div>
         </div>
