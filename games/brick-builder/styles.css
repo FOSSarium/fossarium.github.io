@@ -69,10 +69,7 @@ body {
 #game-root:fullscreen .game-header h1,
 #game-root:fullscreen #theme-toggle,
 #game-root:fullscreen #help-btn,
-#game-root:fullscreen #fullscreen-btn,
-#game-root:fullscreen .toolbar,
-#game-root:fullscreen .grid-controls,
-#game-root:fullscreen .btn-row {
+#game-root:fullscreen #fullscreen-btn {
     display: none !important;
 }
 
