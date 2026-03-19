@@ -269,35 +269,6 @@
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
 
-    // Fullscreen
-    const fsBtn = document.getElementById('fullscreen-btn');
-    const exitFsBtn = document.getElementById('exit-fs-btn');
-    const gameRoot = document.getElementById('game-root');
-
-    fsBtn.addEventListener('click', () => {
-        if (!document.fullscreenElement) {
-            gameRoot.requestFullscreen().catch(err => {
-                console.warn(`Error attempting to enable fullscreen: ${err.message}`);
-            });
-        }
-    });
-
-    exitFsBtn.addEventListener('click', () => {
-        if (document.fullscreenElement) {
-            document.exitFullscreen();
-        }
-    });
-
-    document.addEventListener('fullscreenchange', () => {
-        if (document.fullscreenElement) {
-            fsBtn.classList.add('hidden');
-            resize(); // Force resize on FS entry
-        } else {
-            fsBtn.classList.remove('hidden');
-            resize(); // Force resize on FS exit
-        }
-    });
-
     // Theme Toggle
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = themeToggleBtn.querySelector('ion-icon');

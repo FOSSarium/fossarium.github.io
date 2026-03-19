@@ -39,57 +39,6 @@ body {
     padding: 40px 20px;
 }
 
-/* Fullscreen handling */
-#game-root:fullscreen {
-    background-color: var(--bg-color);
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    overflow: hidden;
-}
-
-#game-root:fullscreen .app-container {
-    max-width: none;
-    width: 100vw;
-    height: 100vh;
-    padding: 0;
-    justify-content: center;
-    align-items: center;
-}
-
-#game-root:fullscreen h1,
-#game-root:fullscreen #theme-toggle,
-#game-root:fullscreen #help-btn,
-#game-root:fullscreen #fullscreen-btn,
-#game-root:fullscreen .stats-bar,
-#game-root:fullscreen .controls-row,
-#game-root:fullscreen .btn-row {
-    display: none !important;
-}
-
-#game-root:fullscreen .canvas-wrap {
-    width: min(95vw, 95vh);
-    height: min(95vw, 95vh);
-    max-width: none;
-    margin: 0;
-}
-
-#game-root:fullscreen #exit-fs-btn {
-    display: flex;
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1001;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-#exit-fs-btn { display: none; }
-
 h1 {
     font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 800;
