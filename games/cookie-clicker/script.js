@@ -73,7 +73,9 @@
                     <div class="upgrade-owned">Owned: ${count}</div>
                 </div>
             `;
-            card.addEventListener('click', () => buyUpgrade(u));
+            if (canAfford) {
+                card.addEventListener('click', () => buyUpgrade(u));
+            }
             upgradesEl.appendChild(card);
         });
     }
@@ -109,14 +111,19 @@
 
     cookieEl.addEventListener('click', clickCookie);
 
-    // Auto CPS
+    // Auto CPS - only update UI every 100ms, don't re-render upgrades
     setInterval(() => {
         if (cps > 0) {
             cookies += cps / 10;
-            updateUI();
-            renderUpgrades();
+            cookiesEl.textContent = formatNum(cookies);
         }
     }, 100);
+
+    // Update upgrade buttons state less frequently
+    setInterval(() => {
+        updateUI();
+        renderUpgrades();
+    }, 300);
 
     // Auto save
     setInterval(saveGame, 5000);
@@ -135,10 +142,25 @@
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
 
-    // Fullscreen
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+    // Theme Toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+
+    function updateThemeIcon() {
+        if (document.documentElement.classList.contains('light-theme')) {
+            themeIcon.setAttribute('name', 'moon-outline');
+        } else {
+            themeIcon.setAttribute('name', 'sunny-outline');
+        }
+    }
+
+    updateThemeIcon();
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLightMode = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLightMode ? 'light' : 'dark');
+        updateThemeIcon();
     });
 
     loadGame(); updateUI(); renderUpgrades();
