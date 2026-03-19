@@ -289,6 +289,7 @@
         const isLight = document.documentElement.classList.contains('light-theme');
         localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
         updateThemeIcon();
+        render(); // Re-render canvas with new theme colors
     });
 
     // Initial setup
