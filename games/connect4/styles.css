@@ -45,14 +45,3 @@ h1{font-size:clamp(1.8rem,5vw,2.4rem);font-weight:800;margin:0;color:transparent
 .overlay-card .action-btn{margin-top:18px;}
 .win-icon{font-size:3rem;margin-bottom:10px;}
 :root.light-theme .overlay{background:rgba(248,249,250,.85);}
-
-/* Fullscreen handling */
-#game-root:fullscreen{background-color:var(--bg-color);}
-#game-root:fullscreen .app-container{max-width:560px;width:100%;padding:40px 20px;}
-#game-root:fullscreen .game-header h1{display:none!important;}
-#game-root:fullscreen #theme-toggle,#game-root:fullscreen #help-btn,#game-root:fullscreen #fullscreen-btn{display:none!important;}
-#game-root:fullscreen #exit-fs-btn{display:flex!important;position:fixed;top:20px;right:20px;z-index:1001;background:rgba(88,166,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(88,166,255,0.2);color:var(--text-color);}
-:root.light-theme #game-root:fullscreen #exit-fs-btn{background:rgba(88,166,255,0.1);border-color:rgba(88,166,255,0.2);}
-#exit-fs-btn{display:none;}
-#game-root:fullscreen .mode-selector{display:none!important;}
-#game-root:fullscreen .board-wrap .board{width:min(70vw,70vh);height:min(70vw,70vh);margin:0 auto;}
