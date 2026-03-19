@@ -41,15 +41,6 @@ body {
     padding: 40px 20px;
 }
 
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    text-decoration: none;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: .9rem;
-}
-
 .game-header {
     display: flex;
     justify-content: space-between;
@@ -206,6 +197,8 @@ h1 {
     cursor: pointer;
     transition: all .2s;
     backdrop-filter: blur(10px);
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .upgrade-card:hover:not(.locked) {
@@ -216,6 +209,7 @@ h1 {
 .upgrade-card.locked {
     opacity: .4;
     cursor: not-allowed;
+    pointer-events: none;
 }
 
 .upgrade-icon {
