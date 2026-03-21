@@ -672,10 +672,10 @@
         "category": "games"
     },
     "dino-run": {
-        "title": "Chrome Dino",
-        "description": "Run and jump over obstacles as a T-Rex.",
+        "title": "Dino Run",
+        "description": "Endless runner. Jump, duck, and dodge obstacles!",
         "icon-name": "game-controller-outline",
-        "credit": "Chrome",
+        "credit": "FOSSarium",
         "category": "games"
     },
     "dots-and-boxes": {
