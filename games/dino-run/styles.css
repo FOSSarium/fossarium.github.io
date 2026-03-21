@@ -6,6 +6,7 @@
     --card-border: rgba(255, 255, 255, 0.05);
     --hover-bg: rgba(33, 38, 45, 0.7);
     --accent-color: #58a6ff;
+    --gradient-2: linear-gradient(135deg, #f12711, #f5af19);
     --gradient-6: linear-gradient(135deg, #11998e, #38ef7d);
 }
 
@@ -35,18 +36,9 @@ body {
 }
 
 .app-container {
-    max-width: 600px;
+    max-width: 700px;
     width: 100%;
     padding: 40px 20px;
-}
-
-.back-button {
-    display: inline-block;
-    color: var(--accent-color);
-    text-decoration: none;
-    margin-bottom: 20px;
-    font-weight: 600;
-    font-size: .9rem;
 }
 
 .game-header {
@@ -96,8 +88,8 @@ h1 {
 
 .stats-bar {
     display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
 .stat {
@@ -105,34 +97,37 @@ h1 {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 8px;
+    padding: 12px;
     text-align: center;
     backdrop-filter: blur(10px);
 }
 
 .stat-label {
     display: block;
-    font-size: .65rem;
+    font-size: .6rem;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
+    letter-spacing: .5px;
 }
 
 .stat-value {
     display: block;
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 800;
     color: var(--accent-color);
+    font-variant-numeric: tabular-nums;
 }
 
-.canvas-wrap {
+.canvas-container {
+    position: relative;
     width: 100%;
-    aspect-ratio: 3/1;
-    margin-bottom: 8px;
-    border-radius: 14px;
+    aspect-ratio: 4/1;
+    border-radius: 16px;
     overflow: hidden;
     border: 2px solid var(--card-border);
-    cursor: pointer;
+    background: var(--card-bg);
+    margin-bottom: 12px;
 }
 
 canvas {
@@ -141,34 +136,56 @@ canvas {
     height: 100%;
 }
 
-.msg {
+.start-message {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(5, 5, 16, 0.7);
+    backdrop-filter: blur(4px);
+    transition: opacity .3s;
+}
+
+.start-message.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.start-icon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.start-text {
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.controls-hint {
     text-align: center;
+    font-size: .85rem;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+}
+
+.hint-key {
+    display: inline-block;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 3px 8px;
     font-weight: 700;
     color: var(--accent-color);
-    font-size: 1rem;
-    margin-bottom: 15px;
-    min-height: 1.5em;
-}
-
-.action-btn {
-    width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform .2s;
-}
-
-.action-btn.primary {
-    background: var(--gradient-6);
-    color: #fff;
-}
-
-.action-btn:hover {
-    transform: translateY(-2px);
+    font-size: .75rem;
 }
 
 .overlay {
@@ -184,13 +201,8 @@ canvas {
 }
 
 @keyframes overlayIn {
-    from {
-        opacity: 0
-    }
-
-    to {
-        opacity: 1
-    }
+    from { opacity: 0 }
+    to { opacity: 1 }
 }
 
 .overlay-card {
@@ -210,7 +222,6 @@ canvas {
         transform: scale(.9) translateY(20px);
         opacity: 0
     }
-
     to {
         transform: scale(1) translateY(0);
         opacity: 1
@@ -234,12 +245,24 @@ canvas {
 
 .overlay-card p strong {
     color: var(--accent-color);
+    font-size: 1.3rem;
+}
+
+.score-display {
+    font-size: 1.1rem;
+}
+
+.best-display {
+    color: #f5af19 !important;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin: 12px 0 !important;
 }
 
 .overlay-card ul {
     text-align: left;
     padding-left: 20px;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 
 .overlay-card ul li {
@@ -250,13 +273,87 @@ canvas {
 
 .overlay-card .action-btn {
     margin-top: 18px;
+    width: 100%;
 }
 
 .win-icon {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 10px;
+}
+
+.action-btn {
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform .2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.action-btn.primary {
+    background: var(--gradient-6);
+    color: #fff;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
 }
 
 :root.light-theme .overlay {
     background: rgba(248, 249, 250, .85);
+}
+
+:root.light-theme .start-message {
+    background: rgba(248, 249, 250, 0.7);
+}
+
+/* Fullscreen styles */
+:fullscreen .game-header h1 {
+    display: none;
+}
+
+:fullscreen .game-header {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    justify-content: flex-end;
+}
+
+:fullscreen .app-container {
+    max-width: none;
+    padding: 20px;
+}
+
+:fullscreen .canvas-container {
+    aspect-ratio: 16/9;
+    max-height: 70vh;
+}
+
+:root.light-theme .stat {
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 500px) {
+    .stats-bar {
+        gap: 6px;
+    }
+    
+    .stat {
+        padding: 8px 6px;
+    }
+    
+    .stat-value {
+        font-size: 1.1rem;
+    }
+    
+    .canvas-container {
+        aspect-ratio: 3/1;
+    }
 }

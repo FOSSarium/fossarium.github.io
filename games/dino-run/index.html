@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +8,68 @@
     <meta name="description" content="Jump and duck to avoid obstacles in this endless runner!">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
 </head>
+
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Dino Run</h1>
             <div class="header-actions">
-                <button class="icon-btn" id="help-btn" title="Help">?</button>
-                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
             </div>
         </div>
         <div class="stats-bar">
-            <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
-            <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
+            <div class="stat">
+                <span class="stat-label">Score</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Best</span>
+                <span class="stat-value" id="best">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Speed</span>
+                <span class="stat-value" id="speed">1x</span>
+            </div>
         </div>
-        <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
-        <div class="msg" id="msg">Click or Press Space to Start</div>
+        <div class="canvas-container">
+            <canvas id="gameCanvas"></canvas>
+            <div class="start-message" id="start-msg">
+                <div class="start-icon">🦖</div>
+                <div class="start-text">Press Space or Tap to Start</div>
+            </div>
+        </div>
+        <div class="controls-hint">
+            <span class="hint-key">Space/↑</span> Jump &nbsp;&bull;&nbsp;
+            <span class="hint-key">↓</span> Duck
+        </div>
         <div class="overlay hidden" id="gameover-overlay">
             <div class="overlay-card">
                 <div class="win-icon">💀</div>
                 <h2>Game Over</h2>
-                <p>Score: <strong id="final-score">0</strong></p>
-                <button class="action-btn primary" id="play-again-btn">Play Again</button>
+                <p class="score-display">Score: <strong id="final-score">0</strong></p>
+                <p class="best-display" id="new-best-msg" style="display:none;">🏆 New Best!</p>
+                <button class="action-btn primary" id="play-again-btn">
+                    <ion-icon name="refresh-outline"></ion-icon> Play Again
+                </button>
             </div>
         </div>
         <div class="overlay hidden" id="help-overlay">
             <div class="overlay-card">
                 <h2>How to Play</h2>
                 <ul>
-                    <li><strong>Space / Up / Click</strong> — Jump</li>
-                    <li><strong>Down</strong> — Duck under flying obstacles</li>
-                    <li>Avoid cacti and birds to survive!</li>
-                    <li>Speed increases over time.</li>
+                    <li><strong>Space / Up Arrow / Tap</strong> — Jump over cacti</li>
+                    <li><strong>Down Arrow</strong> — Duck under flying pterodactyls</li>
+                    <li>Avoid all obstacles to survive!</li>
+                    <li>Game speeds up over time — stay alert!</li>
+                    <li>Beat your high score!</li>
                 </ul>
                 <button class="action-btn primary" id="close-help-btn">Got It</button>
             </div>
@@ -48,4 +77,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
