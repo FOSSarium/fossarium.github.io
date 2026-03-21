@@ -536,28 +536,6 @@
         themeIcon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
     });
 
-    // Fullscreen
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
-    const exitFsBtn = document.getElementById('exit-fs-btn');
-    const gameRoot = document.getElementById('game-root');
-
-    function updateFullscreenButtons() {
-        const isFs = !!document.fullscreenElement;
-        fullscreenBtn.style.display = isFs ? 'none' : 'flex';
-        exitFsBtn.style.display = isFs ? 'flex' : 'none';
-    }
-
-    fullscreenBtn.addEventListener('click', () => {
-        gameRoot.requestFullscreen().catch(() => {});
-    });
-
-    exitFsBtn.addEventListener('click', () => {
-        if (document.fullscreenElement) document.exitFullscreen();
-    });
-
-    document.addEventListener('fullscreenchange', updateFullscreenButtons);
-    updateFullscreenButtons();
-
     // Initialize
     init();
 })();
