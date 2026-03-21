@@ -664,13 +664,6 @@
         "credit": "FOSSarium",
         "category": "games"
     },
-    "crossword": {
-        "title": "Daily Crossword",
-        "description": "Test your vocabulary with a fun crossword puzzle.",
-        "icon-name": "help-circle-outline",
-        "credit": "FOSSarium",
-        "category": "games"
-    },
     "dice-game": {
         "title": "Dice Duel",
         "description": "Competitive dice rolling game.",
