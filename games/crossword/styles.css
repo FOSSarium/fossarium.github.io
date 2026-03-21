@@ -56,6 +56,47 @@ body {
     margin-bottom: 15px;
 }
 
+/* Fullscreen: hide back button, header, clues, buttons - only show board and exit btn */
+:fullscreen .back-button,
+:fullscreen .game-header h1,
+:fullscreen .clues-section,
+:fullscreen .btn-row {
+    display: none !important;
+}
+
+:fullscreen .game-header {
+    justify-content: flex-end;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+}
+
+:fullscreen #exit-fs-btn {
+    display: flex !important;
+}
+
+:fullscreen #fullscreen-btn {
+    display: none !important;
+}
+
+:fullscreen .app-container {
+    max-width: none;
+    padding: 20px;
+}
+
+:fullscreen .board-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+}
+
+:fullscreen .grid {
+    max-width: 90vmin;
+    max-height: 90vmin;
+}
+
 h1 {
     font-size: clamp(1.8rem, 5vw, 2.4rem);
     font-weight: 800;
@@ -70,6 +111,10 @@ h1 {
 .header-actions {
     display: flex;
     gap: 8px;
+}
+
+#exit-fs-btn {
+    display: none;
 }
 
 .icon-btn {
