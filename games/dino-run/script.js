@@ -37,12 +37,12 @@
     const dino = {
         x: 50,
         y: GROUND_Y,
-        width: 40,
-        height: 44,
+        width: 28,
+        height: 32,
         vy: 0,
         isJumping: false,
         isDucking: false,
-        duckHeight: 25,
+        duckHeight: 18,
         runFrame: 0
     };
 
@@ -113,16 +113,16 @@
 
     // Spawn obstacle
     function spawnObstacle() {
-        const type = Math.random() < 0.3 && score > 300 ? 'bird' : 'cactus';
+        const type = Math.random() < 0.25 && score > 400 ? 'bird' : 'cactus';
         
         if (type === 'cactus') {
             const size = Math.random() < 0.5 ? 'small' : 'large';
             obstacles.push({
                 type: 'cactus',
                 x: canvas.width / 2 + 50,
-                y: GROUND_Y + dino.height - (size === 'large' ? 50 : 30),
-                width: size === 'large' ? 25 : 18,
-                height: size === 'large' ? 50 : 30,
+                y: GROUND_Y + dino.height - (size === 'large' ? 38 : 24),
+                width: size === 'large' ? 18 : 14,
+                height: size === 'large' ? 38 : 24,
                 color: getColors().cactus
             });
         } else {
@@ -130,9 +130,9 @@
             obstacles.push({
                 type: 'bird',
                 x: canvas.width / 2 + 50,
-                y: height === 'low' ? GROUND_Y + 15 : GROUND_Y - 20,
-                width: 35,
-                height: 20,
+                y: height === 'low' ? GROUND_Y + 10 : GROUND_Y - 15,
+                width: 28,
+                height: 16,
                 wingFrame: 0
             });
         }
@@ -181,7 +181,7 @@
     function drawDino() {
         const colors = getColors();
         const h = dino.isDucking ? dino.duckHeight : dino.height;
-        const w = dino.isDucking ? 55 : dino.width;
+        const w = dino.isDucking ? 40 : dino.width;
         const y = dino.isDucking ? GROUND_Y + dino.height - h : dino.y;
         
         // Body
@@ -190,29 +190,29 @@
         
         // Head
         if (!dino.isDucking) {
-            ctx.fillRect(dino.x + w - 10, y - 10, 20, 18);
+            ctx.fillRect(dino.x + w - 8, y - 8, 16, 14);
             // Eye
             ctx.fillStyle = '#fff';
-            ctx.fillRect(dino.x + w + 2, y - 6, 6, 6);
+            ctx.fillRect(dino.x + w + 2, y - 5, 5, 5);
             ctx.fillStyle = '#111';
-            ctx.fillRect(dino.x + w + 5, y - 4, 3, 3);
+            ctx.fillRect(dino.x + w + 4, y - 3, 3, 3);
         } else {
             // Ducking head
-            ctx.fillRect(dino.x + w, y + 2, 18, 12);
+            ctx.fillRect(dino.x + w, y + 2, 14, 10);
             ctx.fillStyle = '#fff';
-            ctx.fillRect(dino.x + w + 10, y + 3, 5, 5);
+            ctx.fillRect(dino.x + w + 8, y + 3, 4, 4);
         }
         
         // Legs animation
-        const legOffset = Math.sin(frame * 0.3) * 5;
+        const legOffset = Math.sin(frame * 0.3) * 4;
         if (!dino.isJumping) {
             ctx.fillStyle = colors.cactusDark;
-            ctx.fillRect(dino.x + 8, y + h, 8, 6 + legOffset);
-            ctx.fillRect(dino.x + w - 16, y + h, 8, 6 - legOffset);
+            ctx.fillRect(dino.x + 6, y + h, 6, 5 + legOffset);
+            ctx.fillRect(dino.x + w - 12, y + h, 6, 5 - legOffset);
         }
         
         // Tail
-        ctx.fillRect(dino.x - 8, y + h - 15, 10, 8);
+        ctx.fillRect(dino.x - 6, y + h - 12, 8, 6);
     }
 
     // Draw cactus
@@ -223,13 +223,13 @@
         ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
         // Highlight
         ctx.fillStyle = colors.cactusDark;
-        ctx.fillRect(obs.x + 4, obs.y, 5, obs.height);
-        // Arms
-        if (obs.height > 40) {
-            ctx.fillRect(obs.x - 8, obs.y + 15, 8, 6);
-            ctx.fillRect(obs.x - 8, obs.y + 10, 6, 12);
-            ctx.fillRect(obs.x + obs.width, obs.y + 10, 8, 6);
-            ctx.fillRect(obs.x + obs.width + 2, obs.y + 5, 6, 12);
+        ctx.fillRect(obs.x + 3, obs.y, 3, obs.height);
+        // Arms (only for large cacti)
+        if (obs.height > 30) {
+            ctx.fillRect(obs.x - 6, obs.y + 12, 6, 5);
+            ctx.fillRect(obs.x - 6, obs.y + 8, 5, 10);
+            ctx.fillRect(obs.x + obs.width, obs.y + 8, 6, 5);
+            ctx.fillRect(obs.x + obs.width + 1, obs.y + 4, 5, 10);
         }
     }
 
@@ -349,15 +349,15 @@
                 dino.y = GROUND_Y;
                 dino.isJumping = false;
                 dino.vy = 0;
-                createParticles(dino.x + 20, dino.y + dino.height, getColors().cactus, 5);
+                createParticles(dino.x + 14, dino.y + dino.height, getColors().cactus, 5);
             }
         }
         
         // Spawn obstacles
-        const minGap = Math.max(60, 120 - gameSpeed * 3);
+        const minGap = 200 + gameSpeed * 8; // Increased minimum gap for playability
         const lastObstacle = obstacles[obstacles.length - 1];
         if (!lastObstacle || (canvas.width / 2 - lastObstacle.x > minGap)) {
-            if (Math.random() < 0.02 + (score / 50000)) {
+            if (Math.random() < 0.015 + (score / 80000)) {
                 spawnObstacle();
             }
         }
@@ -389,14 +389,14 @@
         });
         
         updateParticles();
-        
+
         // Collision detection
         const dinoH = dino.isDucking ? dino.duckHeight : dino.height;
-        const dinoW = dino.isDucking ? 55 : dino.width;
+        const dinoW = dino.isDucking ? 40 : dino.width;
         const dinoY = dino.isDucking ? GROUND_Y + dino.height - dinoH : dino.y;
-        
+
         for (const obs of obstacles) {
-            const padding = 8;
+            const padding = 6;
             if (dino.x + dinoW - padding > obs.x + padding &&
                 dino.x + padding < obs.x + obs.width - padding &&
                 dinoY + dinoH - padding > obs.y + padding &&
@@ -430,9 +430,9 @@
     function gameOver() {
         gameState = 'gameover';
         cancelAnimationFrame(animationId);
-        
+
         // Create explosion particles
-        createParticles(dino.x + 20, dino.y + dino.height/2, getColors().cactus, 15);
+        createParticles(dino.x + 14, dino.y + dino.height/2, getColors().cactus, 15);
         draw();
         
         // Check high score
@@ -535,6 +535,28 @@
         localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
         themeIcon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
     });
+
+    // Fullscreen
+    const fullscreenBtn = document.getElementById('fullscreen-btn');
+    const exitFsBtn = document.getElementById('exit-fs-btn');
+    const gameRoot = document.getElementById('game-root');
+
+    function updateFullscreenButtons() {
+        const isFs = !!document.fullscreenElement;
+        fullscreenBtn.style.display = isFs ? 'none' : 'flex';
+        exitFsBtn.style.display = isFs ? 'flex' : 'none';
+    }
+
+    fullscreenBtn.addEventListener('click', () => {
+        gameRoot.requestFullscreen().catch(() => {});
+    });
+
+    exitFsBtn.addEventListener('click', () => {
+        if (document.fullscreenElement) document.exitFullscreen();
+    });
+
+    document.addEventListener('fullscreenchange', updateFullscreenButtons);
+    updateFullscreenButtons();
 
     // Initialize
     init();

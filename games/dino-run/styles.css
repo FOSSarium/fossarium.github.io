@@ -64,6 +64,10 @@ h1 {
     gap: 8px;
 }
 
+#exit-fs-btn {
+    display: none;
+}
+
 .icon-btn {
     width: 40px;
     height: 40px;
@@ -314,8 +318,10 @@ canvas {
 }
 
 /* Fullscreen styles */
-:fullscreen .game-header h1 {
-    display: none;
+:fullscreen .back-button,
+:fullscreen .game-header h1,
+:fullscreen .controls-hint {
+    display: none !important;
 }
 
 :fullscreen .game-header {
@@ -324,6 +330,14 @@ canvas {
     right: 15px;
     background: transparent;
     justify-content: flex-end;
+}
+
+:fullscreen #exit-fs-btn {
+    display: flex !important;
+}
+
+:fullscreen #fullscreen-btn {
+    display: none !important;
 }
 
 :fullscreen .app-container {
