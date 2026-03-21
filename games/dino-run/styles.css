@@ -64,10 +64,6 @@ h1 {
     gap: 8px;
 }
 
-#exit-fs-btn {
-    display: none;
-}
-
 .icon-btn {
     width: 40px;
     height: 40px;
@@ -315,43 +311,6 @@ canvas {
 
 :root.light-theme .start-message {
     background: rgba(248, 249, 250, 0.7);
-}
-
-/* Fullscreen styles */
-:fullscreen .back-button,
-:fullscreen .game-header h1,
-:fullscreen .controls-hint {
-    display: none !important;
-}
-
-:fullscreen .game-header {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: transparent;
-    justify-content: flex-end;
-}
-
-:fullscreen #exit-fs-btn {
-    display: flex !important;
-}
-
-:fullscreen #fullscreen-btn {
-    display: none !important;
-}
-
-:fullscreen .app-container {
-    max-width: none;
-    padding: 20px;
-}
-
-:fullscreen .canvas-container {
-    aspect-ratio: 16/9;
-    max-height: 70vh;
-}
-
-:root.light-theme .stat {
-    border-color: rgba(0, 0, 0, 0.1);
 }
 
 @media (max-width: 500px) {
