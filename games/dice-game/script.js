@@ -5,12 +5,16 @@
     const holdBtn = document.getElementById('hold-btn');
     const p1Card = document.getElementById('p1-card');
     const p2Card = document.getElementById('p2-card');
+    const p1Label = document.getElementById('p1-label');
+    const p2Label = document.getElementById('p2-label');
     const gameoverOverlay = document.getElementById('gameover-overlay');
     const helpOverlay = document.getElementById('help-overlay');
+    const modeBotBtn = document.getElementById('mode-bot');
+    const modePvpBtn = document.getElementById('mode-pvp');
 
     const DICE = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
     const WIN_SCORE = 100;
-    let scores, current, activePlayer, gameOver;
+    let scores, current, activePlayer, gameOver, gameMode; // 'bot' or 'pvp'
 
     function newGame() {
         scores = [0, 0]; current = 0; activePlayer = 0; gameOver = false;
@@ -19,6 +23,22 @@
         diceMsgEl.textContent = ''; diceMsgEl.className = 'dice-msg';
         diceEl.textContent = '⚀';
         updateUI();
+    }
+
+    function setMode(mode) {
+        gameMode = mode;
+        if (mode === 'bot') {
+            p1Label.textContent = 'You';
+            p2Label.textContent = 'CPU';
+            modeBotBtn.classList.add('active');
+            modePvpBtn.classList.remove('active');
+        } else {
+            p1Label.textContent = 'Player 1';
+            p2Label.textContent = 'Player 2';
+            modeBotBtn.classList.remove('active');
+            modePvpBtn.classList.add('active');
+        }
+        newGame();
     }
 
     function updateUI() {
@@ -31,7 +51,7 @@
     }
 
     function roll() {
-        if (gameOver || activePlayer !== 0) return;
+        if (gameOver || (gameMode === 'bot' && activePlayer !== 0)) return;
         const value = Math.floor(Math.random() * 6) + 1;
         diceEl.textContent = DICE[value - 1];
         diceEl.classList.remove('rolling');
@@ -40,28 +60,31 @@
 
         if (value === 1) {
             current = 0;
-            diceMsgEl.textContent = 'Rolled a 1! Turn lost!';
+            const playerName = gameMode === 'bot' ? 'You' : (activePlayer === 0 ? 'Player 1' : 'Player 2');
+            diceMsgEl.textContent = `${playerName} rolled a 1! Turn lost!`;
             diceMsgEl.className = 'dice-msg bad';
             updateUI();
             setTimeout(switchPlayer, 800);
         } else {
             current += value;
-            diceMsgEl.textContent = `+${value}`;
+            const playerName = gameMode === 'bot' ? 'You' : (activePlayer === 0 ? 'Player 1' : 'Player 2');
+            diceMsgEl.textContent = `${playerName} +${value}`;
             diceMsgEl.className = 'dice-msg';
             updateUI();
         }
     }
 
     function hold() {
-        if (gameOver || activePlayer !== 0) return;
-        scores[0] += current;
+        if (gameOver || (gameMode === 'bot' && activePlayer !== 0)) return;
+        scores[activePlayer] += current;
         current = 0;
         diceMsgEl.textContent = '';
-        if (scores[0] >= WIN_SCORE) {
+        if (scores[activePlayer] >= WIN_SCORE) {
             gameOver = true; updateUI();
-            document.getElementById('go-icon').textContent = '🎉';
-            document.getElementById('go-title').textContent = 'You Win!';
-            document.getElementById('go-msg').textContent = `Final Score: ${scores[0]}`;
+            document.getElementById('go-icon').textContent = activePlayer === 0 ? '🎉' : '🎉';
+            const winner = gameMode === 'bot' ? (activePlayer === 0 ? 'You' : 'CPU') : (activePlayer === 0 ? 'Player 1' : 'Player 2');
+            document.getElementById('go-title').textContent = `${winner} Wins!`;
+            document.getElementById('go-msg').textContent = `Final Score: ${scores[activePlayer]}`;
             gameoverOverlay.classList.remove('hidden');
             return;
         }
@@ -73,7 +96,7 @@
         activePlayer = activePlayer === 0 ? 1 : 0;
         current = 0;
         updateUI();
-        if (activePlayer === 1) {
+        if (gameMode === 'bot' && activePlayer === 1) {
             rollBtn.disabled = true; holdBtn.disabled = true;
             setTimeout(cpuTurn, 600);
         } else {
@@ -82,7 +105,7 @@
     }
 
     function cpuTurn() {
-        if (gameOver) return;
+        if (gameOver || gameMode !== 'bot') return;
         const value = Math.floor(Math.random() * 6) + 1;
         diceEl.textContent = DICE[value - 1];
         diceEl.classList.remove('rolling');
@@ -139,10 +162,30 @@
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => { }); else document.exitFullscreen();
+    
+    // Mode selector
+    modeBotBtn.addEventListener('click', () => setMode('bot'));
+    modePvpBtn.addEventListener('click', () => setMode('pvp'));
+
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    const savedTheme = localStorage.getItem('fossarium-theme');
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    } else if (savedTheme === 'dark') {
+        themeIcon.setAttribute('name', 'sunny-outline');
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    }
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        themeIcon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
     });
 
-    newGame();
+    setMode('bot');
 })();
