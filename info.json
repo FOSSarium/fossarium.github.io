@@ -666,7 +666,7 @@
     },
     "dice-game": {
         "title": "Dice Duel",
-        "description": "Competitive dice rolling game.",
+        "description": "Classic Pig dice game. vs CPU or 2 Player mode.",
         "icon-name": "grid-outline",
         "credit": "FOSSarium",
         "category": "games"

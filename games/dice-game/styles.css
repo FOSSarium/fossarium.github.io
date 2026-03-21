@@ -95,6 +95,37 @@ h1 {
     transform: translateY(-2px);
 }
 
+.mode-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.mode-btn {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: .9rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .2s;
+    backdrop-filter: blur(10px);
+}
+
+.mode-btn.active {
+    border-color: var(--accent-color);
+    background: rgba(88, 166, 255, .1);
+    color: var(--accent-color);
+}
+
+.mode-btn:hover {
+    transform: translateY(-2px);
+}
+
 .players-row {
     display: flex;
     gap: 10px;
