@@ -3,22 +3,30 @@
     const turnEl = document.getElementById('turn');
     const p1ScoreEl = document.getElementById('p1-score');
     const p2ScoreEl = document.getElementById('p2-score');
+    const p1LabelEl = document.getElementById('p1-label');
+    const p2LabelEl = document.getElementById('p2-label');
     const gameoverOverlay = document.getElementById('gameover-overlay');
     const helpOverlay = document.getElementById('help-overlay');
+    const modeBotBtn = document.getElementById('mode-bot');
+    const modePvpBtn = document.getElementById('mode-pvp');
 
     const ROWS = 4, COLS = 4;
-    let hLines, vLines, boxes, scores, playerTurn, gameOver;
+    let hLines, vLines, boxes, scores, currentPlayer, gameOver, gameMode;
     
     // Drag state
     let isDragging = false;
     let selectedDot = null;
 
-    function newGame() {
+    function initArrays() {
         hLines = Array.from({ length: ROWS + 1 }, () => Array(COLS).fill(0));
         vLines = Array.from({ length: ROWS }, () => Array(COLS + 1).fill(0));
         boxes = Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+    }
+
+    function newGame() {
+        initArrays();
         scores = [0, 0];
-        playerTurn = true;
+        currentPlayer = 1;
         gameOver = false;
         isDragging = false;
         selectedDot = null;
@@ -26,10 +34,30 @@
         render();
     }
 
+    function setMode(mode) {
+        gameMode = mode;
+        if (mode === 'bot') {
+            p1LabelEl.textContent = 'You';
+            p2LabelEl.textContent = 'CPU';
+            modeBotBtn.classList.add('active');
+            modePvpBtn.classList.remove('active');
+        } else {
+            p1LabelEl.textContent = 'Player 1';
+            p2LabelEl.textContent = 'Player 2';
+            modeBotBtn.classList.remove('active');
+            modePvpBtn.classList.add('active');
+        }
+        newGame();
+    }
+
     function render() {
         p1ScoreEl.textContent = scores[0];
         p2ScoreEl.textContent = scores[1];
-        turnEl.textContent = playerTurn ? 'Your turn' : 'CPU...';
+
+        const p1Name = gameMode === 'bot' ? 'You' : 'Player 1';
+        const p2Name = gameMode === 'bot' ? 'CPU' : 'Player 2';
+        const turnName = currentPlayer === 1 ? p1Name : p2Name;
+        turnEl.textContent = `${turnName}'s turn`;
 
         const gridRows = 2 * ROWS + 1;
         const gridCols = 2 * COLS + 1;
@@ -41,7 +69,6 @@
         for (let gridRow = 0; gridRow < gridRows; gridRow++) {
             for (let gridCol = 0; gridCol < gridCols; gridCol++) {
                 if (gridRow % 2 === 0 && gridCol % 2 === 0) {
-                    // Dot position
                     const row = gridRow / 2;
                     const col = gridCol / 2;
                     const dot = document.createElement('div');
@@ -52,31 +79,28 @@
                     dot.addEventListener('touchstart', handleDotDown, { passive: false });
                     boardEl.appendChild(dot);
                 } else if (gridRow % 2 === 0 && gridCol % 2 === 1) {
-                    // Horizontal line
                     const row = gridRow / 2;
                     const col = (gridCol - 1) / 2;
                     const hLine = document.createElement('div');
                     hLine.className = 'h-line';
                     if (hLines[row][col] === 1) hLine.classList.add('p1');
                     if (hLines[row][col] === 2) hLine.classList.add('p2');
-                    if (!hLines[row][col] && playerTurn && !gameOver) {
+                    if (!hLines[row][col] && !gameOver) {
                         hLine.addEventListener('click', () => placeLine('h', row, col));
                     }
                     boardEl.appendChild(hLine);
                 } else if (gridRow % 2 === 1 && gridCol % 2 === 0) {
-                    // Vertical line
                     const row = (gridRow - 1) / 2;
                     const col = gridCol / 2;
                     const vLine = document.createElement('div');
                     vLine.className = 'v-line';
                     if (vLines[row][col] === 1) vLine.classList.add('p1');
                     if (vLines[row][col] === 2) vLine.classList.add('p2');
-                    if (!vLines[row][col] && playerTurn && !gameOver) {
+                    if (!vLines[row][col] && !gameOver) {
                         vLine.addEventListener('click', () => placeLine('v', row, col));
                     }
                     boardEl.appendChild(vLine);
                 } else {
-                    // Box
                     const row = (gridRow - 1) / 2;
                     const col = (gridCol - 1) / 2;
                     const box = document.createElement('div');
@@ -95,9 +119,10 @@
     }
 
     function placeLine(type, r, c) {
-        if (gameOver || !playerTurn) return;
+        if (gameOver) return;
+        if (gameMode === 'bot' && currentPlayer !== 1) return;
         
-        const player = 1;
+        const player = currentPlayer;
         if (type === 'h') {
             if (hLines[r][c]) return;
             hLines[r][c] = player;
@@ -115,9 +140,11 @@
         }
         
         if (!completed) {
-            playerTurn = false;
+            currentPlayer = currentPlayer === 1 ? 2 : 1;
             render();
-            setTimeout(cpuTurn, 500);
+            if (gameMode === 'bot' && currentPlayer === 2) {
+                setTimeout(cpuTurn, 500);
+            }
         }
     }
 
@@ -158,7 +185,7 @@
     }
 
     function cpuTurn() {
-        if (gameOver) return;
+        if (gameOver || gameMode !== 'bot') return;
         
         const lines = getAvailableLines();
         if (lines.length === 0) return;
@@ -234,7 +261,7 @@
         if (completed) {
             setTimeout(cpuTurn, 500);
         } else {
-            playerTurn = true;
+            currentPlayer = 1;
             render();
         }
     }
@@ -243,11 +270,35 @@
         return scores[0] + scores[1] === ROWS * COLS;
     }
 
+    function endGame() {
+        gameOver = true;
+        const p1Name = gameMode === 'bot' ? 'You' : 'Player 1';
+        const p2Name = gameMode === 'bot' ? 'CPU' : 'Player 2';
+        
+        const icon = document.getElementById('go-icon');
+        const title = document.getElementById('go-title');
+        const msg = document.getElementById('go-msg');
+        
+        if (scores[0] > scores[1]) {
+            icon.textContent = '🎉';
+            title.textContent = `${p1Name} Win!`;
+        } else if (scores[1] > scores[0]) {
+            icon.textContent = '🏆';
+            title.textContent = `${p2Name} Win!`;
+        } else {
+            icon.textContent = '🤝';
+            title.textContent = "It's a Draw!";
+        }
+        msg.textContent = `${p1Name}: ${scores[0]} — ${p2Name}: ${scores[1]}`;
+        gameoverOverlay.classList.remove('hidden');
+    }
+
     // Drag handlers
     function handleDotDown(e) {
-        if (gameOver || !playerTurn) return;
-        e.preventDefault();
+        if (gameOver) return;
+        if (gameMode === 'bot' && currentPlayer !== 1) return;
         
+        e.preventDefault();
         const row = parseInt(e.target.dataset.row);
         const col = parseInt(e.target.dataset.col);
         
@@ -264,7 +315,6 @@
         selectedDot.el.style.transform = '';
         selectedDot.el.style.boxShadow = '';
         
-        // Find target dot
         let targetDot = null;
         if (e.type === 'touchend') {
             const touch = e.changedTouches[0];
@@ -282,7 +332,6 @@
             const rowDiff = Math.abs(targetRow - selectedDot.row);
             const colDiff = Math.abs(targetCol - selectedDot.col);
             
-            // Check if adjacent
             if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
                 if (rowDiff === 1) {
                     const lineRow = Math.min(selectedDot.row, targetRow);
@@ -301,37 +350,44 @@
         selectedDot = null;
     }
 
-    function endGame() {
-        gameOver = true;
-        if (scores[0] > scores[1]) {
-            document.getElementById('go-icon').textContent = '🎉';
-            document.getElementById('go-title').textContent = 'You Win!';
-        } else if (scores[1] > scores[0]) {
-            document.getElementById('go-icon').textContent = '💀';
-            document.getElementById('go-title').textContent = 'CPU Wins!';
-        } else {
-            document.getElementById('go-icon').textContent = '🤝';
-            document.getElementById('go-title').textContent = 'Draw!';
-        }
-        document.getElementById('go-msg').textContent = `You: ${scores[0]} — CPU: ${scores[1]}`;
-        gameoverOverlay.classList.remove('hidden');
-    }
-
+    // Event listeners
     document.getElementById('new-btn').addEventListener('click', newGame);
     document.getElementById('play-again-btn').addEventListener('click', newGame);
     document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
-        else document.exitFullscreen();
-    });
+    
+    // Mode selector
+    modeBotBtn.addEventListener('click', () => setMode('bot'));
+    modePvpBtn.addEventListener('click', () => setMode('pvp'));
     
     // Global drag handlers
     document.addEventListener('mouseup', handleDotUp);
     document.addEventListener('touchend', handleDotUp);
-
-    newGame();
+    
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    const savedTheme = localStorage.getItem('fossarium-theme');
+    
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    } else if (savedTheme === 'dark') {
+        themeIcon.setAttribute('name', 'sunny-outline');
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    }
+    
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        themeIcon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
+    });
+    
+    // Start game
+    setMode('bot');
 })();
