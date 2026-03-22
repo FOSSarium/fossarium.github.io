@@ -8,6 +8,10 @@
 
     const ROWS = 4, COLS = 4;
     let hLines, vLines, boxes, scores, playerTurn, gameOver;
+    
+    // Drag state
+    let isDragging = false;
+    let selectedDot = null;
 
     function newGame() {
         hLines = Array.from({ length: ROWS + 1 }, () => Array(COLS).fill(0));
@@ -16,6 +20,8 @@
         scores = [0, 0];
         playerTurn = true;
         gameOver = false;
+        isDragging = false;
+        selectedDot = null;
         gameoverOverlay.classList.add('hidden');
         render();
     }
@@ -40,6 +46,10 @@
                     const col = gridCol / 2;
                     const dot = document.createElement('div');
                     dot.className = 'dot';
+                    dot.dataset.row = row;
+                    dot.dataset.col = col;
+                    dot.addEventListener('mousedown', handleDotDown);
+                    dot.addEventListener('touchstart', handleDotDown, { passive: false });
                     boardEl.appendChild(dot);
                 } else if (gridRow % 2 === 0 && gridCol % 2 === 1) {
                     // Horizontal line
@@ -233,6 +243,64 @@
         return scores[0] + scores[1] === ROWS * COLS;
     }
 
+    // Drag handlers
+    function handleDotDown(e) {
+        if (gameOver || !playerTurn) return;
+        e.preventDefault();
+        
+        const row = parseInt(e.target.dataset.row);
+        const col = parseInt(e.target.dataset.col);
+        
+        selectedDot = { row, col, el: e.target };
+        isDragging = true;
+        e.target.style.transform = 'scale(1.3)';
+        e.target.style.boxShadow = '0 0 16px rgba(88, 166, 255, 0.8)';
+    }
+
+    function handleDotUp(e) {
+        if (!isDragging || !selectedDot) return;
+        
+        isDragging = false;
+        selectedDot.el.style.transform = '';
+        selectedDot.el.style.boxShadow = '';
+        
+        // Find target dot
+        let targetDot = null;
+        if (e.type === 'touchend') {
+            const touch = e.changedTouches[0];
+            const elements = document.elementsFromPoint(touch.clientX, touch.clientY);
+            targetDot = elements.find(el => el.classList.contains('dot') && el !== selectedDot.el);
+        } else {
+            if (e.target.classList.contains('dot')) {
+                targetDot = e.target;
+            }
+        }
+        
+        if (targetDot && targetDot !== selectedDot.el) {
+            const targetRow = parseInt(targetDot.dataset.row);
+            const targetCol = parseInt(targetDot.dataset.col);
+            const rowDiff = Math.abs(targetRow - selectedDot.row);
+            const colDiff = Math.abs(targetCol - selectedDot.col);
+            
+            // Check if adjacent
+            if ((rowDiff === 1 && colDiff === 0) || (rowDiff === 0 && colDiff === 1)) {
+                if (rowDiff === 1) {
+                    const lineRow = Math.min(selectedDot.row, targetRow);
+                    if (vLines[lineRow][selectedDot.col] === 0) {
+                        placeLine('v', lineRow, selectedDot.col);
+                    }
+                } else {
+                    const lineCol = Math.min(selectedDot.col, targetCol);
+                    if (hLines[selectedDot.row][lineCol] === 0) {
+                        placeLine('h', selectedDot.row, lineCol);
+                    }
+                }
+            }
+        }
+        
+        selectedDot = null;
+    }
+
     function endGame() {
         gameOver = true;
         if (scores[0] > scores[1]) {
@@ -260,6 +328,10 @@
         if (!document.fullscreenElement) el.requestFullscreen().catch(() => {});
         else document.exitFullscreen();
     });
+    
+    // Global drag handlers
+    document.addEventListener('mouseup', handleDotUp);
+    document.addEventListener('touchend', handleDotUp);
 
     newGame();
 })();
