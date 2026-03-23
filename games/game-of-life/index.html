@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game of Life - FOSSarium</title>
+    <meta name="description" content="Watch Conway's fascinating cellular automaton evolve!">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <div class="game-header">
+            <h1>Conway's Game of Life</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
+            </div>
+        </div>
+        <div class="controls-bar">
+            <button class="control-btn" id="start-btn">▶ Start</button>
+            <button class="control-btn" id="clear-btn">Clear</button>
+            <button class="control-btn" id="random-btn">Random</button>
+            <div class="speed-control">
+                <label>Speed:</label>
+                <input type="range" id="speed" min="1" max="60" value="30">
+            </div>
+        </div>
+        <div class="stats-bar">
+            <div class="stat">
+                <span class="stat-label">Generation</span>
+                <span class="stat-value" id="generation">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Population</span>
+                <span class="stat-value" id="population">0</span>
+            </div>
+        </div>
+        <div class="canvas-wrap">
+            <canvas id="canvas"></canvas>
+        </div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How It Works</h2>
+                <ul>
+                    <li><strong>Click cells</strong> to toggle them alive or dead.</li>
+                    <li><strong>Start</strong> the simulation to watch evolution.</li>
+                    <li>Each cell follows 4 simple rules:</li>
+                    <li>• Underpopulation: &lt;2 neighbors → dies</li>
+                    <li>• Survival: 2-3 neighbors → lives</li>
+                    <li>• Overpopulation: &gt;3 neighbors → dies</li>
+                    <li>• Reproduction: exactly 3 neighbors → born</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
