@@ -12,10 +12,12 @@
     canvas.width = W;
     canvas.height = H;
     const FRUITS = ['🍎', '🍊', '🍋', '🍇', '🍉', '🍓', '🍑', '🥝', '🍌', '🫐'];
+    
     let best = parseInt(localStorage.getItem('fossarium-fruitninja-best') || '0');
     bestEl.textContent = best;
-
-    let items, slashTrail, score, lives, frame, running, started, particles, lastSliceTime = 0;
+    let items = [], slashTrail = [], particles = [];
+    let score = 0, lives = 3, frame = 0;
+    let running = false, started = false;
 
     function isLight() {
         return document.documentElement.classList.contains('light-theme');
@@ -30,7 +32,6 @@
         frame = 0;
         running = false;
         started = false;
-        lastSliceTime = 0;
         gameoverOverlay.classList.add('hidden');
         scoreEl.textContent = 0;
         livesEl.textContent = '❤❤❤';
@@ -39,19 +40,18 @@
     }
 
     function spawnItem() {
-        const isBomb = Math.random() < 0.10; // Reduced from 0.15 to 0.10 (10% bombs)
-        // Spawn from center area to prevent fruits going outside edges
-        const x = 80 + Math.random() * (W - 160);
+        const isBomb = Math.random() < 0.08; // 8% bombs
+        const x = 100 + Math.random() * (W - 200); // Center spawn zone
         items.push({
             emoji: isBomb ? '💣' : FRUITS[Math.floor(Math.random() * FRUITS.length)],
             bomb: isBomb,
-            x,
-            y: H + 20,
-            vx: (Math.random() - 0.5) * 2,  // Reduced horizontal velocity
-            vy: -(8 + Math.random() * 3),   // Reduced vertical velocity range
-            r: 22,
+            x: x,
+            y: H + 30,
+            vx: (Math.random() - 0.5) * 1.5, // Minimal horizontal movement
+            vy: -(7 + Math.random() * 2), // Consistent upward speed
+            r: 25,
             sliced: false,
-            missed: false
+            marked: false // Track if already counted
         });
     }
 
@@ -62,12 +62,14 @@
 
         // Slash trail
         if (slashTrail.length > 1) {
-            ctx.strokeStyle = isLight() ? 'rgba(0,86,179,.3)' : 'rgba(88,166,255,.3)';
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = isLight() ? 'rgba(0,86,179,.4)' : 'rgba(88,166,255,.4)';
+            ctx.lineWidth = 4;
             ctx.lineCap = 'round';
             ctx.beginPath();
             ctx.moveTo(slashTrail[0].x, slashTrail[0].y);
-            for (let i = 1; i < slashTrail.length; i++) ctx.lineTo(slashTrail[i].x, slashTrail[i].y);
+            for (let i = 1; i < slashTrail.length; i++) {
+                ctx.lineTo(slashTrail[i].x, slashTrail[i].y);
+            }
             ctx.stroke();
         }
 
@@ -94,24 +96,22 @@
     function update() {
         frame++;
 
-        // Spawn - reduced rate for easier gameplay
-        if (frame % 40 === 0) spawnItem();
-        if (frame % 70 === 0 && Math.random() < 0.3) spawnItem();
+        // Spawn items
+        if (frame % 45 === 0) spawnItem();
 
         // Move items
         items.forEach(item => {
             if (item.sliced) return;
             item.x += item.vx;
             item.y += item.vy;
-            item.vy += 0.15; // Reduced gravity
+            item.vy += 0.12; // Light gravity
         });
 
-        // Check for missed fruits (only at bottom, very lenient)
+        // Check missed - ONLY if fruit goes below visible area significantly
         items.forEach(item => {
-            if (item.sliced || item.missed || item.bomb) return;
-            // Only count as missed if it falls way off bottom
-            if (item.y > H + 60) {
-                item.missed = true;
+            if (item.sliced || item.bomb || item.marked) return;
+            if (item.y > H + 80) {
+                item.marked = true;
                 lives--;
                 livesEl.textContent = '❤'.repeat(Math.max(0, lives));
                 if (lives <= 0) {
@@ -120,7 +120,7 @@
             }
         });
 
-        // Remove sliced items and items way outside screen
+        // Clean up - remove sliced and off-screen items
         items = items.filter(i => !i.sliced && i.y < H + 100 && i.x > -100 && i.x < W + 100);
 
         // Particles
@@ -132,57 +132,52 @@
         });
         particles = particles.filter(p => p.life > 0);
 
-        // Trim trail
-        if (slashTrail.length > 8) slashTrail.shift();
+        // Trail
+        if (slashTrail.length > 6) slashTrail.shift();
 
         render();
     }
 
     function sliceAt(x, y) {
-        const now = Date.now();
-        if (now - lastSliceTime < 50) return;
-        lastSliceTime = now;
-        
-        let hitSomething = false;
         items.forEach(item => {
-            if (item.sliced) return;
-            // Larger hit radius for easier slicing
-            if (Math.hypot(x - item.x, y - item.y) < 35) {
-                hitSomething = true;
+            if (item.sliced || item.marked) return;
+            
+            const dist = Math.hypot(x - item.x, y - item.y);
+            if (dist < 40) { // Very generous hit radius
                 item.sliced = true;
+                
                 if (item.bomb) {
-                    lives--;
-                    livesEl.textContent = '❤'.repeat(Math.max(0, lives));
-                    for (let i = 0; i < 6; i++) {
+                    lives = 0;
+                    livesEl.textContent = '';
+                    for (let i = 0; i < 8; i++) {
                         particles.push({
                             emoji: '💥',
                             x: item.x,
                             y: item.y,
-                            vx: (Math.random() - 0.5) * 4,
-                            vy: -2 - Math.random() * 3,
-                            life: 15,
-                            size: 16
+                            vx: (Math.random() - 0.5) * 6,
+                            vy: (Math.random() - 0.5) * 6,
+                            life: 20,
+                            size: 20
                         });
                     }
-                    if (lives <= 0) gameOver();
+                    gameOver();
                 } else {
                     score++;
                     scoreEl.textContent = score;
-                    for (let i = 0; i < 3; i++) {
+                    for (let i = 0; i < 4; i++) {
                         particles.push({
-                            emoji: item.emoji,
+                            emoji: '✨',
                             x: item.x,
                             y: item.y,
-                            vx: (Math.random() - 0.5) * 5,
-                            vy: -1 - Math.random() * 3,
-                            life: 20,
-                            size: 14
+                            vx: (Math.random() - 0.5) * 4,
+                            vy: (Math.random() - 0.5) * 4,
+                            life: 15,
+                            size: 12
                         });
                     }
                 }
             }
         });
-        return hitSomething;
     }
 
     function gameOver() {
@@ -220,22 +215,25 @@
         };
     }
 
+    // Mouse controls
     canvas.addEventListener('mousedown', e => {
         startGame();
         const p = getCanvasPos(e);
         slashTrail = [p];
         sliceAt(p.x, p.y);
     });
+    
     canvas.addEventListener('mousemove', e => {
         const p = getCanvasPos(e);
         slashTrail.push(p);
-        if (slashTrail.length > 8) slashTrail.shift();
         sliceAt(p.x, p.y);
     });
+    
     canvas.addEventListener('mouseup', () => {
         slashTrail = [];
     });
 
+    // Touch controls
     canvas.addEventListener('touchstart', e => {
         e.preventDefault();
         startGame();
@@ -243,23 +241,33 @@
         slashTrail = [p];
         sliceAt(p.x, p.y);
     }, { passive: false });
+    
     canvas.addEventListener('touchmove', e => {
         e.preventDefault();
         const p = getCanvasPos(e);
         slashTrail.push(p);
-        if (slashTrail.length > 8) slashTrail.shift();
         sliceAt(p.x, p.y);
     }, { passive: false });
+    
     canvas.addEventListener('touchend', () => {
         slashTrail = [];
     });
 
-    // Event listeners
+    // UI buttons
     document.getElementById('play-again-btn').addEventListener('click', init);
-    document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
-    document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
-    helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
-    gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
+    
+    document.getElementById('help-btn').addEventListener('click', () => {
+        helpOverlay.classList.remove('hidden');
+    });
+    document.getElementById('close-help-btn').addEventListener('click', () => {
+        helpOverlay.classList.add('hidden');
+    });
+    helpOverlay.addEventListener('click', e => {
+        if (e.target === helpOverlay) helpOverlay.classList.add('hidden');
+    });
+    gameoverOverlay.addEventListener('click', e => {
+        if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden');
+    });
 
     // Theme toggle
     const themeToggleBtn = document.getElementById('theme-toggle');
