@@ -2,6 +2,8 @@
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const paletteEl = document.getElementById('palette');
+    const brushSizeInput = document.getElementById('brush-size');
+    const sizeValueEl = document.getElementById('size-value');
     const helpOverlay = document.getElementById('help-overlay');
 
     const COLORS = ['#111111', '#ff4757', '#ff6b81', '#ffa502', '#ffdd59', '#2ed573', '#1e90ff', '#a55eea', '#e056fd', '#00d2d3', '#5f27cd', '#01a3a4', '#f8b500', '#ee5a24', '#ffffff'];
@@ -40,7 +42,7 @@
             if (color === '#ffffff') div.style.border = '2px solid rgba(0,0,0,0.15)';
             div.addEventListener('click', () => {
                 currentColor = color;
-                tool = 'pen';
+                if (tool === 'eraser') tool = 'pen';
                 updateTools();
                 paletteEl.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
                 div.classList.add('active');
@@ -109,26 +111,26 @@
             lastPos = pos;
         } else if (tool === 'line' || tool === 'rect' || tool === 'circle') {
             ctx.putImageData(snapshot, 0, 0);
+            ctx.strokeStyle = currentColor;
+            ctx.lineWidth = brushSize;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            
             if (tool === 'line') {
-                ctx.strokeStyle = currentColor;
-                ctx.lineWidth = brushSize;
-                ctx.lineCap = 'round';
                 ctx.beginPath();
                 ctx.moveTo(startX, startY);
                 ctx.lineTo(pos.x, pos.y);
                 ctx.stroke();
             } else if (tool === 'rect') {
-                ctx.fillStyle = currentColor;
-                ctx.fillRect(startX, startY, pos.x - startX, pos.y - startY);
+                ctx.strokeRect(startX, startY, pos.x - startX, pos.y - startY);
             } else if (tool === 'circle') {
-                ctx.fillStyle = currentColor;
                 ctx.beginPath();
                 const radiusX = Math.abs(pos.x - startX) / 2;
                 const radiusY = Math.abs(pos.y - startY) / 2;
                 const centerX = startX + (pos.x - startX) / 2;
                 const centerY = startY + (pos.y - startY) / 2;
                 ctx.ellipse(centerX, centerY, radiusX, radiusY, 0, 0, Math.PI * 2);
-                ctx.fill();
+                ctx.stroke();
             }
         }
     }
@@ -192,7 +194,11 @@
     canvas.addEventListener('touchmove', moveDraw, { passive: false });
     canvas.addEventListener('touchend', endDraw);
 
-    document.getElementById('brush-size').addEventListener('input', e => brushSize = parseInt(e.target.value));
+    brushSizeInput.addEventListener('input', e => {
+        brushSize = parseInt(e.target.value);
+        sizeValueEl.textContent = brushSize;
+    });
+
     document.getElementById('pen-tool').addEventListener('click', () => { tool = 'pen'; updateTools(); });
     document.getElementById('eraser-tool').addEventListener('click', () => { tool = 'eraser'; updateTools(); });
     document.getElementById('line-tool').addEventListener('click', () => { tool = 'line'; updateTools(); });

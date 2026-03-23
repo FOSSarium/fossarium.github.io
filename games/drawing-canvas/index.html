@@ -25,38 +25,50 @@
                 <button class="icon-btn" id="help-btn" title="How to Use" aria-label="Help">?</button>
             </div>
         </div>
+
         <div class="toolbar">
-            <div class="tool-group">
-                <button class="tool-btn active" id="pen-tool" title="Pen">✏️</button>
-                <button class="tool-btn" id="eraser-tool" title="Eraser">🧹</button>
-                <button class="tool-btn" id="line-tool" title="Line">📏</button>
-                <button class="tool-btn" id="rect-tool" title="Rectangle">⬜</button>
-                <button class="tool-btn" id="circle-tool" title="Circle">⭕</button>
-                <button class="tool-btn" id="fill-tool" title="Fill Bucket">🧺</button>
+            <div class="tools-section">
+                <span class="section-label">Tools</span>
+                <div class="tool-group">
+                    <button class="tool-btn active" id="pen-tool" title="Pen">✏️</button>
+                    <button class="tool-btn" id="eraser-tool" title="Eraser">🧹</button>
+                    <button class="tool-btn" id="line-tool" title="Line">📏</button>
+                    <button class="tool-btn" id="rect-tool" title="Rectangle">⬜</button>
+                    <button class="tool-btn" id="circle-tool" title="Circle">⭕</button>
+                    <button class="tool-btn" id="fill-tool" title="Fill Bucket">🧺</button>
+                </div>
             </div>
-            <div class="palette" id="palette"></div>
-            <div class="tool-options">
-                <label class="size-label">Size: <input type="range" id="brush-size" min="1" max="30" value="4"></label>
+            <div class="colors-section">
+                <span class="section-label">Colors</span>
+                <div class="palette" id="palette"></div>
+            </div>
+            <div class="options-section">
+                <span class="section-label">Size</span>
+                <input type="range" id="brush-size" min="1" max="30" value="4">
+                <span class="size-value" id="size-value">4</span>
             </div>
         </div>
+
         <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
+
         <div class="btn-row">
             <button class="action-btn secondary" id="undo-btn">↩ Undo</button>
-            <button class="action-btn secondary" id="clear-btn">Clear</button>
-            <button class="action-btn primary" id="export-btn">Export PNG</button>
+            <button class="action-btn secondary" id="clear-btn">🗑️ Clear</button>
+            <button class="action-btn primary" id="export-btn">📥 Export PNG</button>
         </div>
+
         <div class="overlay hidden" id="help-overlay">
             <div class="overlay-card">
                 <h2>How to Use</h2>
                 <ul>
                     <li><strong>✏️ Pen</strong> - Draw freehand lines</li>
                     <li><strong>🧹 Eraser</strong> - Erase parts of your drawing</li>
-                    <li><strong>📏 Line</strong> - Draw straight lines</li>
-                    <li><strong>⬜ Rectangle</strong> - Draw rectangles</li>
-                    <li><strong>⭕ Circle</strong> - Draw circles/ovals</li>
+                    <li><strong>📏 Line</strong> - Draw straight outline lines</li>
+                    <li><strong>⬜ Rectangle</strong> - Draw rectangle outlines</li>
+                    <li><strong>⭕ Circle</strong> - Draw circle/ellipse outlines</li>
                     <li><strong>🧺 Fill</strong> - Fill areas with color</li>
                     <li>Choose a <strong>color</strong> from the palette</li>
-                    <li>Adjust <strong>brush size</strong> with the slider</li>
+                    <li>Adjust <strong>brush size</strong> for line thickness</li>
                     <li><strong>Undo</strong> reverts the last action</li>
                     <li><strong>Export</strong> saves your art as PNG</li>
                 </ul>
