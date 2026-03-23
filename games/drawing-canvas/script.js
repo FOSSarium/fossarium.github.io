@@ -4,7 +4,7 @@
     const paletteEl = document.getElementById('palette');
     const helpOverlay = document.getElementById('help-overlay');
 
-    const COLORS = ['#111111','#ff4757','#ff6b81','#ffa502','#ffdd59','#2ed573','#1e90ff','#a55eea','#e056fd','#00d2d3','#5f27cd','#01a3a4','#f8b500','#ee5a24','#ffffff'];
+    const COLORS = ['#111111', '#ff4757', '#ff6b81', '#ffa502', '#ffdd59', '#2ed573', '#1e90ff', '#a55eea', '#e056fd', '#00d2d3', '#5f27cd', '#01a3a4', '#f8b500', '#ee5a24', '#ffffff'];
     let currentColor = COLORS[0], brushSize = 4, tool = 'pen', drawing = false;
     let history = [], lastPos = null;
 
@@ -13,10 +13,10 @@
         const w = Math.floor(rect.width);
         const h = Math.floor(w * 3 / 4);
         if (canvas.width !== w || canvas.height !== h) {
-            const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            canvas.width = w; canvas.height = h;
-            ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h);
-            ctx.putImageData(imgData, 0, 0);
+            canvas.width = w;
+            canvas.height = h;
+            ctx.fillStyle = '#fff';
+            ctx.fillRect(0, 0, w, h);
         }
     }
 
@@ -28,7 +28,9 @@
             div.style.background = color;
             if (color === '#ffffff') div.style.border = '2px solid rgba(0,0,0,0.15)';
             div.addEventListener('click', () => {
-                currentColor = color; tool = 'pen'; updateTools();
+                currentColor = color;
+                tool = 'pen';
+                updateTools();
                 paletteEl.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
                 div.classList.add('active');
             });
@@ -59,7 +61,8 @@
     function drawLine(from, to) {
         ctx.strokeStyle = tool === 'eraser' ? '#ffffff' : currentColor;
         ctx.lineWidth = brushSize;
-        ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.lineTo(to.x, to.y);
@@ -82,7 +85,10 @@
         lastPos = pos;
     }
 
-    function endDraw() { drawing = false; lastPos = null; }
+    function endDraw() {
+        drawing = false;
+        lastPos = null;
+    }
 
     canvas.addEventListener('mousedown', startDraw);
     canvas.addEventListener('mousemove', moveDraw);
@@ -99,13 +105,17 @@
     document.getElementById('undo-btn').addEventListener('click', () => {
         if (history.length === 0) return;
         const img = new Image();
-        img.onload = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0); };
+        img.onload = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(img, 0, 0);
+        };
         img.src = history.pop();
     });
 
     document.getElementById('clear-btn').addEventListener('click', () => {
         saveState();
-        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#fff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     });
 
     document.getElementById('export-btn').addEventListener('click', () => {
@@ -115,16 +125,36 @@
         link.click();
     });
 
+    // Help overlay
     document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    const savedTheme = localStorage.getItem('fossarium-theme');
+
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    } else if (savedTheme === 'dark') {
+        themeIcon.setAttribute('name', 'sunny-outline');
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        themeIcon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
     });
 
     window.addEventListener('resize', resize);
     resize();
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
     buildPalette();
 })();
