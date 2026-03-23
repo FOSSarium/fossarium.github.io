@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drawing Canvas - FOSSarium</title>
-    <meta name="description" content="A freehand digital drawing canvas with brushes, colors, and export.">
+    <meta name="description" content="A freehand digital drawing canvas with brushes, shapes, colors, and export.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <!-- Ionicons -->
@@ -26,11 +26,17 @@
             </div>
         </div>
         <div class="toolbar">
-            <div class="palette" id="palette"></div>
             <div class="tool-group">
-                <label class="size-label">Size: <input type="range" id="brush-size" min="1" max="30" value="4"></label>
                 <button class="tool-btn active" id="pen-tool" title="Pen">✏️</button>
                 <button class="tool-btn" id="eraser-tool" title="Eraser">🧹</button>
+                <button class="tool-btn" id="line-tool" title="Line">📏</button>
+                <button class="tool-btn" id="rect-tool" title="Rectangle">⬜</button>
+                <button class="tool-btn" id="circle-tool" title="Circle">⭕</button>
+                <button class="tool-btn" id="fill-tool" title="Fill Bucket">🧺</button>
+            </div>
+            <div class="palette" id="palette"></div>
+            <div class="tool-options">
+                <label class="size-label">Size: <input type="range" id="brush-size" min="1" max="30" value="4"></label>
             </div>
         </div>
         <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
@@ -43,13 +49,16 @@
             <div class="overlay-card">
                 <h2>How to Use</h2>
                 <ul>
-                    <li><strong>Draw</strong> by clicking/touching and dragging on the canvas.</li>
-                    <li>Choose a <strong>color</strong> from the palette below.</li>
-                    <li>Adjust <strong>brush size</strong> with the slider.</li>
-                    <li>Use <strong>✏️ Pen</strong> to draw or <strong>🧹 Eraser</strong> to erase.</li>
-                    <li><strong>Undo</strong> reverts your last stroke.</li>
-                    <li><strong>Clear</strong> removes everything from canvas.</li>
-                    <li><strong>Export</strong> saves your artwork as a PNG file.</li>
+                    <li><strong>✏️ Pen</strong> - Draw freehand lines</li>
+                    <li><strong>🧹 Eraser</strong> - Erase parts of your drawing</li>
+                    <li><strong>📏 Line</strong> - Draw straight lines</li>
+                    <li><strong>⬜ Rectangle</strong> - Draw rectangles</li>
+                    <li><strong>⭕ Circle</strong> - Draw circles/ovals</li>
+                    <li><strong>🧺 Fill</strong> - Fill areas with color</li>
+                    <li>Choose a <strong>color</strong> from the palette</li>
+                    <li>Adjust <strong>brush size</strong> with the slider</li>
+                    <li><strong>Undo</strong> reverts the last action</li>
+                    <li><strong>Export</strong> saves your art as PNG</li>
                 </ul>
                 <button class="action-btn primary" id="close-help-btn">Got It</button>
             </div>
