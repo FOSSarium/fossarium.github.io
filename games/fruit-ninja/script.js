@@ -7,19 +7,29 @@
     const msgEl = document.getElementById('msg');
     const gameoverOverlay = document.getElementById('gameover-overlay');
     const helpOverlay = document.getElementById('help-overlay');
-    const isLight = () => document.documentElement.classList.contains('light-theme');
 
     const W = 480, H = 360;
-    canvas.width = W; canvas.height = H;
-    const FRUITS = ['🍎','🍊','🍋','🍇','🍉','🍓','🍑','🥝','🍌','🫐'];
+    canvas.width = W;
+    canvas.height = H;
+    const FRUITS = ['🍎', '🍊', '🍋', '🍇', '🍉', '🍓', '🍑', '🥝', '🍌', '🫐'];
     let best = parseInt(localStorage.getItem('fossarium-fruitninja-best') || '0');
     bestEl.textContent = best;
 
     let items, slashTrail, score, lives, frame, running, started, particles;
 
+    function isLight() {
+        return document.documentElement.classList.contains('light-theme');
+    }
+
     function init() {
-        items = []; slashTrail = []; particles = [];
-        score = 0; lives = 3; frame = 0; running = false; started = false;
+        items = [];
+        slashTrail = [];
+        particles = [];
+        score = 0;
+        lives = 3;
+        frame = 0;
+        running = false;
+        started = false;
         gameoverOverlay.classList.add('hidden');
         scoreEl.textContent = 0;
         livesEl.textContent = '❤❤❤';
@@ -33,7 +43,8 @@
         items.push({
             emoji: isBomb ? '💣' : FRUITS[Math.floor(Math.random() * FRUITS.length)],
             bomb: isBomb,
-            x, y: H + 20,
+            x,
+            y: H + 20,
             vx: (Math.random() - 0.5) * 3,
             vy: -(8 + Math.random() * 4),
             r: 22,
@@ -44,12 +55,14 @@
 
     function render() {
         const bg = isLight() ? '#e8ecf2' : '#0a0e18';
-        ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = bg;
+        ctx.fillRect(0, 0, W, H);
 
         // Slash trail
         if (slashTrail.length > 1) {
             ctx.strokeStyle = isLight() ? 'rgba(0,86,179,.3)' : 'rgba(88,166,255,.3)';
-            ctx.lineWidth = 3; ctx.lineCap = 'round';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
             ctx.beginPath();
             ctx.moveTo(slashTrail[0].x, slashTrail[0].y);
             for (let i = 1; i < slashTrail.length; i++) ctx.lineTo(slashTrail[i].x, slashTrail[i].y);
@@ -60,7 +73,8 @@
         items.forEach(item => {
             if (item.sliced) return;
             ctx.font = `${item.r * 2}px serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
             ctx.fillText(item.emoji, item.x, item.y);
         });
 
@@ -68,7 +82,8 @@
         particles.forEach(p => {
             ctx.globalAlpha = p.life / 20;
             ctx.font = `${p.size}px serif`;
-            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
             ctx.fillText(p.emoji, p.x, p.y);
         });
         ctx.globalAlpha = 1;
@@ -88,18 +103,29 @@
             item.y += item.vy;
             item.vy += 0.18;
 
+            // Check if item went outside playable area (bottom or sides)
+            const outOfBounds = item.y > H + 30 || item.x < -30 || item.x > W + 30;
+            
             // Fell off screen without being sliced
-            if (item.y > H + 30 && !item.missed && !item.bomb) {
+            if (outOfBounds && !item.missed && !item.bomb) {
                 item.missed = true;
                 lives--;
                 livesEl.textContent = '❤'.repeat(Math.max(0, lives));
-                if (lives <= 0) { gameOver(); return; }
+                if (lives <= 0) {
+                    gameOver();
+                    return;
+                }
             }
         });
-        items = items.filter(i => i.y < H + 60);
+        items = items.filter(i => i.y < H + 60 && i.x > -60 && i.x < W + 60);
 
         // Particles
-        particles.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.15; p.life--; });
+        particles.forEach(p => {
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.15;
+            p.life--;
+        });
         particles = particles.filter(p => p.life > 0);
 
         // Trim trail
@@ -116,17 +142,31 @@
                 if (item.bomb) {
                     lives--;
                     livesEl.textContent = '❤'.repeat(Math.max(0, lives));
-                    // Bomb particles
                     for (let i = 0; i < 6; i++) {
-                        particles.push({ emoji: '💥', x: item.x, y: item.y, vx: (Math.random() - 0.5) * 4, vy: -2 - Math.random() * 3, life: 15, size: 16 });
+                        particles.push({
+                            emoji: '💥',
+                            x: item.x,
+                            y: item.y,
+                            vx: (Math.random() - 0.5) * 4,
+                            vy: -2 - Math.random() * 3,
+                            life: 15,
+                            size: 16
+                        });
                     }
                     if (lives <= 0) gameOver();
                 } else {
                     score++;
                     scoreEl.textContent = score;
-                    // Slice particles
                     for (let i = 0; i < 3; i++) {
-                        particles.push({ emoji: item.emoji, x: item.x, y: item.y, vx: (Math.random() - 0.5) * 5, vy: -1 - Math.random() * 3, life: 20, size: 14 });
+                        particles.push({
+                            emoji: item.emoji,
+                            x: item.x,
+                            y: item.y,
+                            vx: (Math.random() - 0.5) * 5,
+                            vy: -1 - Math.random() * 3,
+                            life: 20,
+                            size: 14
+                        });
                     }
                 }
             }
@@ -152,7 +192,8 @@
 
     function startGame() {
         if (started) return;
-        started = true; running = true;
+        started = true;
+        running = true;
         msgEl.textContent = '';
         loop();
     }
@@ -161,7 +202,10 @@
         const rect = canvas.getBoundingClientRect();
         const cx = e.clientX || (e.touches && e.touches[0].clientX);
         const cy = e.clientY || (e.touches && e.touches[0].clientY);
-        return { x: (cx - rect.left) / rect.width * W, y: (cy - rect.top) / rect.height * H };
+        return {
+            x: (cx - rect.left) / rect.width * W,
+            y: (cy - rect.top) / rect.height * H
+        };
     }
 
     canvas.addEventListener('mousedown', e => {
@@ -176,10 +220,13 @@
         slashTrail.push(p);
         sliceAt(p.x, p.y);
     });
-    canvas.addEventListener('mouseup', () => { slashTrail = []; });
+    canvas.addEventListener('mouseup', () => {
+        slashTrail = [];
+    });
 
     canvas.addEventListener('touchstart', e => {
-        e.preventDefault(); startGame();
+        e.preventDefault();
+        startGame();
         const p = getCanvasPos(e);
         slashTrail = [p];
         sliceAt(p.x, p.y);
@@ -190,16 +237,37 @@
         slashTrail.push(p);
         sliceAt(p.x, p.y);
     }, { passive: false });
-    canvas.addEventListener('touchend', () => { slashTrail = []; });
+    canvas.addEventListener('touchend', () => {
+        slashTrail = [];
+    });
 
+    // Event listeners
     document.getElementById('play-again-btn').addEventListener('click', init);
     document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
     document.getElementById('close-help-btn').addEventListener('click', () => helpOverlay.classList.add('hidden'));
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     gameoverOverlay.addEventListener('click', e => { if (e.target === gameoverOverlay) gameoverOverlay.classList.add('hidden'); });
-    document.getElementById('fullscreen-btn').addEventListener('click', () => {
-        const el = document.getElementById('game-root');
-        if (!document.fullscreenElement) el.requestFullscreen().catch(() => {}); else document.exitFullscreen();
+
+    // Theme toggle
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = themeToggleBtn.querySelector('ion-icon');
+    const savedTheme = localStorage.getItem('fossarium-theme');
+
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    } else if (savedTheme === 'dark') {
+        themeIcon.setAttribute('name', 'sunny-outline');
+    } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.setAttribute('name', 'moon-outline');
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        document.documentElement.classList.toggle('light-theme');
+        const isLight = document.documentElement.classList.contains('light-theme');
+        localStorage.setItem('fossarium-theme', isLight ? 'light' : 'dark');
+        themeIcon.setAttribute('name', isLight ? 'moon-outline' : 'sunny-outline');
     });
 
     init();

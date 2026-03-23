@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,24 +8,40 @@
     <meta name="description" content="Swipe to slice flying fruits and avoid bombs!">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <!-- Ionicons -->
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
 </head>
+
 <body>
     <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
     <div class="app-container" id="game-root">
-        <a href="../../index.html" class="back-button">&larr; Back to FOSSarium</a>
         <div class="game-header">
             <h1>Fruit Ninja</h1>
             <div class="header-actions">
-                <button class="icon-btn" id="help-btn" title="Help">?</button>
-                <button class="icon-btn" id="fullscreen-btn" title="Fullscreen">⛶</button>
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="help-btn" title="How to Play" aria-label="Help">?</button>
             </div>
         </div>
         <div class="stats-bar">
-            <div class="stat"><span class="stat-label">Score</span><span class="stat-value" id="score">0</span></div>
-            <div class="stat"><span class="stat-label">Best</span><span class="stat-value" id="best">0</span></div>
-            <div class="stat"><span class="stat-label">Lives</span><span class="stat-value" id="lives">❤❤❤</span></div>
+            <div class="stat">
+                <span class="stat-label">Score</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Best</span>
+                <span class="stat-value" id="best">0</span>
+            </div>
+            <div class="stat">
+                <span class="stat-label">Lives</span>
+                <span class="stat-value" id="lives">❤❤❤</span>
+            </div>
         </div>
-        <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
+        <div class="canvas-wrap">
+            <canvas id="canvas"></canvas>
+        </div>
         <div class="msg" id="msg">Click or Swipe to Start</div>
         <div class="overlay hidden" id="gameover-overlay">
             <div class="overlay-card">
@@ -49,4 +66,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
