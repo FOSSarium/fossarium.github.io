@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Pairing - FOSSarium</title>
+    <meta name="description" content="Professional Swiss system chess tournament pairing engine">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <div class="game-header">
+            <h1>♟️ Chess Tournament Manager</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme">
+                    <ion-icon name="sunny-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="help-btn" title="Help">?</button>
+                <button class="icon-btn" id="export-btn" title="Export Results">
+                    <ion-icon name="download-outline"></ion-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Alert Messages -->
+        <div class="alert hidden" id="alert-box">
+            <span class="alert-icon" id="alert-icon"></span>
+            <span class="alert-message" id="alert-message"></span>
+            <button class="alert-close" id="alert-close">&times;</button>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="dashboard">
+            <div class="card">
+                <h2><ion-icon name="people-outline"></ion-icon> Add Players</h2>
+                <div class="player-form">
+                    <input type="text" id="player-name" placeholder="Player Name" autocomplete="off" />
+                    <input type="number" id="player-rating" placeholder="Rating (optional)" min="0" max="3500" />
+                    <button class="btn-primary" id="add-player-btn">
+                        <ion-icon name="add-outline"></ion-icon> Add Player
+                    </button>
+                </div>
+                <div class="bulk-actions">
+                    <button class="btn-small btn-secondary" id="bulk-add-btn">
+                        <ion-icon name="people-outline"></ion-icon> Bulk Add
+                    </button>
+                    <button class="btn-small btn-secondary" id="clear-players-btn">
+                        <ion-icon name="trash-outline"></ion-icon> Clear All
+                    </button>
+                </div>
+                <div class="player-list" id="player-list"></div>
+            </div>
+
+            <div class="card">
+                <h2><ion-icon name="trophy-outline"></ion-icon> Tournament Status</h2>
+                <div class="tournament-info">
+                    <div class="info-row">
+                        <span><ion-icon name="flag-outline"></ion-icon> Current Round:</span>
+                        <strong id="current-round" class="round-badge">0</strong>
+                    </div>
+                    <div class="info-row">
+                        <span><ion-icon name="people-outline"></ion-icon> Total Players:</span>
+                        <strong id="total-players">0</strong>
+                    </div>
+                    <div class="info-row">
+                        <span><ion-icon name="checkmark-circle-outline"></ion-icon> Active Players:</span>
+                        <strong id="active-players">0</strong>
+                    </div>
+                    <div class="info-row">
+                        <span><ion-icon name="swap-horizontal-outline"></ion-icon> Total Rounds:</span>
+                        <strong id="total-rounds">-</strong>
+                    </div>
+                </div>
+                <div class="tournament-actions">
+                    <button class="btn-primary btn-large" id="generate-pairings-btn">
+                        <ion-icon name="shuffle-outline"></ion-icon> Generate Pairings
+                    </button>
+                    <button class="btn-secondary btn-large" id="new-tournament-btn">
+                        <ion-icon name="refresh-outline"></ion-icon> New Tournament
+                    </button>
+                </div>
+                <div class="round-info hidden" id="round-info">
+                    <p><ion-icon name="information-circle-outline"></ion-icon> Recommended rounds: <strong id="recommended-rounds"></strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pairings -->
+        <div class="card pairings-card hidden" id="pairings-card">
+            <div class="pairings-header">
+                <h2><ion-icon name="swap-horizontal-outline"></ion-icon> Round <span id="pairings-round">1</span> Pairings</h2>
+                <div class="pairings-status" id="pairings-status">
+                    <span class="status-indicator"></span>
+                    <span class="status-text">Awaiting Results</span>
+                </div>
+            </div>
+            <div class="pairings-list" id="pairings-list"></div>
+            <div class="pairings-actions">
+                <button class="btn-secondary" id="cancel-pairings-btn">
+                    <ion-icon name="close-outline"></ion-icon> Cancel
+                </button>
+                <button class="btn-primary" id="submit-results-btn">
+                    <ion-icon name="checkmark-outline"></ion-icon> Submit Results
+                </button>
+            </div>
+        </div>
+
+        <!-- Standings -->
+        <div class="card standings-card">
+            <div class="standings-header">
+                <h2><ion-icon name="stats-chart-outline"></ion-icon> Tournament Standings</h2>
+                <div class="standings-controls">
+                    <button class="btn-small btn-secondary" id="print-standings-btn">
+                        <ion-icon name="print-outline"></ion-icon> Print
+                    </button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="standings-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="rank">Rank</th>
+                            <th data-sort="name">Player</th>
+                            <th data-sort="rating">Rating</th>
+                            <th data-sort="score">Score</th>
+                            <th data-sort="buchholz">Buchholz</th>
+                            <th data-sort="buchholzCut1">BCut1</th>
+                            <th data-sort="sb">SB</th>
+                            <th data-sort="progressive">Prog.</th>
+                            <th data-sort="games">Games</th>
+                        </tr>
+                    </thead>
+                    <tbody id="standings-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Bulk Add Modal -->
+        <div class="overlay hidden" id="bulk-add-overlay">
+            <div class="overlay-card">
+                <h2>Bulk Add Players</h2>
+                <p>Enter one player per line. Format: Name (Rating)</p>
+                <textarea id="bulk-add-text" placeholder="John Doe (1500)&#10;Jane Smith (1600)&#10;Bob Wilson"></textarea>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancel-bulk-add-btn">Cancel</button>
+                    <button class="btn-primary" id="confirm-bulk-add-btn">Add Players</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Modal -->
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>♟️ Chess Tournament Manager</h2>
+                <h3>Getting Started</h3>
+                <ul>
+                    <li><strong>Add Players</strong> with name and optional rating</li>
+                    <li><strong>Generate Pairings</strong> for each round using Swiss system</li>
+                    <li><strong>Enter Results</strong> (1 = win, 0.5 = draw, 0 = loss)</li>
+                    <li><strong>View Standings</strong> with automatic tie-break calculations</li>
+                </ul>
+                <h3>Pairing Rules</h3>
+                <ul>
+                    <li>✓ No rematches between same players</li>
+                    <li>✓ No player receives Bye twice</li>
+                    <li>✓ No player gets same color 3 times in a row</li>
+                    <li>✓ Color balance maintained (max ±2 difference)</li>
+                </ul>
+                <h3>Tie-Breaks (in order)</h3>
+                <ul>
+                    <li><strong>Buchholz:</strong> Sum of all opponents' scores</li>
+                    <li><strong>Buchholz Cut 1:</strong> Minus lowest opponent score</li>
+                    <li><strong>Sonneborn-Berger:</strong> Weighted by opponent strength</li>
+                    <li><strong>Progressive:</strong> Cumulative score per round</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+
+        <!-- Results Prompt Modal (for small tournaments) -->
+        <div class="overlay hidden" id="results-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">📋</div>
+                <h2>Enter Results</h2>
+                <p id="results-message">Please enter results for all pairings</p>
+                <button class="action-btn primary" id="close-results-btn">OK</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

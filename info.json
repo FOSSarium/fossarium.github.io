@@ -90,6 +90,13 @@
         "credit": "FOSSarium",
         "category": "tools"
     },
+    "chess-pairing": {
+        "title": "Chess Pairing Tool",
+        "description": "Generate tournament pairings and track results.",
+        "icon-name": "chess-outline",
+        "credit": "FOSSarium",
+        "category": "tools"
+    },
     "chmod-calc": {
         "title": "Chmod Calculator",
         "description": "Quickly generate Linux file permission codes.",
@@ -759,13 +766,6 @@
         "title": "Jigsaw Puzzle",
         "description": "Solve puzzles by matching various pieces.",
         "icon-name": "grid-outline",
-        "credit": "FOSSarium",
-        "category": "games"
-    },
-    "lights-out": {
-        "title": "Lights Out",
-        "description": "Turn off all the lights on the board.",
-        "icon-name": "flash-outline",
         "credit": "FOSSarium",
         "category": "games"
     },
