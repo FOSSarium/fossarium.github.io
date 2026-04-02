@@ -17,7 +17,7 @@ Instead of scattered repositories, lists, and websites, Fossarium aims to become
 ## 🧪 Live Testing URL
 
 You can test the latest build of the project here:
-**[View Live](https://fossarium.github.io/)**
+**[View Live Here](https://fossarium.github.io/)** or use Alternate Link **[View Live Here](https://fossarium.charank.tech/)**
 
 ---
 
