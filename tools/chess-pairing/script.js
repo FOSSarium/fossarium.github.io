@@ -31,6 +31,7 @@
     const standingsBodyEl = document.getElementById('standings-body');
     const printStandingsBtn = document.getElementById('print-standings-btn');
     const exportBtn = document.getElementById('export-btn');
+    const importBtn = document.getElementById('import-btn');
     
     const bulkAddOverlay = document.getElementById('bulk-add-overlay');
     const bulkAddText = document.getElementById('bulk-add-text');
@@ -40,6 +41,11 @@
     const helpOverlay = document.getElementById('help-overlay');
     const resultsOverlay = document.getElementById('results-overlay');
     const resultsMessage = document.getElementById('results-message');
+    
+    const importOverlay = document.getElementById('import-overlay');
+    const importFile = document.getElementById('import-file');
+    const cancelImportBtn = document.getElementById('cancel-import-btn');
+    const confirmImportBtn = document.getElementById('confirm-import-btn');
 
     // Game State
     let players = [];
@@ -617,7 +623,126 @@
         }
     }
 
-    // Export Results
+    // Export Tournament (Full JSON)
+    function exportTournament() {
+        if (players.length === 0) {
+            showAlert('warning', 'No tournament data to export');
+            return;
+        }
+
+        calculateTieBreaks();
+        
+        const tournamentData = {
+            version: '1.0',
+            exportedAt: new Date().toISOString(),
+            currentRound,
+            players: players.map(p => ({
+                id: p.id,
+                name: p.name,
+                rating: p.rating,
+                score: p.score,
+                progressive: p.progressive,
+                progressiveScores: p.progressiveScores,
+                opponents: p.opponents,
+                results: p.results,
+                colors: p.colors,
+                bye: p.bye,
+                eliminated: p.eliminated,
+                buchholz: p.buchholz,
+                buchholzCut1: p.buchholzCut1,
+                sb: p.sb
+            })),
+            pairings: pairings.map(p => ({
+                player1Id: p.player1?.id,
+                player2Id: p.player2?.id,
+                color1: p.color1,
+                color2: p.color2,
+                isBye: p.isBye,
+                result: p.result
+            }))
+        };
+
+        const json = JSON.stringify(tournamentData, null, 2);
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `chess-tournament-${new Date().toISOString().split('T')[0]}-round-${currentRound}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        showAlert('success', 'Tournament exported successfully');
+    }
+
+    // Import Tournament (Full JSON)
+    function importTournament() {
+        importOverlay.classList.remove('hidden');
+        importFile.value = '';
+    }
+
+    function confirmImport() {
+        const file = importFile.files[0];
+        if (!file) {
+            showAlert('error', 'Please select a file to import');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+                
+                // Validate tournament data
+                if (!data.version || !data.players || !data.currentRound) {
+                    throw new Error('Invalid tournament file format');
+                }
+
+                // Restore tournament state
+                currentRound = data.currentRound || 0;
+                players = data.players.map(p => ({
+                    id: p.id,
+                    name: p.name,
+                    rating: p.rating,
+                    score: p.score,
+                    progressive: p.progressive,
+                    progressiveScores: p.progressiveScores || [],
+                    opponents: p.opponents || [],
+                    results: p.results || [],
+                    colors: p.colors || [],
+                    bye: p.bye || false,
+                    eliminated: p.eliminated || false
+                }));
+
+                // Restore pairings (need to map player IDs back to player objects)
+                pairings = (data.pairings || []).map(p => {
+                    const player1 = players.find(pl => pl.id === p.player1Id);
+                    const player2 = players.find(pl => pl.id === p.player2Id);
+                    return {
+                        player1,
+                        player2,
+                        color1: p.color1,
+                        color2: p.color2,
+                        isBye: p.isBye,
+                        result: p.result
+                    };
+                });
+
+                saveState();
+                updateUI();
+                importOverlay.classList.add('hidden');
+                showAlert('success', `Tournament imported successfully (${players.length} players, Round ${currentRound})`);
+                
+            } catch (error) {
+                showAlert('error', `Import failed: ${error.message}`);
+            }
+        };
+        reader.onerror = () => {
+            showAlert('error', 'Failed to read file');
+        };
+        reader.readAsText(file);
+    }
+
+    // Export Results (CSV) - Keep existing function
     function exportResults() {
         if (players.length === 0) {
             showAlert('warning', 'No data to export');
@@ -689,7 +814,11 @@
     newTournamentBtn.addEventListener('click', newTournament);
     
     printStandingsBtn.addEventListener('click', () => window.print());
-    exportBtn.addEventListener('click', exportResults);
+    exportBtn.addEventListener('click', exportTournament);
+    importBtn.addEventListener('click', importTournament);
+    
+    cancelImportBtn.addEventListener('click', () => importOverlay.classList.add('hidden'));
+    confirmImportBtn.addEventListener('click', confirmImport);
 
     // Help overlay
     document.getElementById('help-btn').addEventListener('click', () => helpOverlay.classList.remove('hidden'));
@@ -699,6 +828,7 @@
     helpOverlay.addEventListener('click', e => { if (e.target === helpOverlay) helpOverlay.classList.add('hidden'); });
     resultsOverlay.addEventListener('click', e => { if (e.target === resultsOverlay) resultsOverlay.classList.add('hidden'); });
     bulkAddOverlay.addEventListener('click', e => { if (e.target === bulkAddOverlay) bulkAddOverlay.classList.add('hidden'); });
+    importOverlay.addEventListener('click', e => { if (e.target === importOverlay) importOverlay.classList.add('hidden'); });
 
     // Theme toggle
     const themeToggleBtn = document.getElementById('theme-toggle');

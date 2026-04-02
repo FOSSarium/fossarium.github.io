@@ -22,8 +22,11 @@
                     <ion-icon name="sunny-outline"></ion-icon>
                 </button>
                 <button class="icon-btn" id="help-btn" title="Help">?</button>
-                <button class="icon-btn" id="export-btn" title="Export Results">
+                <button class="icon-btn" id="export-btn" title="Export Tournament">
                     <ion-icon name="download-outline"></ion-icon>
+                </button>
+                <button class="icon-btn" id="import-btn" title="Import Tournament">
+                    <ion-icon name="cloud-upload-outline"></ion-icon>
                 </button>
             </div>
         </div>
@@ -190,6 +193,26 @@
                 <h2>Enter Results</h2>
                 <p id="results-message">Please enter results for all pairings</p>
                 <button class="action-btn primary" id="close-results-btn">OK</button>
+            </div>
+        </div>
+
+        <!-- Import Modal -->
+        <div class="overlay hidden" id="import-overlay">
+            <div class="overlay-card">
+                <div class="win-icon">📁</div>
+                <h2>Import Tournament</h2>
+                <p>Select a previously exported tournament file (.json)</p>
+                <div class="file-input-wrapper">
+                    <input type="file" id="import-file" accept=".json,application/json" />
+                </div>
+                <div class="import-warning">
+                    <ion-icon name="warning-outline"></ion-icon>
+                    <span>Warning: This will replace your current tournament data</span>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancel-import-btn">Cancel</button>
+                    <button class="btn-primary" id="confirm-import-btn">Import</button>
+                </div>
             </div>
         </div>
     </div>

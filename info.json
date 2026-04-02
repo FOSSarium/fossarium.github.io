@@ -92,7 +92,7 @@
     },
     "chess-pairing": {
         "title": "Chess Pairing Tool",
-        "description": "Generate tournament pairings and track results.",
+        "description": "Swiss tournament pairing with import/export. Full event management.",
         "icon-name": "chess-outline",
         "credit": "FOSSarium",
         "category": "tools"

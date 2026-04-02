@@ -681,6 +681,61 @@ h1 {
     border-color: var(--accent-color);
 }
 
+.file-input-wrapper {
+    margin: 20px 0;
+}
+
+.file-input-wrapper input[type="file"] {
+    width: 100%;
+    padding: 15px;
+    border: 2px dashed var(--card-border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all .2s;
+}
+
+.file-input-wrapper input[type="file"]:hover {
+    border-color: var(--accent-color);
+    background: var(--hover-bg);
+}
+
+.file-input-wrapper input[type="file"]::file-selector-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: var(--gradient-2);
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 15px;
+    transition: transform .2s;
+}
+
+.file-input-wrapper input[type="file"]::file-selector-button:hover {
+    transform: translateY(-2px);
+}
+
+.import-warning {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    background: rgba(255, 165, 2, 0.15);
+    border: 1px solid var(--warning);
+    border-radius: 8px;
+    color: var(--warning);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.import-warning ion-icon {
+    font-size: 1.2rem;
+}
+
 .modal-actions, .pairings-actions {
     display: flex;
     gap: 10px;
