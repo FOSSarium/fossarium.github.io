@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravity Balls - FOSSarium</title>
+    <meta name="description" content="Physics-based ball simulation and play.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="../../assets/icons/ionicons.esm.js"></script>
+    <script nomodule src="../../assets/icons/ionicons.js"></script>
+</head>
+
+<body>
+    <script>const s = localStorage.getItem('fossarium-theme'); if (s === 'light' || (!s && window.matchMedia('(prefers-color-scheme: light)').matches)) document.documentElement.classList.add('light-theme');</script>
+    <div class="app-container" id="game-root">
+        <div class="game-header">
+            <h1>Gravity Balls</h1>
+            <div class="header-actions">
+                <button class="icon-btn" id="theme-toggle" title="Toggle Theme"><ion-icon name="sunny-outline"></ion-icon></button>
+                <button class="icon-btn" id="help-btn" title="How to Play">?</button>
+            </div>
+        </div>
+        <div class="controls-bar">
+            <button class="control-btn" id="add-btn">+ Add Ball</button>
+            <button class="control-btn" id="clear-btn">Clear All</button>
+            <button class="control-btn" id="gravity-btn">Gravity: ON</button>
+            <div class="slider-group">
+                <label>Count: <span id="ball-count">0</span></label>
+            </div>
+        </div>
+        <div class="canvas-wrap"><canvas id="canvas"></canvas></div>
+        <div class="overlay hidden" id="help-overlay">
+            <div class="overlay-card">
+                <h2>How to Play</h2>
+                <ul>
+                    <li><strong>Click</strong> to add balls to the canvas.</li>
+                    <li>Watch balls <strong>bounce</strong> and collide realistically.</li>
+                    <li>Toggle <strong>gravity</strong> on/off.</li>
+                    <li>Drag balls with your mouse/touch.</li>
+                    <li>Enjoy the physics simulation!</li>
+                </ul>
+                <button class="action-btn primary" id="close-help-btn">Got It</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
